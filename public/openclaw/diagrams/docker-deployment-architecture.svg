@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="1100" height="850" viewBox="0 0 1100 850">
+  <defs>
+    <style type="text/css">
+      .title { font: bold 18px 'Helvetica Neue', Arial, sans-serif; fill: #1a1a2e; }
+      .subtitle { font: bold 12px 'Helvetica Neue', Arial, sans-serif; fill: #666666; }
+      .section-title { font: bold 13px 'Helvetica Neue', Arial, sans-serif; fill: #1a1a2e; }
+      .container-title { font: bold 12px 'Helvetica Neue', Arial, sans-serif; fill: #ffffff; }
+      .container-detail { font: bold 10px 'Helvetica Neue', Arial, sans-serif; fill: #e3f2fd; }
+      .volume-title { font: bold 11px 'Helvetica Neue', Arial, sans-serif; fill: #1a1a2e; }
+      .volume-detail { font: bold 9px 'Helvetica Neue', Arial, sans-serif; fill: #666666; }
+      .port-text { font: bold 10px 'Courier New', monospace; fill: #ffffff; }
+      .port-label { font: bold 9px 'Helvetica Neue', Arial, sans-serif; fill: #666666; }
+      .env-text { font: bold 10px 'Courier New', monospace; fill: #1a1a2e; }
+      .label-text { font: bold 10px 'Helvetica Neue', Arial, sans-serif; fill: #666666; }
+    </style>
+    <linearGradient id="dockerBlue" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#2196F3"/>
+      <stop offset="100%" style="stop-color:#1565C0"/>
+    </linearGradient>
+    <linearGradient id="containerGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0288D1"/>
+      <stop offset="100%" style="stop-color:#01579B"/>
+    </linearGradient>
+    <linearGradient id="volumeGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFC107"/>
+      <stop offset="100%" style="stop-color:#FFA000"/>
+    </linearGradient>
+    <linearGradient id="portGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#4CAF50"/>
+      <stop offset="100%" style="stop-color:#388E3C"/>
+    </linearGradient>
+    <linearGradient id="externalGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#9C27B0"/>
+      <stop offset="100%" style="stop-color:#7B1FA2"/>
+    </linearGradient>
+    <linearGradient id="hostGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#607D8B"/>
+      <stop offset="100%" style="stop-color:#455A64"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.15"/>
+    </filter>
+    <pattern id="stripes" patternUnits="userSpaceOnUse" width="10" height="10">
+      <path d="M-1,1 l2,-2 M0,10 l10,-10 M9,11 l2,-2" style="stroke:#e0e0e0; stroke-width:1"/>
+    </pattern>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#4a5568"/>
+    </marker>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2196F3"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1100" height="850" fill="#fafbfc"/>
+
+  <!-- Title -->
+  <text x="550" y="35" text-anchor="middle" class="title">OpenClaw Docker Deployment Architecture</text>
+  <text x="550" y="55" text-anchor="middle" class="subtitle">Container orchestration, volume mounts, and network configuration</text>
+
+  <!-- Docker Compose Stack Boundary -->
+  <rect x="50" y="80" width="700" height="520" rx="10" fill="#ffffff" stroke="#2196F3" stroke-width="3" stroke-dasharray="10,5"/>
+  <rect x="50" y="80" width="700" height="35" rx="10" fill="url(#dockerBlue)"/>
+  <text x="400" y="103" text-anchor="middle" class="container-title">Docker Compose Stack</text>
+
+  <!-- Gateway Container -->
+  <rect x="80" y="140" width="300" height="200" rx="8" fill="url(#containerGrad)" filter="url(#shadow)"/>
+  <text x="230" y="165" text-anchor="middle" class="container-title">openclaw-gateway</text>
+  <line x1="100" y1="175" x2="360" y2="175" stroke="#4fc3f7" stroke-width="1"/>
+
+  <!-- Gateway Container Details -->
+  <text x="100" y="195" class="container-detail">Image: ${OPENCLAW_IMAGE:-openclaw:local}</text>
+  <text x="100" y="212" class="container-detail">Command: node dist/index.js gateway</text>
+  <text x="100" y="229" class="container-detail">User: node (non-root)</text>
+  <text x="100" y="246" class="container-detail">Init: true</text>
+  <text x="100" y="263" class="container-detail">Restart: unless-stopped</text>
+
+  <!-- Gateway Components -->
+  <rect x="100" y="278" width="120" height="25" rx="4" fill="#4fc3f7"/>
+  <text x="160" y="294" text-anchor="middle" style="font: bold 9px 'Helvetica Neue', Arial, sans-serif; fill: #01579B;">WebSocket Server</text>
+  <rect x="230" y="278" width="120" height="25" rx="4" fill="#4fc3f7"/>
+  <text x="290" y="294" text-anchor="middle" style="font: bold 9px 'Helvetica Neue', Arial, sans-serif; fill: #01579B;">Control UI</text>
+  <rect x="100" y="308" width="120" height="25" rx="4" fill="#4fc3f7"/>
+  <text x="160" y="324" text-anchor="middle" style="font: bold 9px 'Helvetica Neue', Arial, sans-serif; fill: #01579B;">Channel Plugins</text>
+  <rect x="230" y="308" width="120" height="25" rx="4" fill="#4fc3f7"/>
+  <text x="290" y="324" text-anchor="middle" style="font: bold 9px 'Helvetica Neue', Arial, sans-serif; fill: #01579B;">Agent Runtime</text>
+
+  <!-- CLI Container -->
+  <rect x="420" y="140" width="300" height="200" rx="8" fill="url(#containerGrad)" filter="url(#shadow)"/>
+  <text x="570" y="165" text-anchor="middle" class="container-title">openclaw-cli</text>
+  <line x1="440" y1="175" x2="700" y2="175" stroke="#4fc3f7" stroke-width="1"/>
+
+  <!-- CLI Container Details -->
+  <text x="440" y="195" class="container-detail">Image: ${OPENCLAW_IMAGE:-openclaw:local}</text>
+  <text x="440" y="212" class="container-detail">Entrypoint: node dist/index.js</text>
+  <text x="440" y="229" class="container-detail">stdin_open: true</text>
+  <text x="440" y="246" class="container-detail">tty: true</text>
+  <text x="440" y="263" class="container-detail">Interactive terminal support</text>
+
+  <!-- CLI Components -->
+  <rect x="440" y="278" width="120" height="25" rx="4" fill="#4fc3f7"/>
+  <text x="500" y="294" text-anchor="middle" style="font: bold 9px 'Helvetica Neue', Arial, sans-serif; fill: #01579B;">Provider Login</text>
+  <rect x="570" y="278" width="120" height="25" rx="4" fill="#4fc3f7"/>
+  <text x="630" y="294" text-anchor="middle" style="font: bold 9px 'Helvetica Neue', Arial, sans-serif; fill: #01579B;">Configuration</text>
+  <rect x="440" y="308" width="120" height="25" rx="4" fill="#4fc3f7"/>
+  <text x="500" y="324" text-anchor="middle" style="font: bold 9px 'Helvetica Neue', Arial, sans-serif; fill: #01579B;">Health Checks</text>
+  <rect x="570" y="308" width="120" height="25" rx="4" fill="#4fc3f7"/>
+  <text x="630" y="324" text-anchor="middle" style="font: bold 9px 'Helvetica Neue', Arial, sans-serif; fill: #01579B;">Diagnostics</text>
+
+  <!-- Port Mappings -->
+  <rect x="80" y="360" width="300" height="80" rx="6" fill="#e8f5e9" stroke="#4CAF50" stroke-width="2"/>
+  <text x="230" y="380" text-anchor="middle" class="section-title">Port Mappings</text>
+
+  <rect x="100" y="390" width="80" height="22" rx="4" fill="url(#portGrad)"/>
+  <text x="140" y="405" text-anchor="middle" class="port-text">18789</text>
+  <text x="195" y="405" class="port-label">Gateway + Control UI (HTTP/WS)</text>
+
+  <rect x="100" y="415" width="80" height="22" rx="4" fill="url(#portGrad)"/>
+  <text x="140" y="430" text-anchor="middle" class="port-text">18790</text>
+  <text x="195" y="430" class="port-label">Bridge Protocol (Legacy TCP)</text>
+
+  <!-- Environment Variables Box -->
+  <rect x="420" y="360" width="300" height="220" rx="6" fill="#fff3e0" stroke="#FF9800" stroke-width="2"/>
+  <text x="570" y="380" text-anchor="middle" class="section-title">Environment Variables</text>
+
+  <text x="440" y="400" class="env-text">HOME=/home/node</text>
+  <text x="440" y="418" class="env-text">TERM=xterm-256color</text>
+  <text x="440" y="436" class="env-text">OPENCLAW_GATEWAY_TOKEN=***</text>
+  <text x="440" y="454" class="env-text">OPENCLAW_CONFIG_DIR=~/.openclaw</text>
+  <text x="440" y="472" class="env-text">OPENCLAW_WORKSPACE_DIR=...</text>
+  <text x="440" y="490" class="env-text">OPENCLAW_GATEWAY_PORT=18789</text>
+  <text x="440" y="508" class="env-text">OPENCLAW_GATEWAY_BIND=lan</text>
+  <line x1="440" y1="520" x2="700" y2="520" stroke="#FFB74D" stroke-width="1" stroke-dasharray="4,2"/>
+  <text x="440" y="538" style="font: bold italic 9px 'Helvetica Neue', Arial, sans-serif; fill: #666666;">Optional:</text>
+  <text x="440" y="553" class="env-text">CLAUDE_AI_SESSION_KEY=...</text>
+  <text x="440" y="568" class="env-text">CLAUDE_WEB_SESSION_KEY=...</text>
+
+  <!-- Volume Mounts -->
+  <rect x="80" y="460" width="300" height="120" rx="6" fill="#fffde7" stroke="#FFC107" stroke-width="2"/>
+  <text x="230" y="480" text-anchor="middle" class="section-title">Volume Mounts</text>
+
+  <!-- Volume 1 -->
+  <rect x="100" y="495" width="25" height="25" rx="4" fill="url(#volumeGrad)"/>
+  <text x="140" y="508" class="volume-title">~/.openclaw</text>
+  <text x="140" y="520" class="volume-detail">/home/node/.openclaw (Config &amp; State)</text>
+
+  <!-- Volume 2 -->
+  <rect x="100" y="535" width="25" height="25" rx="4" fill="url(#volumeGrad)"/>
+  <text x="140" y="548" class="volume-title">~/.openclaw/workspace</text>
+  <text x="140" y="560" class="volume-detail">/home/node/.openclaw/workspace (Agent Files)</text>
+
+  <!-- Host System -->
+  <rect x="780" y="80" width="290" height="250" rx="8" fill="#eceff1" stroke="#607D8B" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="780" y="80" width="290" height="35" rx="8" fill="url(#hostGrad)"/>
+  <text x="925" y="103" text-anchor="middle" class="container-title">Host System</text>
+
+  <!-- Host File System -->
+  <rect x="800" y="130" width="250" height="180" rx="6" fill="#ffffff" stroke="#90A4AE" stroke-width="1"/>
+  <text x="925" y="150" text-anchor="middle" class="section-title">File System (~/.openclaw/)</text>
+
+  <text x="820" y="175" class="volume-detail">openclaw.json</text>
+  <text x="910" y="175" class="volume-detail">Main configuration</text>
+
+  <text x="820" y="195" class="volume-detail">agents/</text>
+  <text x="910" y="195" class="volume-detail">Per-agent state &amp; sessions</text>
+
+  <text x="820" y="215" class="volume-detail">canvas/</text>
+  <text x="910" y="215" class="volume-detail">Canvas file server root</text>
+
+  <text x="820" y="235" class="volume-detail">cron/</text>
+  <text x="910" y="235" class="volume-detail">Scheduled task definitions</text>
+
+  <text x="820" y="255" class="volume-detail">identity/</text>
+  <text x="910" y="255" class="volume-detail">Device identity keys</text>
+
+  <text x="820" y="275" class="volume-detail">workspace/</text>
+  <text x="910" y="275" class="volume-detail">Default agent workspace</text>
+
+  <text x="820" y="295" class="volume-detail">  AGENTS.md, SOUL.md, USER.md</text>
+
+  <!-- External Services -->
+  <rect x="780" y="360" width="290" height="240" rx="8" fill="#f3e5f5" stroke="#9C27B0" stroke-width="2" filter="url(#shadow)"/>
+  <rect x="780" y="360" width="290" height="35" rx="8" fill="url(#externalGrad)"/>
+  <text x="925" y="383" text-anchor="middle" class="container-title">External Services</text>
+
+  <!-- External Services List -->
+  <rect x="800" y="410" width="110" height="35" rx="5" fill="#CE93D8"/>
+  <text x="855" y="432" text-anchor="middle" style="font: bold 10px 'Helvetica Neue', Arial, sans-serif; fill: #4A148C;">WhatsApp</text>
+
+  <rect x="920" y="410" width="110" height="35" rx="5" fill="#CE93D8"/>
+  <text x="975" y="432" text-anchor="middle" style="font: bold 10px 'Helvetica Neue', Arial, sans-serif; fill: #4A148C;">Telegram</text>
+
+  <rect x="800" y="455" width="110" height="35" rx="5" fill="#CE93D8"/>
+  <text x="855" y="477" text-anchor="middle" style="font: bold 10px 'Helvetica Neue', Arial, sans-serif; fill: #4A148C;">Discord</text>
+
+  <rect x="920" y="455" width="110" height="35" rx="5" fill="#CE93D8"/>
+  <text x="975" y="477" text-anchor="middle" style="font: bold 10px 'Helvetica Neue', Arial, sans-serif; fill: #4A148C;">Slack</text>
+
+  <rect x="800" y="500" width="110" height="35" rx="5" fill="#BA68C8"/>
+  <text x="855" y="522" text-anchor="middle" style="font: bold 10px 'Helvetica Neue', Arial, sans-serif; fill: #4A148C;">Claude API</text>
+
+  <rect x="920" y="500" width="110" height="35" rx="5" fill="#BA68C8"/>
+  <text x="975" y="522" text-anchor="middle" style="font: bold 10px 'Helvetica Neue', Arial, sans-serif; fill: #4A148C;">OpenAI API</text>
+
+  <rect x="800" y="545" width="110" height="35" rx="5" fill="#BA68C8"/>
+  <text x="855" y="567" text-anchor="middle" style="font: bold 10px 'Helvetica Neue', Arial, sans-serif; fill: #4A148C;">Google AI</text>
+
+  <rect x="920" y="545" width="110" height="35" rx="5" fill="#AB47BC"/>
+  <text x="975" y="567" text-anchor="middle" style="font: bold 10px 'Helvetica Neue', Arial, sans-serif; fill: #ffffff;">Local (Ollama)</text>
+
+  <!-- Connection Lines -->
+  <!-- Volume connections -->
+  <path d="M380,515 L780,200" style="fill:none;stroke:#FFC107;stroke-width:2;stroke-dasharray:5,3;" marker-end="url(#arrow)"/>
+  <path d="M380,555 L780,275" style="fill:none;stroke:#FFC107;stroke-width:2;stroke-dasharray:5,3;" marker-end="url(#arrow)"/>
+
+  <!-- Gateway to External -->
+  <path d="M380,240 L780,480" style="fill:none;stroke:#9C27B0;stroke-width:2;" marker-end="url(#arrow)"/>
+
+  <!-- Build Information -->
+  <rect x="50" y="620" width="700" height="120" rx="8" fill="#e3f2fd" stroke="#2196F3" stroke-width="2"/>
+  <text x="400" y="645" text-anchor="middle" class="section-title">Docker Build Process (Dockerfile)</text>
+
+  <text x="70" y="670" class="env-text">FROM node:22-bookworm</text>
+  <text x="300" y="670" class="label-text">Base image with Node.js 22</text>
+
+  <text x="70" y="690" class="env-text">RUN curl -fsSL https://bun.sh/install | bash</text>
+  <text x="420" y="690" class="label-text">Install Bun for build scripts</text>
+
+  <text x="70" y="710" class="env-text">RUN pnpm install --frozen-lockfile</text>
+  <text x="370" y="710" class="label-text">Install dependencies</text>
+
+  <text x="70" y="730" class="env-text">RUN pnpm build &amp;&amp; pnpm ui:build</text>
+  <text x="350" y="730" class="label-text">Compile TypeScript + Build UI</text>
+
+  <!-- Commands -->
+  <rect x="780" y="620" width="290" height="120" rx="8" fill="#e8f5e9" stroke="#4CAF50" stroke-width="2"/>
+  <text x="925" y="645" text-anchor="middle" class="section-title">Common Commands</text>
+
+  <text x="800" y="670" style="font: bold 9px 'Courier New', monospace; fill: #1a1a2e;">docker compose up -d openclaw-gateway</text>
+  <text x="800" y="690" style="font: bold 9px 'Courier New', monospace; fill: #1a1a2e;">docker compose logs -f openclaw-gateway</text>
+  <text x="800" y="710" style="font: bold 9px 'Courier New', monospace; fill: #1a1a2e;">docker compose run --rm openclaw-cli health</text>
+  <text x="800" y="730" style="font: bold 9px 'Courier New', monospace; fill: #1a1a2e;">docker compose restart openclaw-gateway</text>
+
+  <!-- Legend -->
+  <rect x="50" y="760" width="1020" height="70" rx="6" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="550" y="780" text-anchor="middle" class="section-title">Legend</text>
+
+  <rect x="80" y="795" width="20" height="20" rx="3" fill="url(#containerGrad)"/>
+  <text x="110" y="810" class="label-text">Container</text>
+
+  <rect x="200" y="795" width="20" height="20" rx="3" fill="url(#volumeGrad)"/>
+  <text x="230" y="810" class="label-text">Volume</text>
+
+  <rect x="320" y="795" width="20" height="20" rx="3" fill="url(#portGrad)"/>
+  <text x="350" y="810" class="label-text">Port</text>
+
+  <rect x="430" y="795" width="20" height="20" rx="3" fill="url(#externalGrad)"/>
+  <text x="460" y="810" class="label-text">External Service</text>
+
+  <rect x="580" y="795" width="20" height="20" rx="3" fill="url(#hostGrad)"/>
+  <text x="610" y="810" class="label-text">Host System</text>
+
+  <line x1="720" y1="805" x2="770" y2="805" stroke="#FFC107" stroke-width="2" stroke-dasharray="5,3"/>
+  <text x="780" y="810" class="label-text">Volume Mount</text>
+
+  <line x1="890" y1="805" x2="940" y2="805" stroke="#9C27B0" stroke-width="2"/>
+  <text x="950" y="810" class="label-text">API Connection</text>
+</svg>

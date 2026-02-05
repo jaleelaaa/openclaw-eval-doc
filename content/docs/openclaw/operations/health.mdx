@@ -1,0 +1,270 @@
+---
+title: Health Checks
+description: Monitor OpenClaw gateway health and connectivity
+icon: Activity
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Card, Cards } from 'fumadocs-ui/components/card';
+
+# Health Checks
+
+Monitoring OpenClaw's health ensures your AI assistant remains available and responsive. This guide covers built-in health checks, monitoring strategies, and alerting.
+
+## Quick Health Check
+
+```bash
+# Docker
+docker compose run --rm openclaw-cli health --token "$OPENCLAW_GATEWAY_TOKEN"
+
+# Native
+openclaw health --json
+```
+
+**Expected output:**
+```json
+{
+  "status": "healthy",
+  "gateway": {
+    "status": "running",
+    "port": 18789,
+    "uptime": "2d 4h 32m"
+  },
+  "channels": {
+    "whatsapp": "connected",
+    "telegram": "connected",
+    "discord": "disconnected"
+  },
+  "model": "google/gemini-3-flash-preview",
+  "memory": {
+    "used": "256MB",
+    "limit": "2GB"
+  }
+}
+```
+
+## Health Endpoints
+
+### CLI Health Command
+
+```bash
+# Basic check
+openclaw health
+
+# JSON output for scripts
+openclaw health --json
+
+# Include detailed metrics
+openclaw health --detailed
+```
+
+### WebSocket Protocol
+
+Send a health check via WebSocket:
+
+```json
+// Request
+{
+  "type": "req",
+  "id": 1,
+  "method": "health",
+  "params": {}
+}
+
+// Response
+{
+  "type": "res",
+  "id": 1,
+  "ok": true,
+  "payload": {
+    "status": "healthy",
+    ...
+  }
+}
+```
+
+### HTTP Endpoint
+
+```bash
+curl http://127.0.0.1:18789/__openclaw__/health
+```
+
+## Health Status Values
+
+| Status | Meaning |
+|--------|---------|
+| `healthy` | All systems operational |
+| `degraded` | Some components unhealthy |
+| `unhealthy` | Critical components failed |
+
+### Component Statuses
+
+| Component Status | Description |
+|------------------|-------------|
+| `connected` | Fully operational |
+| `connecting` | Attempting to connect |
+| `disconnected` | Not connected |
+| `error` | Connection failed |
+
+## Monitoring Individual Components
+
+### Gateway Status
+
+```bash
+openclaw gateway status
+```
+
+Checks:
+- WebSocket server listening
+- HTTP server responding
+- Configuration loaded
+- Authentication working
+
+### Channel Status
+
+```bash
+openclaw channels status
+```
+
+Checks each enabled channel:
+- Connection to external API
+- Authentication valid
+- Message flow working
+
+### Model Status
+
+```bash
+openclaw models status
+```
+
+Checks:
+- Primary model reachable
+- API key valid
+- Fallback models available
+
+## Automated Monitoring
+
+### Docker Health Check
+
+Add to `docker-compose.yml`:
+
+```yaml
+services:
+  openclaw-gateway:
+    healthcheck:
+      test: ["CMD", "node", "dist/index.js", "health", "--json"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+```
+
+### External Monitoring
+
+Use monitoring services with the HTTP health endpoint:
+
+```bash
+# Uptime monitoring
+curl -f http://127.0.0.1:18789/__openclaw__/health || exit 1
+```
+
+### Prometheus Metrics
+
+If enabled, metrics are available at:
+
+```
+http://127.0.0.1:18789/__openclaw__/metrics
+```
+
+Metrics include:
+- `openclaw_messages_received_total`
+- `openclaw_messages_sent_total`
+- `openclaw_model_requests_total`
+- `openclaw_model_latency_seconds`
+- `openclaw_channel_status`
+
+## Diagnostic Commands
+
+### Full Diagnostics
+
+```bash
+openclaw doctor
+```
+
+Runs comprehensive checks:
+- Configuration validation
+- Network connectivity
+- API key verification
+- Channel authentication
+- Disk space
+- Memory usage
+
+### Network Test
+
+```bash
+openclaw doctor --network
+```
+
+Tests connectivity to:
+- LLM provider APIs
+- Channel platform APIs
+- External dependencies
+
+## Alerting
+
+### Webhook Alerts
+
+Configure alerts in `openclaw.json`:
+
+```json
+{
+  "monitoring": {
+    "alerts": {
+      "webhook": "https://your-webhook.example.com/alerts",
+      "triggers": [
+        "channel_disconnected",
+        "model_error",
+        "high_memory"
+      ]
+    }
+  }
+}
+```
+
+### Log-Based Alerts
+
+Monitor logs for error patterns:
+
+```bash
+# Alert on authentication failures
+docker compose logs -f openclaw-gateway 2>&1 | \
+  grep -E '(unauthorized|token_mismatch)' | \
+  while read line; do
+    curl -X POST https://alerts.example.com -d "$line"
+  done
+```
+
+## Common Issues
+
+| Issue | Symptom | Solution |
+|-------|---------|----------|
+| Gateway unhealthy | `status: unhealthy` | Check logs, restart service |
+| Channel disconnected | Individual channel offline | Re-authenticate channel |
+| Model errors | API failures | Verify API key, check provider status |
+| High memory | Memory usage climbing | Enable compaction, restart |
+| Port conflict | Gateway won't start | Change port or stop conflicting service |
+
+<Callout title="Recovery" type="info">
+  Most issues can be resolved by restarting the gateway: `docker compose restart openclaw-gateway`
+</Callout>
+
+## Next Steps
+
+<Cards>
+  <Card href="/docs/openclaw/operations/troubleshooting" title="Troubleshooting" icon="AlertCircle">
+    Solve common issues
+  </Card>
+  <Card href="/docs/openclaw/operations/security" title="Security" icon="Shield">
+    Secure your deployment
+  </Card>
+</Cards>

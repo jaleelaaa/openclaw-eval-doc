@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="700" viewBox="0 0 800 700">
+  <defs>
+    <style type="text/css">
+      .title { font-family: Arial, Helvetica, sans-serif; font-size: 22px; font-weight: bold; fill: #333333; }
+      .entity-label { font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: bold; fill: #ffffff; }
+      .frame-type { font-family: monospace; font-size: 11px; font-weight: bold; fill: #1976D2; }
+      .frame-desc { font-family: Arial, Helvetica, sans-serif; font-size: 10px; font-weight: bold; fill: #666666; }
+      .phase-label { font-family: Arial, Helvetica, sans-serif; font-size: 12px; font-weight: bold; fill: #333333; }
+      .section-label { font-family: Arial, Helvetica, sans-serif; font-size: 13px; font-weight: bold; fill: #333333; }
+    </style>
+    <marker id="arrowhead-right" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#1976D2"/>
+    </marker>
+    <marker id="arrowhead-left" markerWidth="10" markerHeight="7" refX="1" refY="3.5" orient="auto">
+      <polygon points="10 0, 0 3.5, 10 7" fill="#388E3C"/>
+    </marker>
+    <marker id="arrowhead-event" markerWidth="10" markerHeight="7" refX="1" refY="3.5" orient="auto">
+      <polygon points="10 0, 0 3.5, 10 7" fill="#F57C00"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="700" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" class="title">WebSocket Protocol</text>
+
+  <!-- Client entity -->
+  <rect x="80" y="60" width="120" height="40" rx="8" fill="#1976D2" stroke="#0D47A1" stroke-width="2"/>
+  <text x="140" y="85" text-anchor="middle" class="entity-label">Client</text>
+  <line x1="140" y1="100" x2="140" y2="650" stroke="#1976D2" stroke-width="2"/>
+
+  <!-- Gateway entity -->
+  <rect x="600" y="60" width="120" height="40" rx="8" fill="#388E3C" stroke="#1B5E20" stroke-width="2"/>
+  <text x="660" y="85" text-anchor="middle" class="entity-label">Gateway</text>
+  <line x1="660" y1="100" x2="660" y2="650" stroke="#388E3C" stroke-width="2"/>
+
+  <!-- Phase 1: Connection -->
+  <rect x="250" y="110" width="300" height="100" rx="8" fill="#E3F2FD" stroke="#1976D2" stroke-width="1"/>
+  <text x="400" y="130" text-anchor="middle" class="phase-label">1. Connection Handshake</text>
+
+  <!-- req:connect -->
+  <line x1="140" y1="155" x2="660" y2="155" stroke="#1976D2" stroke-width="2" marker-end="url(#arrowhead-right)"/>
+  <text x="400" y="148" text-anchor="middle" class="frame-type">req:connect</text>
+  <text x="400" y="170" text-anchor="middle" class="frame-desc">{auth: {token: "..."}, client: {...}}</text>
+
+  <!-- res:hello-ok -->
+  <line x1="660" y1="195" x2="140" y2="195" stroke="#388E3C" stroke-width="2" marker-end="url(#arrowhead-left)"/>
+  <text x="400" y="188" text-anchor="middle" class="frame-type">res:hello-ok</text>
+  <text x="400" y="210" text-anchor="middle" class="frame-desc">{sessionId: "...", snapshot: {...}}</text>
+
+  <!-- Phase 2: Agent Request -->
+  <rect x="250" y="230" width="300" height="200" rx="8" fill="#FFF3E0" stroke="#F57C00" stroke-width="1"/>
+  <text x="400" y="250" text-anchor="middle" class="phase-label">2. Agent Interaction</text>
+
+  <!-- req:agent -->
+  <line x1="140" y1="280" x2="660" y2="280" stroke="#1976D2" stroke-width="2" marker-end="url(#arrowhead-right)"/>
+  <text x="400" y="273" text-anchor="middle" class="frame-type">req:agent</text>
+  <text x="400" y="295" text-anchor="middle" class="frame-desc">{message: "Hello!", sessionKey: "..."}</text>
+
+  <!-- res:agent (ack) -->
+  <line x1="660" y1="320" x2="140" y2="320" stroke="#388E3C" stroke-width="2" marker-end="url(#arrowhead-left)"/>
+  <text x="400" y="313" text-anchor="middle" class="frame-type">res:agent (ack)</text>
+  <text x="400" y="335" text-anchor="middle" class="frame-desc">{runId: "...", status: "accepted"}</text>
+
+  <!-- event:agent (streaming) -->
+  <line x1="660" y1="360" x2="140" y2="360" stroke="#F57C00" stroke-width="2" stroke-dasharray="5,5" marker-end="url(#arrowhead-event)"/>
+  <text x="400" y="353" text-anchor="middle" class="frame-type">event:agent</text>
+  <text x="400" y="375" text-anchor="middle" class="frame-desc">{type: "text_delta", delta: "..."}</text>
+
+  <!-- event:agent (more) -->
+  <line x1="660" y1="395" x2="140" y2="395" stroke="#F57C00" stroke-width="2" stroke-dasharray="5,5" marker-end="url(#arrowhead-event)"/>
+  <text x="400" y="410" text-anchor="middle" class="frame-desc">{type: "text_delta", delta: "..."}</text>
+
+  <!-- res:agent (final) -->
+  <line x1="660" y1="430" x2="140" y2="430" stroke="#388E3C" stroke-width="2" marker-end="url(#arrowhead-left)"/>
+  <text x="400" y="423" text-anchor="middle" class="frame-type">res:agent (final)</text>
+  <text x="400" y="445" text-anchor="middle" class="frame-desc">{runId: "...", status: "completed"}</text>
+
+  <!-- Phase 3: Events -->
+  <rect x="250" y="460" width="300" height="80" rx="8" fill="#E8F5E9" stroke="#388E3C" stroke-width="1"/>
+  <text x="400" y="480" text-anchor="middle" class="phase-label">3. Push Events</text>
+
+  <!-- event:message -->
+  <line x1="660" y1="510" x2="140" y2="510" stroke="#F57C00" stroke-width="2" stroke-dasharray="5,5" marker-end="url(#arrowhead-event)"/>
+  <text x="400" y="503" text-anchor="middle" class="frame-type">event:message</text>
+  <text x="400" y="525" text-anchor="middle" class="frame-desc">{channel: "whatsapp", content: "..."}</text>
+
+  <!-- Legend -->
+  <rect x="250" y="560" width="300" height="120" rx="8" fill="#f5f5f5" stroke="#E0E0E0" stroke-width="1"/>
+  <text x="270" y="585" class="section-label">Frame Types</text>
+
+  <line x1="270" y1="605" x2="320" y2="605" stroke="#1976D2" stroke-width="2" marker-end="url(#arrowhead-right)"/>
+  <text x="330" y="610" class="frame-desc">Request (req:*)</text>
+
+  <line x1="270" y1="630" x2="320" y2="630" stroke="#388E3C" stroke-width="2" marker-end="url(#arrowhead-left)"/>
+  <text x="330" y="635" class="frame-desc">Response (res:*)</text>
+
+  <line x1="270" y1="655" x2="320" y2="655" stroke="#F57C00" stroke-width="2" stroke-dasharray="5,5" marker-end="url(#arrowhead-event)"/>
+  <text x="330" y="660" class="frame-desc">Event (event:*) - Push</text>
+
+  <!-- Connection URL -->
+  <rect x="30" y="560" width="200" height="120" rx="8" fill="#ffffff" stroke="#E0E0E0" stroke-width="1"/>
+  <text x="50" y="585" class="section-label">Connection</text>
+  <text x="50" y="610" class="frame-desc">Endpoint:</text>
+  <text x="50" y="630" class="frame-type">ws://host:18789</text>
+  <text x="50" y="655" class="frame-desc">Auth: ?token=...</text>
+
+  <!-- Close codes -->
+  <rect x="570" y="560" width="200" height="120" rx="8" fill="#ffffff" stroke="#E0E0E0" stroke-width="1"/>
+  <text x="590" y="585" class="section-label">Close Codes</text>
+  <text x="590" y="610" class="frame-type">1000</text>
+  <text x="640" y="610" class="frame-desc">Normal</text>
+  <text x="590" y="630" class="frame-type">1008</text>
+  <text x="640" y="630" class="frame-desc">Auth failed</text>
+  <text x="590" y="650" class="frame-type">4002</text>
+  <text x="640" y="650" class="frame-desc">Pairing required</text>
+</svg>

@@ -1,0 +1,227 @@
+---
+title: Gateway Architecture
+description: Deep dive into OpenClaw's WebSocket control plane
+icon: Server
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Card, Cards } from 'fumadocs-ui/components/card';
+
+# Gateway Architecture
+
+The gateway is the central component of OpenClaw, serving as the control plane that orchestrates all communication between messaging channels, agents, and LLM providers.
+
+## Core Responsibilities
+
+The gateway handles:
+
+1. **WebSocket Server** — Manages client connections and protocol
+2. **Channel Coordination** — Initializes and monitors channel connectors
+3. **Message Routing** — Directs messages to appropriate agents
+4. **Agent Orchestration** — Manages agent lifecycle and execution
+5. **State Management** — Maintains configuration and session state
+6. **Control UI** — Serves the web-based management dashboard
+
+## Architecture Overview
+
+```
+┌──────────────────────────────────────────────────────────────────┐
+│                       Gateway Process                            │
+├──────────────────────────────────────────────────────────────────┤
+│                                                                  │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐              │
+│  │  WebSocket  │  │   HTTP      │  │  Channel    │              │
+│  │   Server    │  │   Server    │  │  Manager    │              │
+│  │  (Control)  │  │ (Control UI)│  │ (Plugins)   │              │
+│  └──────┬──────┘  └──────┬──────┘  └──────┬──────┘              │
+│         │                │                │                      │
+│         └────────────────┼────────────────┘                      │
+│                          ▼                                       │
+│              ┌─────────────────────┐                            │
+│              │   Message Router    │                            │
+│              │  (Binding-based)    │                            │
+│              └──────────┬──────────┘                            │
+│                         ▼                                        │
+│              ┌─────────────────────┐                            │
+│              │   Agent Runtime     │                            │
+│              │  (pi-agent-core)    │                            │
+│              └──────────┬──────────┘                            │
+│                         ▼                                        │
+│              ┌─────────────────────┐                            │
+│              │   Session Manager   │                            │
+│              │  (File Persistence) │                            │
+│              └─────────────────────┘                            │
+│                                                                  │
+└──────────────────────────────────────────────────────────────────┘
+```
+
+## WebSocket Protocol
+
+The gateway communicates via WebSocket using a JSON-based protocol:
+
+### Connection Handshake
+
+```
+Client                           Gateway
+  │                                │
+  │─── req:connect ───────────────>│   (mandatory first frame)
+  │<── res:hello-ok ───────────────│   (includes system snapshot)
+```
+
+### Message Flow
+
+```
+Client                           Gateway
+  │                                │
+  │─── req:agent ─────────────────>│   (run agent turn)
+  │<── res:agent (ack) ────────────│   (runId, status:accepted)
+  │<── event:agent ────────────────│   (streaming output)
+  │<── event:agent ────────────────│   (streaming output)
+  │<── res:agent (final) ──────────│   (runId, status:ok/error)
+```
+
+### Frame Types
+
+| Frame Type | Direction | Purpose |
+|------------|-----------|---------|
+| `req:connect` | Client → Gateway | Initial authentication |
+| `res:hello-ok` | Gateway → Client | Connection accepted |
+| `req:agent` | Client → Gateway | Run an agent turn |
+| `res:agent` | Gateway → Client | Agent response/status |
+| `event:agent` | Gateway → Client | Streaming agent output |
+| `req:method` | Client → Gateway | Call gateway method |
+| `res:method` | Gateway → Client | Method response |
+
+## Port Configuration
+
+| Port | Default | Purpose |
+|------|---------|---------|
+| **Gateway Port** | 18789 | WebSocket + HTTP Control UI |
+| **Bridge Port** | 18790 | Legacy bridge protocol |
+| **Canvas Port** | 18793 | File server for agent artifacts |
+
+## Network Binding
+
+Control where the gateway accepts connections:
+
+| Mode | Address | Use Case |
+|------|---------|----------|
+| `loopback` | `127.0.0.1` | Development, local-only access |
+| `lan` | `0.0.0.0` (filtered) | LAN access, default |
+| `0.0.0.0` | All interfaces | Requires additional security |
+
+```bash
+# Start with specific binding
+openclaw gateway --bind loopback
+openclaw gateway --bind lan
+```
+
+<Callout title="Security" type="warn">
+  Never expose the gateway to the public internet without proper authentication and TLS. Use a VPN like Tailscale for remote access.
+</Callout>
+
+## Control UI
+
+The built-in web dashboard provides:
+
+- **Health Status** — Real-time gateway health
+- **Channel Status** — Connected/disconnected channels
+- **Agent Configuration** — View active agent settings
+- **Session Browser** — View conversation history
+- **Event Stream** — Live event monitoring
+
+Access at:
+```
+http://127.0.0.1:18789?token=<gateway-token>
+```
+
+## Authentication
+
+### Gateway Token
+
+All connections require a 64-character hex token:
+
+```bash
+# Generate token
+openssl rand -hex 32
+
+# Use in connection
+ws://127.0.0.1:18789?token=<your-token>
+```
+
+### Device Pairing
+
+For additional security, the gateway supports device pairing:
+
+1. Client sends connection request
+2. Gateway generates pairing challenge
+3. User approves in Control UI or CLI
+4. Device is added to trusted list
+
+```bash
+# Disable pairing (development only)
+openclaw config set gateway.controlUi.dangerouslyDisableDeviceAuth true
+```
+
+## Channel Manager
+
+The channel manager initializes and monitors channel connectors:
+
+### Startup Sequence
+
+1. Load channel configurations from `openclaw.json`
+2. Initialize enabled channel plugins
+3. Authenticate with external platforms
+4. Register message handlers
+5. Start monitoring for disconnections
+
+### Health Monitoring
+
+```bash
+# Check channel status
+openclaw channels status
+
+# Expected output:
+{
+  "whatsapp": "connected",
+  "telegram": "connected",
+  "discord": "disconnected"
+}
+```
+
+## Configuration Hot-Reload
+
+The gateway watches `openclaw.json` for changes:
+
+- **Automatic Detection** — File changes trigger reload
+- **Graceful Application** — Most settings apply without restart
+- **Validation** — Invalid configs are rejected with error
+
+Settings requiring restart:
+- Gateway port
+- Network binding
+- TLS configuration
+
+## Startup Options
+
+```bash
+openclaw gateway [options]
+
+Options:
+  --port <number>     Gateway port (default: 18789)
+  --bind <mode>       Network binding: loopback, lan (default: lan)
+  --verbose           Enable verbose logging
+  --skip-channels     Skip channel initialization
+  --config <path>     Custom config file path
+```
+
+## Next Steps
+
+<Cards>
+  <Card href="/docs/openclaw/concepts/message-flow" title="Message Flow" icon="GitBranch">
+    Understand how messages are processed
+  </Card>
+  <Card href="/docs/openclaw/concepts/agents" title="Agent Runtime" icon="Bot">
+    Learn about agent execution
+  </Card>
+</Cards>

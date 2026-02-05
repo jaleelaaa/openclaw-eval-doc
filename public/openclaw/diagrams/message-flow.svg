@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="1100" height="700" viewBox="0 0 1100 700">
+  <defs>
+    <style type="text/css">
+      .title { font-family: Arial, Helvetica, sans-serif; font-size: 22px; font-weight: bold; fill: #333333; }
+      .subtitle { font-family: Arial, Helvetica, sans-serif; font-size: 12px; fill: #666666; }
+      .phase-label { font-family: Arial, Helvetica, sans-serif; font-size: 11px; font-weight: bold; fill: #333333; }
+      .step-title { font-family: Arial, Helvetica, sans-serif; font-size: 12px; font-weight: bold; fill: #ffffff; }
+      .step-text { font-family: Arial, Helvetica, sans-serif; font-size: 10px; fill: #ffffff; }
+      .legend-text { font-family: Arial, Helvetica, sans-serif; font-size: 11px; fill: #333333; }
+    </style>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333333"/>
+    </marker>
+    <marker id="arrow-orange" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#FFA000"/>
+    </marker>
+    <marker id="arrow-gray" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#455A64"/>
+    </marker>
+    <marker id="arrow-purple" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#9C27B0"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1100" height="700" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="550" y="30" text-anchor="middle" class="title">OpenClaw Message Processing Pipeline</text>
+  <text x="550" y="55" text-anchor="middle" class="subtitle">Inbound Message to Response Generation Flow</text>
+
+  <!-- Phase Labels -->
+  <rect x="60" y="75" width="110" height="22" rx="4" fill="#E3F2FD"/>
+  <text x="115" y="91" text-anchor="middle" class="phase-label">INGESTION</text>
+
+  <rect x="235" y="75" width="110" height="22" rx="4" fill="#E8F5E9"/>
+  <text x="290" y="91" text-anchor="middle" class="phase-label">PROCESSING</text>
+
+  <rect x="445" y="75" width="110" height="22" rx="4" fill="#FFF3E0"/>
+  <text x="500" y="91" text-anchor="middle" class="phase-label">REASONING</text>
+
+  <rect x="665" y="75" width="110" height="22" rx="4" fill="#FCE4EC"/>
+  <text x="720" y="91" text-anchor="middle" class="phase-label">DELIVERY</text>
+
+  <rect x="875" y="75" width="110" height="22" rx="4" fill="#F3E5F5"/>
+  <text x="930" y="91" text-anchor="middle" class="phase-label">PERSISTENCE</text>
+
+  <!-- Step 1: External Message -->
+  <ellipse cx="115" cy="160" rx="50" ry="45" fill="#1976D2" stroke="#0D47A1" stroke-width="2"/>
+  <text x="115" y="145" text-anchor="middle" class="step-title">1. External</text>
+  <text x="115" y="162" text-anchor="middle" class="step-title">Message</text>
+  <text x="115" y="180" text-anchor="middle" class="step-text">User sends</text>
+  <text x="115" y="193" text-anchor="middle" class="step-text">message</text>
+
+  <!-- Step 2: Channel Connector -->
+  <rect x="55" y="250" width="120" height="80" rx="8" fill="#7B1FA2" stroke="#4A148C" stroke-width="2"/>
+  <text x="115" y="275" text-anchor="middle" class="step-title">2. Channel</text>
+  <text x="115" y="292" text-anchor="middle" class="step-title">Connector</text>
+  <text x="115" y="310" text-anchor="middle" class="step-text">Platform SDK</text>
+  <text x="115" y="323" text-anchor="middle" class="step-text">(Baileys/grammY)</text>
+
+  <!-- Step 3: Message Normalization -->
+  <rect x="215" y="130" width="120" height="70" rx="8" fill="#388E3C" stroke="#1B5E20" stroke-width="2"/>
+  <text x="275" y="155" text-anchor="middle" class="step-title">3. Message</text>
+  <text x="275" y="172" text-anchor="middle" class="step-title">Normalization</text>
+  <text x="275" y="190" text-anchor="middle" class="step-text">Unified format</text>
+
+  <!-- Step 4: Access Control (Diamond) -->
+  <polygon points="290,290 350,340 290,390 230,340" fill="#F57C00" stroke="#E65100" stroke-width="2"/>
+  <text x="290" y="325" text-anchor="middle" class="step-title">4. Access</text>
+  <text x="290" y="342" text-anchor="middle" class="step-title">Control</text>
+  <text x="290" y="360" text-anchor="middle" class="step-text">Allowlist</text>
+
+  <!-- Step 5: Agent Router -->
+  <rect x="215" y="430" width="120" height="70" rx="8" fill="#00897B" stroke="#004D40" stroke-width="2"/>
+  <text x="275" y="455" text-anchor="middle" class="step-title">5. Agent</text>
+  <text x="275" y="472" text-anchor="middle" class="step-title">Router</text>
+  <text x="275" y="490" text-anchor="middle" class="step-text">Binding match</text>
+
+  <!-- Step 6: Session Lookup -->
+  <rect x="425" y="130" width="120" height="70" rx="8" fill="#5C6BC0" stroke="#3949AB" stroke-width="2"/>
+  <text x="485" y="155" text-anchor="middle" class="step-title">6. Session</text>
+  <text x="485" y="172" text-anchor="middle" class="step-title">Lookup</text>
+  <text x="485" y="190" text-anchor="middle" class="step-text">History context</text>
+
+  <!-- Step 7: Agent Runtime -->
+  <rect x="425" y="240" width="120" height="70" rx="8" fill="#D32F2F" stroke="#B71C1C" stroke-width="2"/>
+  <text x="485" y="265" text-anchor="middle" class="step-title">7. Agent</text>
+  <text x="485" y="282" text-anchor="middle" class="step-title">Runtime</text>
+  <text x="485" y="300" text-anchor="middle" class="step-text">pi-agent-core</text>
+
+  <!-- Step 8: LLM Provider -->
+  <rect x="425" y="350" width="120" height="70" rx="8" fill="#FFA000" stroke="#FF6F00" stroke-width="2"/>
+  <text x="485" y="375" text-anchor="middle" class="step-title">8. LLM</text>
+  <text x="485" y="392" text-anchor="middle" class="step-title">Provider</text>
+  <text x="485" y="410" text-anchor="middle" class="step-text">API call</text>
+
+  <!-- Step 9: Tool Execution -->
+  <rect x="425" y="460" width="120" height="70" rx="8" fill="#455A64" stroke="#263238" stroke-width="2"/>
+  <text x="485" y="485" text-anchor="middle" class="step-title">9. Tool</text>
+  <text x="485" y="502" text-anchor="middle" class="step-title">Execution</text>
+  <text x="485" y="520" text-anchor="middle" class="step-text">Skills/Commands</text>
+
+  <!-- Step 10: Response Formatter -->
+  <rect x="645" y="240" width="120" height="70" rx="8" fill="#C2185B" stroke="#880E4F" stroke-width="2"/>
+  <text x="705" y="265" text-anchor="middle" class="step-title">10. Response</text>
+  <text x="705" y="282" text-anchor="middle" class="step-title">Formatter</text>
+  <text x="705" y="300" text-anchor="middle" class="step-text">Chunking/Media</text>
+
+  <!-- Step 11: Outbound Delivery -->
+  <rect x="645" y="350" width="120" height="70" rx="8" fill="#1976D2" stroke="#0D47A1" stroke-width="2"/>
+  <text x="705" y="375" text-anchor="middle" class="step-title">11. Outbound</text>
+  <text x="705" y="392" text-anchor="middle" class="step-title">Delivery</text>
+  <text x="705" y="410" text-anchor="middle" class="step-text">Platform API</text>
+
+  <!-- Step 12: Session Update (Cylinder) -->
+  <ellipse cx="890" cy="250" rx="45" ry="12" fill="#9C27B0" stroke="#6A1B9A" stroke-width="2"/>
+  <rect x="845" y="250" width="90" height="60" fill="#9C27B0"/>
+  <ellipse cx="890" cy="310" rx="45" ry="12" fill="#9C27B0" stroke="#6A1B9A" stroke-width="2"/>
+  <line x1="845" y1="250" x2="845" y2="310" stroke="#6A1B9A" stroke-width="2"/>
+  <line x1="935" y1="250" x2="935" y2="310" stroke="#6A1B9A" stroke-width="2"/>
+  <text x="890" y="270" text-anchor="middle" class="step-title">12. Session</text>
+  <text x="890" y="287" text-anchor="middle" class="step-title">Update</text>
+  <text x="890" y="304" text-anchor="middle" class="step-text">Persist history</text>
+
+  <!-- Step 13: Event Broadcast -->
+  <rect x="855" y="360" width="100" height="70" rx="8" fill="#607D8B" stroke="#37474F" stroke-width="2"/>
+  <text x="905" y="385" text-anchor="middle" class="step-title">13. Event</text>
+  <text x="905" y="402" text-anchor="middle" class="step-title">Broadcast</text>
+  <text x="905" y="420" text-anchor="middle" class="step-text">WebSocket</text>
+
+  <!-- Arrows - Main Flow -->
+  <path d="M 115 205 L 115 250" fill="none" stroke="#333333" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M 175 290 Q 195 215 215 165" fill="none" stroke="#333333" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M 275 200 L 275 250" fill="none" stroke="#333333" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M 290 390 L 275 430" fill="none" stroke="#333333" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M 335 465 Q 380 200 425 165" fill="none" stroke="#333333" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M 485 200 L 485 240" fill="none" stroke="#333333" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M 485 310 L 485 350" fill="none" stroke="#FFA000" stroke-width="3" stroke-dasharray="5,5" marker-end="url(#arrow-orange)"/>
+  <path d="M 485 420 L 485 460" fill="none" stroke="#455A64" stroke-width="2" stroke-dasharray="5,5" marker-end="url(#arrow-gray)"/>
+  <path d="M 545 275 L 645 275" fill="none" stroke="#333333" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M 705 310 L 705 350" fill="none" stroke="#333333" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M 765 275 L 845 275" fill="none" stroke="#9C27B0" stroke-width="3" stroke-dasharray="5,5" marker-end="url(#arrow-purple)"/>
+  <path d="M 765 385 L 855 395" fill="none" stroke="#607D8B" stroke-width="2" stroke-dasharray="5,5" marker-end="url(#arrow-gray)"/>
+
+  <!-- Loop arrow for tools -->
+  <path d="M 545 495 Q 600 495 600 275 Q 600 275 545 275" fill="none" stroke="#455A64" stroke-width="2" stroke-dasharray="5,5" marker-end="url(#arrow-gray)"/>
+  <text x="580" y="400" text-anchor="middle" style="font-family: Arial; font-size: 10px; font-weight: bold; fill: #455A64;">Loop until</text>
+  <text x="580" y="415" text-anchor="middle" style="font-family: Arial; font-size: 10px; font-weight: bold; fill: #455A64;">complete</text>
+
+  <!-- Reject indicator -->
+  <text x="360" y="330" style="font-family: Arial; font-size: 10px; font-weight: bold; fill: #D32F2F;">REJECT</text>
+  <line x1="350" y1="340" x2="400" y2="340" stroke="#D32F2F" stroke-width="2" stroke-dasharray="3,3" marker-end="url(#arrow)"/>
+
+  <!-- Legend -->
+  <rect x="40" y="580" width="300" height="90" rx="8" fill="#ffffff" stroke="#666666" stroke-width="1"/>
+  <text x="55" y="600" class="phase-label">Legend</text>
+
+  <line x1="55" y1="620" x2="85" y2="620" stroke="#333333" stroke-width="3" marker-end="url(#arrow)"/>
+  <text x="95" y="625" class="legend-text">Primary Flow</text>
+
+  <line x1="55" y1="645" x2="85" y2="645" stroke="#666666" stroke-width="2" stroke-dasharray="5,5" marker-end="url(#arrow-gray)"/>
+  <text x="95" y="650" class="legend-text">Secondary/Async</text>
+
+  <polygon points="180,615 195,625 180,635 165,625" fill="#F57C00" stroke="#E65100" stroke-width="1"/>
+  <text x="205" y="630" class="legend-text">Decision Point</text>
+
+  <ellipse cx="275" cy="645" rx="12" ry="6" fill="#9C27B0" stroke="#6A1B9A" stroke-width="1"/>
+  <rect x="263" y="645" width="24" height="12" fill="#9C27B0"/>
+  <ellipse cx="275" cy="657" rx="12" ry="6" fill="#9C27B0" stroke="#6A1B9A" stroke-width="1"/>
+  <text x="295" y="655" class="legend-text">Storage</text>
+
+</svg>

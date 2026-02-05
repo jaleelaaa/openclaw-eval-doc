@@ -1,0 +1,10 @@
+{
+  "title": "Core Concepts",
+  "icon": "Lightbulb",
+  "pages": [
+    "gateway",
+    "message-flow",
+    "agents",
+    "sessions"
+  ]
+}

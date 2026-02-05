@@ -1,0 +1,471 @@
+---
+title: WebSocket API
+description: Gateway WebSocket protocol specification
+icon: Zap
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+# WebSocket API
+
+The OpenClaw gateway communicates via a WebSocket-based JSON protocol. This reference documents the complete API for building custom clients.
+
+## Connection
+
+### Endpoint
+
+```
+ws://127.0.0.1:18789?token=<gateway-token>
+```
+
+For TLS connections:
+```
+wss://hostname:18789?token=<gateway-token>
+```
+
+### Authentication
+
+Include the gateway token as a query parameter:
+
+```javascript
+const ws = new WebSocket('ws://127.0.0.1:18789?token=your-64-char-token');
+```
+
+Or send token in first frame (see Connect Request).
+
+## Protocol Overview
+
+### Frame Structure
+
+All frames are JSON objects:
+
+```typescript
+interface Frame {
+  type: 'req' | 'res' | 'event';
+  id?: number;           // For req/res correlation
+  method?: string;       // For requests
+  params?: object;       // Request parameters
+  ok?: boolean;          // Response success
+  payload?: object;      // Response/event data
+  error?: ErrorInfo;     // Error details
+}
+```
+
+### Request-Response Pattern
+
+```
+Client → Gateway: { type: 'req', id: 1, method: 'health', params: {} }
+Gateway → Client: { type: 'res', id: 1, ok: true, payload: { ... } }
+```
+
+### Events
+
+Events are pushed from gateway to client:
+
+```
+Gateway → Client: { type: 'event', event: 'agent', payload: { ... } }
+```
+
+## Connection Lifecycle
+
+### Connect Request (Required First Frame)
+
+```json
+{
+  "type": "req",
+  "id": 1,
+  "method": "connect",
+  "params": {
+    "auth": {
+      "token": "your-64-char-token"
+    },
+    "client": {
+      "name": "MyClient",
+      "version": "1.0.0"
+    }
+  }
+}
+```
+
+### Connect Response
+
+```json
+{
+  "type": "res",
+  "id": 1,
+  "ok": true,
+  "payload": {
+    "sessionId": "abc123",
+    "gateway": {
+      "version": "2026.2.1",
+      "features": ["streaming", "tools"]
+    },
+    "snapshot": {
+      "channels": { "whatsapp": "connected" },
+      "agents": [{ "id": "default", "model": "..." }]
+    }
+  }
+}
+```
+
+### Disconnect
+
+Close the WebSocket connection normally:
+
+```javascript
+ws.close(1000, 'Client closing');
+```
+
+## Methods
+
+### health
+
+Check gateway health.
+
+**Request:**
+```json
+{
+  "type": "req",
+  "id": 2,
+  "method": "health",
+  "params": {}
+}
+```
+
+**Response:**
+```json
+{
+  "type": "res",
+  "id": 2,
+  "ok": true,
+  "payload": {
+    "status": "healthy",
+    "channels": { "whatsapp": "connected" },
+    "model": "google/gemini-3-flash-preview"
+  }
+}
+```
+
+### agent
+
+Run an agent turn.
+
+**Request:**
+```json
+{
+  "type": "req",
+  "id": 3,
+  "method": "agent",
+  "params": {
+    "agentId": "default",
+    "sessionKey": "chat-123",
+    "message": {
+      "role": "user",
+      "content": "Hello, how are you?"
+    },
+    "options": {
+      "stream": true
+    }
+  }
+}
+```
+
+**Response (Acknowledgment):**
+```json
+{
+  "type": "res",
+  "id": 3,
+  "ok": true,
+  "payload": {
+    "runId": "run-456",
+    "status": "accepted"
+  }
+}
+```
+
+**Streaming Events:**
+```json
+{
+  "type": "event",
+  "event": "agent",
+  "payload": {
+    "runId": "run-456",
+    "type": "text_delta",
+    "delta": "Hello! I'm "
+  }
+}
+```
+
+```json
+{
+  "type": "event",
+  "event": "agent",
+  "payload": {
+    "runId": "run-456",
+    "type": "text_delta",
+    "delta": "doing great!"
+  }
+}
+```
+
+**Final Response:**
+```json
+{
+  "type": "res",
+  "id": 3,
+  "ok": true,
+  "payload": {
+    "runId": "run-456",
+    "status": "completed",
+    "usage": {
+      "inputTokens": 50,
+      "outputTokens": 120
+    }
+  }
+}
+```
+
+### send
+
+Send a message through a channel.
+
+**Request:**
+```json
+{
+  "type": "req",
+  "id": 4,
+  "method": "send",
+  "params": {
+    "channel": "whatsapp",
+    "peer": "+1234567890",
+    "content": "Hello!",
+    "idempotencyKey": "msg-789"
+  }
+}
+```
+
+**Response:**
+```json
+{
+  "type": "res",
+  "id": 4,
+  "ok": true,
+  "payload": {
+    "messageId": "wa-msg-123",
+    "timestamp": "2026-02-05T10:00:00Z"
+  }
+}
+```
+
+<Callout title="Idempotency" type="info">
+  Include `idempotencyKey` for side-effecting methods to prevent duplicate execution on retries.
+</Callout>
+
+### config.get
+
+Get configuration value.
+
+**Request:**
+```json
+{
+  "type": "req",
+  "id": 5,
+  "method": "config.get",
+  "params": {
+    "key": "agents.defaults.model"
+  }
+}
+```
+
+### config.set
+
+Set configuration value.
+
+**Request:**
+```json
+{
+  "type": "req",
+  "id": 6,
+  "method": "config.set",
+  "params": {
+    "key": "agents.defaults.model.primary",
+    "value": "anthropic/claude-sonnet"
+  }
+}
+```
+
+### sessions.list
+
+List sessions.
+
+**Request:**
+```json
+{
+  "type": "req",
+  "id": 7,
+  "method": "sessions.list",
+  "params": {
+    "agentId": "default",
+    "limit": 20
+  }
+}
+```
+
+### sessions.get
+
+Get session details.
+
+**Request:**
+```json
+{
+  "type": "req",
+  "id": 8,
+  "method": "sessions.get",
+  "params": {
+    "sessionKey": "agent:default:+1234567890"
+  }
+}
+```
+
+### channels.status
+
+Get channel statuses.
+
+**Request:**
+```json
+{
+  "type": "req",
+  "id": 9,
+  "method": "channels.status",
+  "params": {}
+}
+```
+
+## Events
+
+### agent
+
+Agent execution events.
+
+| Type | Description |
+|------|-------------|
+| `text_delta` | Text chunk |
+| `tool_use` | Tool being called |
+| `tool_result` | Tool execution result |
+| `completed` | Agent finished |
+| `error` | Agent error |
+
+### message
+
+Incoming message event.
+
+```json
+{
+  "type": "event",
+  "event": "message",
+  "payload": {
+    "channel": "whatsapp",
+    "peer": "+1234567890",
+    "content": "Hello!",
+    "timestamp": "2026-02-05T10:00:00Z"
+  }
+}
+```
+
+### channel
+
+Channel status change.
+
+```json
+{
+  "type": "event",
+  "event": "channel",
+  "payload": {
+    "channel": "discord",
+    "status": "disconnected",
+    "reason": "Token expired"
+  }
+}
+```
+
+### config
+
+Configuration changed.
+
+```json
+{
+  "type": "event",
+  "event": "config",
+  "payload": {
+    "key": "agents.defaults.model",
+    "value": { "primary": "..." }
+  }
+}
+```
+
+## Error Handling
+
+### Error Response
+
+```json
+{
+  "type": "res",
+  "id": 1,
+  "ok": false,
+  "error": {
+    "code": "UNAUTHORIZED",
+    "message": "Invalid token",
+    "details": {}
+  }
+}
+```
+
+### Error Codes
+
+| Code | Description |
+|------|-------------|
+| `UNAUTHORIZED` | Authentication failed |
+| `FORBIDDEN` | Permission denied |
+| `NOT_FOUND` | Resource not found |
+| `INVALID_REQUEST` | Malformed request |
+| `RATE_LIMITED` | Too many requests |
+| `INTERNAL_ERROR` | Server error |
+
+## Connection Codes
+
+WebSocket close codes:
+
+| Code | Meaning |
+|------|---------|
+| 1000 | Normal closure |
+| 1008 | Policy violation (auth failed) |
+| 1011 | Server error |
+| 4000 | Token missing |
+| 4001 | Token invalid |
+| 4002 | Pairing required |
+
+## Client Example
+
+```javascript
+const ws = new WebSocket('ws://127.0.0.1:18789?token=...');
+
+ws.onopen = () => {
+  // Send connect request
+  ws.send(JSON.stringify({
+    type: 'req',
+    id: 1,
+    method: 'connect',
+    params: { auth: { token: '...' } }
+  }));
+};
+
+ws.onmessage = (event) => {
+  const frame = JSON.parse(event.data);
+
+  if (frame.type === 'res') {
+    console.log('Response:', frame.id, frame.payload);
+  } else if (frame.type === 'event') {
+    console.log('Event:', frame.event, frame.payload);
+  }
+};
+```

@@ -1,0 +1,104 @@
+---
+title: Installation Guide
+description: Choose the right installation method for your environment
+icon: Download
+---
+
+import { Card, Cards } from 'fumadocs-ui/components/card';
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
+# Installation Guide
+
+OpenClaw can be installed using Docker (recommended) or natively on your system. This guide helps you choose the right method and get started quickly.
+
+![Installation Decision Flow](/openclaw/diagrams/installation-decision-flow.svg)
+
+The decision flow above helps you determine which installation method best fits your needs based on your environment and use case.
+
+## Choosing Your Installation Method
+
+| Criteria | Docker | Native | Source |
+|----------|--------|--------|--------|
+| **Best For** | Production, isolation | Development, debugging | Contributing, customization |
+| **Prerequisites** | Docker, Docker Compose | Node.js 22+, npm/pnpm | Git, Node.js 22+, pnpm |
+| **Setup Complexity** | Low (single script) | Medium (multiple steps) | High (build required) |
+| **Resource Overhead** | Higher (container layer) | Lower (direct execution) | Lowest |
+| **Updates** | Rebuild container | npm update | git pull + rebuild |
+| **Debugging** | Via logs/exec | Direct access | Full source access |
+
+<Callout title="Recommendation" type="info">
+  **Docker installation** is recommended for most users. It provides consistent behavior, easy updates, and isolation from your host system.
+</Callout>
+
+## Quick Start Commands
+
+<Tabs items={['Docker (Recommended)', 'NPM Global', 'From Source']}>
+  <Tab value="Docker (Recommended)">
+    ```bash
+    # Clone and run setup
+    git clone https://github.com/openclaw/openclaw.git
+    cd openclaw
+    bash ./docker-setup.sh
+    ```
+  </Tab>
+  <Tab value="NPM Global">
+    ```bash
+    # Install globally
+    npm install -g openclaw@latest
+
+    # Run onboarding
+    openclaw onboard --install-daemon
+
+    # Start gateway
+    openclaw gateway --port 18789 --verbose
+    ```
+  </Tab>
+  <Tab value="From Source">
+    ```bash
+    # Clone repository
+    git clone https://github.com/openclaw/openclaw.git
+    cd openclaw
+
+    # Install and build
+    pnpm install
+    pnpm build
+
+    # Start development gateway
+    pnpm gateway:dev
+    ```
+  </Tab>
+</Tabs>
+
+## System Requirements
+
+| Resource | Minimum | Recommended |
+|----------|---------|-------------|
+| **Node.js** | v22.12.0+ | Latest LTS |
+| **Memory** | 512MB | 2GB+ |
+| **Storage** | 1GB | 10GB+ (with media caching) |
+| **Network** | Outbound HTTPS | Low latency preferred |
+
+## Installation Guides
+
+<Cards>
+  <Card href="/docs/openclaw/installation/docker" title="Docker Installation" icon="Container">
+    Production-ready containerized deployment with Docker Compose
+  </Card>
+  <Card href="/docs/openclaw/installation/native" title="Native Installation" icon="Terminal">
+    Direct installation with npm for development or lightweight deployments
+  </Card>
+  <Card href="/docs/openclaw/installation/source" title="Development Setup" icon="Code">
+    Build from source for contributing or deep customization
+  </Card>
+</Cards>
+
+## Post-Installation
+
+After installing OpenClaw, you'll need to:
+
+1. **Configure an LLM provider** — Set up Google Gemini, Anthropic Claude, OpenAI, or Ollama
+2. **Connect messaging channels** — Link WhatsApp, Telegram, Discord, or other platforms
+3. **Verify the installation** — Run health checks and test message flow
+
+See [Configuration](/docs/openclaw/configuration) for detailed setup instructions.

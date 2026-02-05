@@ -1,0 +1,579 @@
+---
+title: Discord
+description: Connect your Discord bot using discord.js
+icon: Hash
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Card, Cards } from 'fumadocs-ui/components/card';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
+# Discord Integration
+
+Discord integration uses discord.js to connect your AI assistant to Discord servers. This enables interaction through DMs, server channels, and threads.
+
+## Prerequisites
+
+- A Discord account
+- Permission to add bots to a server (or your own server)
+- OpenClaw gateway running
+
+## Create a Discord Bot
+
+### Step 1: Create Discord Application
+
+1. Go to [Discord Developer Portal](https://discord.com/developers/applications)
+2. Click **"New Application"**
+3. Enter a name (e.g., "OpenClaw") and click **Create**
+4. Note your **Application ID** (Client ID) - you'll need this for the invite link
+
+### Step 2: Create Bot User
+
+1. In your application, go to **"Bot"** section (left sidebar)
+2. Click **"Add Bot"** → **"Yes, do it!"**
+3. Under the bot's username, click **"Reset Token"** to generate a new token
+4. **Copy the token** immediately
+
+<Callout title="Token Security" type="warn">
+  Keep this token secret! Anyone with this token can control your bot. Never commit it to version control.
+</Callout>
+
+### Step 3: Configure Bot Settings
+
+In the Bot section, configure these settings:
+
+**Privileged Gateway Intents** (REQUIRED):
+- ✅ **MESSAGE CONTENT INTENT** - Required for the bot to read message content
+- ✅ **SERVER MEMBERS INTENT** - Optional, for member-related features
+- ✅ **PRESENCE INTENT** - Optional, for presence features
+
+**Bot Permissions**:
+- ✅ Public Bot (optional - uncheck if you want only you to add the bot)
+
+Click **"Save Changes"** at the bottom of the page.
+
+### Step 4: Required Bot Permissions
+
+For OpenClaw to function properly, the bot needs these permissions:
+
+| Permission | Purpose |
+|------------|---------|
+| Read Messages/View Channels | See channels and messages |
+| Send Messages | Reply to users |
+| Send Messages in Threads | Reply in thread conversations |
+| Embed Links | Send rich embeds |
+| Attach Files | Send files/images |
+| Read Message History | Access conversation history |
+| Add Reactions | React to messages (for acknowledgments) |
+| Use External Emojis | Use custom emojis |
+
+**Permission Integer:** `274877975552`
+
+### Step 5: Generate Invite Link
+
+Replace `CLIENT_ID` with your Application ID:
+
+```
+https://discord.com/api/oauth2/authorize?client_id=CLIENT_ID&permissions=274877975552&scope=bot
+```
+
+**With Slash Commands:**
+```
+https://discord.com/api/oauth2/authorize?client_id=CLIENT_ID&permissions=274877975552&scope=bot%20applications.commands
+```
+
+### Step 6: Add Token to OpenClaw
+
+```bash
+# Via CLI
+openclaw providers add --provider discord --token "your-bot-token"
+
+# Or via environment variable
+export DISCORD_BOT_TOKEN="your-bot-token"
+```
+
+### Step 6: Verify Connection
+
+```bash
+openclaw channels status
+```
+
+Expected log:
+```
+✓ [discord] logged in to discord as YourBot#1234
+```
+
+## Configuration
+
+### Basic Configuration
+
+Add this to your `openclaw.json`:
+
+```json
+{
+  "channels": {
+    "discord": {
+      "enabled": true,
+      "token": "YOUR_BOT_TOKEN_HERE"
+    }
+  },
+  "plugins": {
+    "entries": {
+      "discord": {
+        "enabled": true
+      }
+    }
+  }
+}
+```
+
+### Full Configuration with All Options
+
+```json
+{
+  "channels": {
+    "discord": {
+      "enabled": true,
+      "token": "YOUR_BOT_TOKEN_HERE",
+      "groupPolicy": "open",
+      "dm": {
+        "enabled": true,
+        "policy": "open",
+        "allowFrom": ["*"],
+        "groupEnabled": false,
+        "groupChannels": []
+      },
+      "guilds": {
+        "*": {
+          "requireMention": true,
+          "allowFrom": ["*"]
+        }
+      },
+      "replyToMode": "off"
+    }
+  }
+}
+```
+
+### Configuration Options Explained
+
+| Option | Description | Values |
+|--------|-------------|--------|
+| `enabled` | Enable/disable Discord | `true` / `false` |
+| `token` | Bot token from Discord Developer Portal | String |
+| `groupPolicy` | How to handle server messages | `"open"` / `"allowlist"` / `"disabled"` |
+| `dm.enabled` | Enable direct messages | `true` / `false` |
+| `dm.policy` | DM access policy | `"pairing"` / `"open"` / `"allowlist"` / `"disabled"` |
+| `dm.allowFrom` | Users allowed to DM | Array of user IDs or `["*"]` for all |
+| `guilds` | Per-server settings | Object |
+| `requireMention` | Require @mention in servers | `true` / `false` |
+| `replyToMode` | Reply threading mode | `"off"` / `"first"` / `"all"` |
+
+## DM Policy Configuration
+
+### Available DM Policies
+
+| Policy | Behavior | Use Case |
+|--------|----------|----------|
+| `"pairing"` | New users get a pairing code, owner must approve | Default, most secure |
+| `"open"` | Anyone can DM (requires `allowFrom: ["*"]`) | Easy access, less secure |
+| `"allowlist"` | Only users in `allowFrom` list can DM | Controlled access |
+| `"disabled"` | No DMs allowed | Server-only bot |
+
+<Tabs items={['Pairing Mode', 'Open Mode', 'Allowlist Mode', 'Disabled']}>
+  <Tab value="Pairing Mode">
+    **Most Secure (Default)**
+
+    New users must be approved before they can chat:
+
+    ```json
+    {
+      "channels": {
+        "discord": {
+          "dm": {
+            "enabled": true,
+            "policy": "pairing"
+          }
+        }
+      }
+    }
+    ```
+
+    To approve users:
+    ```bash
+    # List pending pairing requests
+    docker compose run --rm openclaw-cli pairing list discord
+
+    # Approve a user
+    docker compose run --rm openclaw-cli pairing approve discord <code>
+    ```
+  </Tab>
+  <Tab value="Open Mode">
+    **Anyone Can DM**
+
+    Allow anyone to DM the bot:
+
+    ```json
+    {
+      "channels": {
+        "discord": {
+          "dm": {
+            "enabled": true,
+            "policy": "open",
+            "allowFrom": ["*"]
+          }
+        }
+      }
+    }
+    ```
+
+    <Callout title="Security Warning" type="warn">
+      Open mode allows anyone to chat with your bot and potentially use your API credits.
+    </Callout>
+  </Tab>
+  <Tab value="Allowlist Mode">
+    **Specific Users Only**
+
+    Only allow specific users:
+
+    ```json
+    {
+      "channels": {
+        "discord": {
+          "dm": {
+            "enabled": true,
+            "policy": "allowlist",
+            "allowFrom": ["123456789012345678", "234567890123456789"]
+          }
+        }
+      }
+    }
+    ```
+
+    **Finding User IDs:** Enable Developer Mode in Discord Settings → Right-click user → Copy User ID
+  </Tab>
+  <Tab value="Disabled">
+    **No DMs Allowed**
+
+    Completely disable DMs:
+
+    ```json
+    {
+      "channels": {
+        "discord": {
+          "dm": {
+            "enabled": false
+          }
+        }
+      }
+    }
+    ```
+  </Tab>
+</Tabs>
+
+## Server/Guild Configuration
+
+### Allow Bot in All Servers (Open)
+
+```json
+{
+  "channels": {
+    "discord": {
+      "groupPolicy": "open",
+      "guilds": {
+        "*": {
+          "requireMention": true,
+          "allowFrom": ["*"]
+        }
+      }
+    }
+  }
+}
+```
+
+### Specific Server Configuration
+
+```json
+{
+  "channels": {
+    "discord": {
+      "groupPolicy": "allowlist",
+      "guilds": {
+        "123456789012345678": {
+          "requireMention": false,
+          "allowFrom": ["*"]
+        },
+        "234567890123456789": {
+          "requireMention": true,
+          "allowFrom": ["admin-user-id"]
+        }
+      }
+    }
+  }
+}
+```
+
+## Features
+
+| Feature | Supported |
+|---------|-----------|
+| Direct messages | ✅ |
+| Server channels | ✅ |
+| Threads | ✅ |
+| Slash commands | ✅ |
+| Message reactions | ✅ |
+| Embeds | ✅ |
+| File attachments | ✅ |
+| Voice (transcription) | ⚠️ (partial) |
+| Forum posts | ✅ |
+
+## Slash Commands
+
+Discord supports slash commands (`/command`) for better UX:
+
+```bash
+# Register slash commands
+openclaw discord commands register
+
+# Available commands depend on your agent configuration
+```
+
+### Built-in Commands
+
+| Command | Description |
+|---------|-------------|
+| `/chat <message>` | Send a message to the agent |
+| `/reset` | Reset conversation context |
+| `/help` | Show available commands |
+
+## Troubleshooting
+
+### Problem: Bot Doesn't Respond to DMs
+
+**Causes & Solutions:**
+
+1. **DM policy is set to "pairing"** (default)
+
+   Update `openclaw.json`:
+   ```json
+   {
+     "channels": {
+       "discord": {
+         "dm": {
+           "enabled": true,
+           "policy": "open",
+           "allowFrom": ["*"]
+         }
+       }
+     }
+   }
+   ```
+
+2. **DMs are disabled**
+
+   Ensure:
+   ```json
+   {
+     "channels": {
+       "discord": {
+         "dm": {
+           "enabled": true
+         }
+       }
+     }
+   }
+   ```
+
+3. **User not in allowlist**
+
+   Add `"*"` to `allowFrom` or add specific user ID.
+
+### Problem: Bot Doesn't Respond in Servers
+
+1. **Mention required but not used**
+
+   Either mention the bot `@BotName` or disable mention requirement:
+   ```json
+   {
+     "channels": {
+       "discord": {
+         "guilds": {
+           "*": {
+             "requireMention": false
+           }
+         }
+       }
+     }
+   }
+   ```
+
+2. **Server not in allowlist**
+
+   Set `groupPolicy` to `"open"`:
+   ```json
+   {
+     "channels": {
+       "discord": {
+         "groupPolicy": "open"
+       }
+     }
+   }
+   ```
+
+3. **Bot lacks permissions**
+
+   Ensure bot has "Read Messages" and "Send Messages" permissions in the channel.
+
+### Problem: "Message Content Intent is limited"
+
+**Log Message:**
+```
+[discord] Discord Message Content Intent is limited; bots under 100 servers can use it without verification.
+```
+
+**Solution:** This is just a warning, not an error. For bots in fewer than 100 servers, the Message Content Intent works without verification. If you need to scale beyond 100 servers, you'll need to verify your bot with Discord.
+
+### Problem: Bot Shows as Offline
+
+1. **Gateway not running**
+   ```bash
+   docker compose up openclaw-gateway
+   ```
+
+2. **Invalid bot token**
+
+   Verify the token in `openclaw.json` matches the one from Discord Developer Portal.
+
+3. **Token was reset**
+
+   If you reset the bot token in Discord Developer Portal, update it in `openclaw.json`.
+
+### Common Issues Reference
+
+| Issue | Symptom | Solution |
+|-------|---------|----------|
+| Bot not responding to DMs | User sends message, no reply | Set `dm.policy: "open"` with `allowFrom: ["*"]` |
+| DM pairing required | Bot sends pairing code | Either approve via CLI or change to open policy |
+| Bot offline in Discord | Shows as offline | Start gateway: `docker compose up openclaw-gateway` |
+| Bot not responding in servers | Works in DM but not server | Set `groupPolicy: "open"` or mention bot |
+| Bot responds multiple times | Duplicate responses | Check for multiple instances: `docker ps` |
+| Slow response time | Long wait for reply | Try faster model: `google/gemini-3-flash-preview` |
+
+### Permission Errors
+
+If the bot can't send messages:
+
+1. Check server permissions for the bot role
+2. Check channel-specific permissions
+3. Ensure bot has "Send Messages" permission
+
+### Regenerate Token
+
+If your token is compromised:
+
+1. Go to [Discord Developer Portal](https://discord.com/developers/applications)
+2. Select your application → **Bot**
+3. Click **"Reset Token"**
+4. Update OpenClaw configuration
+5. Restart gateway: `docker compose restart openclaw-gateway`
+
+## Quick Reference: Complete Working Configuration
+
+```json
+{
+  "channels": {
+    "discord": {
+      "enabled": true,
+      "token": "YOUR_BOT_TOKEN",
+      "groupPolicy": "open",
+      "dm": {
+        "enabled": true,
+        "policy": "open",
+        "allowFrom": ["*"]
+      },
+      "guilds": {
+        "*": {
+          "requireMention": true,
+          "allowFrom": ["*"]
+        }
+      }
+    }
+  },
+  "plugins": {
+    "entries": {
+      "discord": {
+        "enabled": true
+      }
+    }
+  }
+}
+```
+
+After updating configuration, restart the gateway:
+
+```bash
+docker compose restart openclaw-gateway
+```
+
+### Verify Discord Status
+
+Check logs for connection status:
+```bash
+docker logs openclaw-openclaw-gateway-1 | grep discord
+```
+
+Expected output:
+```
+[discord] [default] starting provider (@openclaw)
+[discord] logged in to discord as <bot-id>
+```
+
+## Bot Presence
+
+Set your bot's status:
+
+```bash
+# Set status
+openclaw config set channels.discord.presence.status "online"  # online, idle, dnd
+
+# Set activity
+openclaw config set channels.discord.presence.activity "Helping users"
+openclaw config set channels.discord.presence.activityType "playing"  # playing, watching, listening
+```
+
+## Multiple Servers
+
+The same bot can be in multiple servers. Use agent bindings to route different servers to different agents:
+
+```json
+{
+  "agents": {
+    "bindings": [
+      {
+        "agentId": "support-agent",
+        "match": {
+          "channel": "discord",
+          "server": "support-server-id"
+        }
+      },
+      {
+        "agentId": "general-agent",
+        "match": {
+          "channel": "discord"
+        }
+      }
+    ]
+  }
+}
+```
+
+## Next Steps
+
+<Cards>
+  <Card href="/docs/openclaw/channels/slack" title="Add Slack" icon="Slack">
+    Connect to Slack workspaces
+  </Card>
+  <Card href="/docs/openclaw/plugins" title="Extend Functionality" icon="Puzzle">
+    Add custom plugins and skills
+  </Card>
+</Cards>

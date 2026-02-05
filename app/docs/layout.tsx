@@ -1,0 +1,27 @@
+import { DocsLayout } from 'fumadocs-ui/layouts/docs';
+import { baseOptions, linkItems, logo } from '@/lib/layout.shared';
+import { source } from '@/lib/source';
+import type { ReactNode } from 'react';
+
+export default function Layout({ children }: { children: ReactNode }) {
+  const base = baseOptions();
+
+  return (
+    <DocsLayout
+      {...base}
+      tree={source.pageTree}
+      links={linkItems.filter((item) => item.type === 'icon')}
+      nav={{
+        ...base.nav,
+        title: (
+          <>
+            {logo}
+            <span className="font-medium max-md:hidden">OpenClaw</span>
+          </>
+        ),
+      }}
+    >
+      {children}
+    </DocsLayout>
+  );
+}

@@ -1,0 +1,378 @@
+---
+title: Creating Plugins
+description: Step-by-step guide to building custom channel plugins
+icon: Wrench
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Card, Cards } from 'fumadocs-ui/components/card';
+
+# Creating Plugins
+
+This guide walks through creating a custom channel plugin for OpenClaw. By the end, you'll have a working plugin that can send and receive messages from a custom platform.
+
+## Project Setup
+
+### Initialize Project
+
+```bash
+mkdir my-channel-plugin
+cd my-channel-plugin
+npm init -y
+```
+
+### Install Dependencies
+
+```bash
+npm install @openclaw/plugin-sdk
+npm install -D typescript @types/node
+```
+
+### Configure TypeScript
+
+Create `tsconfig.json`:
+
+```json
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "declaration": true,
+    "outDir": "dist",
+    "strict": true,
+    "esModuleInterop": true
+  },
+  "include": ["src/**/*"]
+}
+```
+
+## Plugin Structure
+
+```
+my-channel-plugin/
+├── src/
+│   ├── index.ts        # Plugin entry point
+│   ├── plugin.ts       # Plugin implementation
+│   └── types.ts        # Custom types
+├── package.json
+├── tsconfig.json
+└── README.md
+```
+
+## Implementation
+
+### Define Metadata
+
+Create `src/index.ts`:
+
+```typescript
+import type { ChannelMeta } from '@openclaw/plugin-sdk';
+import MyChannelPlugin from './plugin';
+
+export const meta: ChannelMeta = {
+  id: 'my-channel',
+  name: 'My Custom Channel',
+  version: '1.0.0',
+  description: 'A custom messaging channel integration',
+  author: 'Your Name',
+};
+
+export default MyChannelPlugin;
+```
+
+### Implement Plugin
+
+Create `src/plugin.ts`:
+
+```typescript
+import {
+  ChannelPlugin,
+  ChannelCapabilities,
+  InboundMessage,
+  OutboundMessage,
+  MessageHandler,
+  ChannelRuntime,
+} from '@openclaw/plugin-sdk';
+
+export default class MyChannelPlugin implements ChannelPlugin {
+  readonly id = 'my-channel';
+  readonly name = 'My Custom Channel';
+  readonly version = '1.0.0';
+
+  readonly capabilities = [
+    ChannelCapabilities.TEXT,
+    ChannelCapabilities.IMAGES,
+  ];
+
+  private runtime?: ChannelRuntime;
+  private messageHandler?: MessageHandler;
+  private client?: MyPlatformClient;
+
+  // Receive runtime from OpenClaw
+  setRuntime(runtime: ChannelRuntime): void {
+    this.runtime = runtime;
+  }
+
+  // Connect to the platform
+  async connect(): Promise<void> {
+    const token = process.env.MY_CHANNEL_TOKEN;
+    if (!token) {
+      throw new Error('MY_CHANNEL_TOKEN is required');
+    }
+
+    this.client = new MyPlatformClient(token);
+
+    // Listen for incoming messages
+    this.client.on('message', (rawMessage) => {
+      const message = this.normalizeMessage(rawMessage);
+      if (this.messageHandler) {
+        this.messageHandler(message);
+      }
+    });
+
+    await this.client.connect();
+    console.log('[my-channel] Connected successfully');
+  }
+
+  // Disconnect from the platform
+  async disconnect(): Promise<void> {
+    if (this.client) {
+      await this.client.disconnect();
+      this.client = undefined;
+    }
+  }
+
+  // Send a message to the platform
+  async sendMessage(message: OutboundMessage): Promise<void> {
+    if (!this.client) {
+      throw new Error('Not connected');
+    }
+
+    // Chunk long messages if needed
+    const limit = this.runtime?.resolveChunkLimit('my-channel') ?? 2000;
+    const chunks = this.runtime?.chunkMarkdown(message.content, limit)
+      ?? [message.content];
+
+    for (const chunk of chunks) {
+      await this.client.send({
+        to: message.peer,
+        text: chunk,
+        replyTo: message.replyTo,
+      });
+    }
+  }
+
+  // Register message handler
+  onMessage(handler: MessageHandler): void {
+    this.messageHandler = handler;
+  }
+
+  // Convert platform message to OpenClaw format
+  private normalizeMessage(raw: any): InboundMessage {
+    return {
+      id: raw.id,
+      channel: 'my-channel',
+      peer: raw.chatId,
+      sender: raw.senderId,
+      content: raw.text,
+      timestamp: new Date(raw.timestamp),
+      metadata: {
+        isGroup: raw.isGroup ?? false,
+        groupId: raw.groupId,
+        groupName: raw.groupName,
+      },
+      attachments: raw.attachments?.map((a: any) => ({
+        type: a.type,
+        url: a.url,
+        filename: a.name,
+      })),
+    };
+  }
+
+  // Report connection status
+  getStatus() {
+    return {
+      connected: this.client?.isConnected ?? false,
+      lastActivity: this.client?.lastActivity,
+    };
+  }
+}
+```
+
+### Add Configuration
+
+Define what config your plugin needs:
+
+```typescript
+import { buildConfigSchema } from '@openclaw/plugin-sdk';
+
+export const configSchema = buildConfigSchema({
+  enabled: {
+    type: 'boolean',
+    default: true,
+  },
+  token: {
+    type: 'string',
+    required: true,
+    secret: true,
+    env: 'MY_CHANNEL_TOKEN',
+  },
+  dmPolicy: {
+    type: 'enum',
+    values: ['pairing', 'allowlist', 'open'],
+    default: 'pairing',
+  },
+});
+```
+
+## Building
+
+Add build script to `package.json`:
+
+```json
+{
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch"
+  }
+}
+```
+
+Build the plugin:
+
+```bash
+npm run build
+```
+
+## Testing Locally
+
+### Install in Workspace
+
+```bash
+# Link plugin to OpenClaw
+cp -r ./dist ~/.openclaw/plugins/my-channel
+
+# Or use npm link
+npm link
+cd ~/.openclaw/plugins
+npm link my-channel-plugin
+```
+
+### Configure OpenClaw
+
+```bash
+# Enable the plugin
+openclaw config set channels.my-channel.enabled true
+
+# Set required config
+openclaw config set channels.my-channel.token "your-token"
+```
+
+### Test
+
+```bash
+# Start gateway with verbose logging
+openclaw gateway --verbose
+
+# Watch for your plugin's log messages
+```
+
+## Publishing
+
+### Package.json Setup
+
+```json
+{
+  "name": "@openclaw-community/channel-my-channel",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "keywords": ["openclaw", "openclaw-plugin", "openclaw-channel"],
+  "peerDependencies": {
+    "@openclaw/plugin-sdk": "^1.0.0"
+  },
+  "files": ["dist"]
+}
+```
+
+### Publish to npm
+
+```bash
+npm publish --access public
+```
+
+### Users Install Via
+
+```bash
+openclaw plugins install @openclaw-community/channel-my-channel
+```
+
+## Adding Skills
+
+To add tools your agent can use:
+
+```typescript
+import { SkillPlugin, ToolDefinition } from '@openclaw/plugin-sdk';
+
+export class MySkill implements SkillPlugin {
+  readonly id = 'my-skill';
+  readonly name = 'My Custom Skill';
+
+  tools: ToolDefinition[] = [
+    {
+      name: 'my_tool',
+      description: 'Does something useful',
+      parameters: {
+        type: 'object',
+        properties: {
+          input: { type: 'string', description: 'Input value' },
+        },
+        required: ['input'],
+      },
+      execute: async (params) => {
+        const result = await doSomething(params.input);
+        return { success: true, result };
+      },
+    },
+  ];
+}
+```
+
+## Best Practices
+
+<Callout title="Error Handling" type="info">
+  Always handle errors gracefully. A crashing plugin shouldn't take down the gateway.
+</Callout>
+
+1. **Validate early** — Check configuration during `connect()`
+2. **Log appropriately** — Use `[plugin-id]` prefix in logs
+3. **Handle reconnection** — Implement automatic reconnection logic
+4. **Respect rate limits** — Don't spam platform APIs
+5. **Clean up resources** — Release connections in `disconnect()`
+6. **Test thoroughly** — Test with various message types and edge cases
+
+## Debugging
+
+```bash
+# Enable debug logging
+DEBUG=openclaw:plugins:* openclaw gateway
+
+# Test plugin directly
+node -e "
+  const Plugin = require('./dist').default;
+  const p = new Plugin();
+  p.connect().then(() => console.log('Connected!'));
+"
+```
+
+## Next Steps
+
+<Cards>
+  <Card href="/docs/openclaw/plugins/sdk" title="SDK Reference" icon="Package">
+    Complete API documentation
+  </Card>
+  <Card href="/docs/openclaw/concepts/message-flow" title="Message Flow" icon="GitBranch">
+    Understand how messages are processed
+  </Card>
+</Cards>

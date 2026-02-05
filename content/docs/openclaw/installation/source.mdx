@@ -1,0 +1,229 @@
+---
+title: Development Setup
+description: Build OpenClaw from source for development and customization
+icon: Code
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Card, Cards } from 'fumadocs-ui/components/card';
+
+# Development Setup
+
+Building OpenClaw from source gives you full access to the codebase for contributing, customization, or understanding the internals. This guide covers setting up a development environment.
+
+## Prerequisites
+
+| Requirement | Version | Purpose |
+|-------------|---------|---------|
+| Node.js | 22.12.0+ | Runtime |
+| pnpm | 10.23.0+ | Package manager |
+| Git | 2.0+ | Version control |
+
+## Clone the Repository
+
+```bash
+git clone https://github.com/openclaw/openclaw.git
+cd openclaw
+```
+
+## Install Dependencies
+
+```bash
+pnpm install
+```
+
+This installs all dependencies including:
+- **@mariozechner/pi-agent-core** — Agent runtime
+- **TypeScript** — Type-safe development
+- **Vitest** — Testing framework
+- **ESBuild** — Fast bundling
+
+## Build the Project
+
+```bash
+# Build all packages
+pnpm build
+
+# Build the Control UI
+pnpm ui:build
+```
+
+## Run Onboarding
+
+```bash
+# Skip daemon installation for development
+pnpm openclaw onboard
+```
+
+## Start Development Gateway
+
+```bash
+# Standard development mode
+pnpm gateway:dev
+
+# Skip channel initialization (faster startup)
+pnpm gateway:dev:skip-channels
+
+# Reset state and start fresh
+pnpm gateway:dev:reset
+```
+
+<Callout title="Development Mode" type="info">
+  In development mode, the gateway runs with additional logging and faster file watching for configuration changes.
+</Callout>
+
+## Development Commands
+
+| Command | Description |
+|---------|-------------|
+| `pnpm dev` | Start with auto-reload |
+| `pnpm gateway:dev` | Gateway in dev mode |
+| `pnpm gateway:dev:reset` | Reset state and start |
+| `pnpm test` | Run unit tests |
+| `pnpm test:e2e` | Run end-to-end tests |
+| `pnpm lint` | Run linter (oxlint) |
+| `pnpm format:fix` | Auto-format code |
+| `pnpm typecheck` | TypeScript type checking |
+
+## Project Structure
+
+```
+openclaw/
+├── src/
+│   ├── agents/           # Agent runtime integration
+│   ├── channels/         # Channel connector base
+│   ├── cli/              # Command-line interface
+│   ├── commands/         # CLI command implementations
+│   ├── config/           # Configuration management
+│   ├── discord/          # Discord channel plugin
+│   ├── gateway/          # Gateway server core
+│   ├── logging/          # Logging infrastructure
+│   ├── plugin-sdk/       # Plugin development SDK
+│   ├── slack/            # Slack channel plugin
+│   ├── telegram/         # Telegram channel plugin
+│   ├── whatsapp/         # WhatsApp channel plugin
+│   └── ...
+├── skills/               # Built-in skills
+├── extensions/           # Extension modules
+├── ui/                   # Control UI (web)
+├── tests/                # Test suites
+└── docs/                 # Documentation
+```
+
+## Testing
+
+```bash
+# Run all tests
+pnpm test
+
+# Run specific test file
+pnpm test src/gateway/router.test.ts
+
+# Run with coverage
+pnpm test:coverage
+
+# Run E2E tests
+pnpm test:e2e
+```
+
+### Test Coverage Requirements
+
+The project maintains a minimum coverage threshold:
+- **Statements**: 70%
+- **Branches**: 70%
+- **Functions**: 70%
+- **Lines**: 70%
+
+## Linting and Formatting
+
+```bash
+# Check for lint errors
+pnpm lint
+
+# Auto-fix lint errors
+pnpm lint:fix
+
+# Format code
+pnpm format:fix
+
+# Check types
+pnpm typecheck
+```
+
+## Building for Production
+
+```bash
+# Full production build
+pnpm build
+
+# Build Docker image
+docker build -t openclaw:local .
+```
+
+## Environment Variables for Development
+
+```bash
+# Create local env file
+cat > .env.local << EOF
+OPENCLAW_GATEWAY_TOKEN=$(openssl rand -hex 32)
+OPENCLAW_GATEWAY_PORT=18789
+OPENCLAW_GATEWAY_BIND=loopback
+GOOGLE_API_KEY=your-dev-key
+EOF
+```
+
+## Debugging
+
+### VS Code Configuration
+
+Create `.vscode/launch.json`:
+
+```json
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug Gateway",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["gateway:dev"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal"
+    }
+  ]
+}
+```
+
+### Verbose Logging
+
+```bash
+# Enable verbose mode
+pnpm gateway:dev --verbose
+
+# Or set environment variable
+DEBUG=openclaw:* pnpm gateway:dev
+```
+
+## Contributing
+
+1. **Fork** the repository
+2. **Create** a feature branch: `git checkout -b feature/my-feature`
+3. **Make** your changes with tests
+4. **Run** the full test suite: `pnpm test`
+5. **Submit** a pull request
+
+<Callout title="Code Style" type="info">
+  The project uses oxlint for linting and oxfmt for formatting. Run `pnpm lint:fix && pnpm format:fix` before committing.
+</Callout>
+
+## Next Steps
+
+<Cards>
+  <Card href="/docs/openclaw/plugins/development" title="Create a Plugin" icon="Puzzle">
+    Learn how to build custom channel plugins
+  </Card>
+  <Card href="/docs/openclaw/concepts/gateway" title="Gateway Internals" icon="Server">
+    Understand the gateway architecture
+  </Card>
+</Cards>

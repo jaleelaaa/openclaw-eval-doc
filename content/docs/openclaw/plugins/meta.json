@@ -1,0 +1,10 @@
+{
+  "title": "Plugins & Skills",
+  "icon": "Puzzle",
+  "pages": [
+    "index",
+    "skills",
+    "sdk",
+    "development"
+  ]
+}

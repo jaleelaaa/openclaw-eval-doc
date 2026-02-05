@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
+  <defs>
+    <style>
+      .title { font: bold 22px Arial, sans-serif; fill: #1a1a2e; }
+      .section-title { font: bold 16px Arial, sans-serif; fill: #1e40af; }
+      .label { font: bold 13px Arial, sans-serif; fill: #ffffff; }
+      .label-dark { font: bold 13px Arial, sans-serif; fill: #1a1a2e; }
+      .small-text { font: bold 11px Arial, sans-serif; fill: #4b5563; }
+      .example { font: bold 11px Arial, sans-serif; fill: #059669; font-style: italic; }
+      .status { font: bold 12px Arial, sans-serif; fill: #059669; }
+    </style>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#3b82f6"/>
+    </marker>
+    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#60a5fa"/>
+      <stop offset="100%" style="stop-color:#3b82f6"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="500" fill="#ffffff"/>
+
+  <!-- Header -->
+  <rect x="0" y="0" width="800" height="60" fill="url(#skyGrad)"/>
+  <text x="400" y="30" text-anchor="middle" style="font: bold 24px Arial; fill: white;">☀️ WEATHER SKILL</text>
+  <text x="400" y="50" text-anchor="middle" style="font: bold 14px Arial; fill: #bfdbfe;">Get weather forecasts without API key</text>
+
+  <!-- Purpose Section -->
+  <rect x="20" y="75" width="360" height="120" fill="#eff6ff" stroke="#3b82f6" stroke-width="2" rx="8"/>
+  <text x="40" y="100" class="section-title">PURPOSE</text>
+  <text x="40" y="125" class="small-text">• Get current weather for any location</text>
+  <text x="40" y="145" class="small-text">• View 5-day forecasts</text>
+  <text x="40" y="165" class="small-text">• Check temperature, humidity, conditions</text>
+  <text x="40" y="185" class="small-text">• No API key required ✓</text>
+
+  <!-- Status Section -->
+  <rect x="420" y="75" width="360" height="120" fill="#ecfdf5" stroke="#10b981" stroke-width="2" rx="8"/>
+  <text x="440" y="100" class="section-title" style="fill: #059669;">STATUS: 🟢 ELIGIBLE</text>
+  <text x="440" y="125" class="small-text">Requirements: None</text>
+  <text x="440" y="145" class="small-text">Dependencies: None</text>
+  <text x="440" y="165" class="small-text">Ready to use immediately!</text>
+  <text x="440" y="185" class="status">✓ No installation needed</text>
+
+  <!-- Flow Diagram -->
+  <text x="400" y="220" text-anchor="middle" class="section-title">HOW IT WORKS</text>
+
+  <!-- User Box -->
+  <rect x="50" y="240" width="150" height="70" fill="#8b5cf6" stroke="#7c3aed" stroke-width="2" rx="8"/>
+  <text x="125" y="270" text-anchor="middle" class="label">USER</text>
+  <text x="125" y="290" text-anchor="middle" style="font: bold 10px Arial; fill: #e9d5ff;">(Discord/Slack/CLI)</text>
+
+  <!-- Arrow 1 -->
+  <line x1="200" y1="275" x2="270" y2="275" stroke="#3b82f6" stroke-width="3" marker-end="url(#arrow)"/>
+  <text x="235" y="265" text-anchor="middle" style="font: bold 9px Arial; fill: #3b82f6;">"What's the</text>
+  <text x="235" y="278" text-anchor="middle" style="font: bold 9px Arial; fill: #3b82f6;">weather?"</text>
+
+  <!-- Gateway Box -->
+  <rect x="280" y="240" width="150" height="70" fill="#3b82f6" stroke="#1d4ed8" stroke-width="2" rx="8"/>
+  <text x="355" y="270" text-anchor="middle" class="label">OPENCLAW</text>
+  <text x="355" y="290" text-anchor="middle" class="label">GATEWAY</text>
+
+  <!-- Arrow 2 -->
+  <line x1="430" y1="275" x2="500" y2="275" stroke="#3b82f6" stroke-width="3" marker-end="url(#arrow)"/>
+  <text x="465" y="265" text-anchor="middle" style="font: bold 9px Arial; fill: #3b82f6;">Query</text>
+
+  <!-- Weather Service Box -->
+  <rect x="510" y="240" width="150" height="70" fill="#f59e0b" stroke="#d97706" stroke-width="2" rx="8"/>
+  <text x="585" y="270" text-anchor="middle" class="label">WEATHER</text>
+  <text x="585" y="290" text-anchor="middle" class="label">SERVICE</text>
+
+  <!-- Arrow 3 (return) -->
+  <path d="M 510 310 L 510 340 L 200 340 L 200 310" fill="none" stroke="#10b981" stroke-width="3" marker-end="url(#arrow)" stroke-dasharray="5,3"/>
+  <text x="355" y="358" text-anchor="middle" style="font: bold 10px Arial; fill: #10b981;">Response: Temperature, Humidity, Forecast</text>
+
+  <!-- Example Commands Section -->
+  <rect x="20" y="380" width="760" height="100" fill="#fef3c7" stroke="#f59e0b" stroke-width="2" rx="8"/>
+  <text x="40" y="405" class="section-title" style="fill: #d97706;">EXAMPLE COMMANDS</text>
+
+  <text x="40" y="430" class="example">Discord: @openclaw What's the weather in New York?</text>
+  <text x="40" y="450" class="example">Discord: @openclaw Give me a 5-day forecast for Tokyo</text>
+  <text x="40" y="470" class="example">CLI: docker-compose run --rm openclaw-cli agent --message "Weather in London"</text>
+</svg>

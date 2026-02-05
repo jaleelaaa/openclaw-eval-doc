@@ -1,0 +1,245 @@
+---
+title: Logging
+description: Configure and interpret OpenClaw logs
+icon: FileText
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+# Logging
+
+OpenClaw provides comprehensive logging to help you monitor operations, debug issues, and audit system activity. This guide covers log configuration, locations, and interpretation.
+
+## Log Locations
+
+| Source | Location | Format |
+|--------|----------|--------|
+| Console (Docker) | `docker compose logs` | Timestamped text |
+| Console (Native) | stdout | Timestamped text |
+| File Log | `/tmp/openclaw/openclaw-YYYY-MM-DD.log` | Structured JSON |
+
+## Viewing Logs
+
+### Docker
+
+```bash
+# Follow live logs
+docker compose logs -f openclaw-gateway
+
+# Last 100 lines
+docker compose logs --tail 100 openclaw-gateway
+
+# Since specific time
+docker compose logs --since "2026-02-05T10:00:00" openclaw-gateway
+```
+
+### Native
+
+```bash
+# Follow file log
+tail -f /tmp/openclaw/openclaw-$(date +%Y-%m-%d).log
+
+# View console output (if running in foreground)
+openclaw gateway --verbose
+```
+
+## Log Levels
+
+| Level | Description | When to Use |
+|-------|-------------|-------------|
+| `error` | Critical failures | Always on |
+| `warn` | Potential issues | Always on |
+| `info` | Normal operations | Default |
+| `debug` | Detailed information | Troubleshooting |
+| `trace` | Very detailed | Development only |
+
+### Configure Log Level
+
+```bash
+# Via CLI
+openclaw gateway --log-level debug
+
+# Via environment
+export OPENCLAW_LOG_LEVEL=debug
+openclaw gateway
+```
+
+## Log Format
+
+### Console Output
+
+```
+✓ [gateway]   listening on ws://0.0.0.0:18789
+✓ [heartbeat] started
+✓ [discord]   logged in to discord as MyBot#1234
+⚠ [whatsapp]  reconnecting...
+✗ [telegram]  authentication failed
+```
+
+Symbols:
+- `✓` — Success/info
+- `⚠` — Warning
+- `✗` — Error
+
+### JSON Format (File)
+
+```json
+{
+  "timestamp": "2026-02-05T10:00:00.000Z",
+  "level": "info",
+  "component": "gateway",
+  "message": "listening on ws://0.0.0.0:18789",
+  "metadata": {
+    "port": 18789,
+    "bind": "lan"
+  }
+}
+```
+
+## Component Tags
+
+| Tag | Component |
+|-----|-----------|
+| `[gateway]` | Core gateway server |
+| `[ws]` | WebSocket connections |
+| `[channel]` | Channel manager |
+| `[whatsapp]` | WhatsApp connector |
+| `[telegram]` | Telegram connector |
+| `[discord]` | Discord connector |
+| `[slack]` | Slack connector |
+| `[agent]` | Agent runtime |
+| `[session]` | Session manager |
+| `[model]` | LLM provider calls |
+| `[tool]` | Tool execution |
+| `[heartbeat]` | Keepalive system |
+| `[canvas]` | Canvas file server |
+
+## Common Log Messages
+
+### Startup Sequence
+
+```
+✓ [canvas]     host mounted at http://0.0.0.0:18789/__openclaw__/canvas/
+✓ [heartbeat]  started
+✓ [gateway]    agent model: google/gemini-3-flash-preview
+✓ [gateway]    listening on ws://0.0.0.0:18789 (PID 7)
+✓ [discord]    logged in to discord as MyBot#1234
+```
+
+### Message Processing
+
+```
+[channel]   received message from +1234567890
+[router]    routing to agent: default
+[session]   loading session: agent:default:+1234567890
+[agent]     calling model: google/gemini-3-flash-preview
+[model]     response: 1234 tokens
+[delivery]  sent response to whatsapp
+```
+
+### Error Signals
+
+| Signal | Meaning |
+|--------|---------|
+| `token_missing` | No auth token provided |
+| `token_mismatch` | Invalid auth token |
+| `pairing required` | Device needs approval |
+| `unauthorized` | Authentication failed |
+| `SIGTERM received` | Graceful shutdown initiated |
+| `rate_limited` | API rate limit hit |
+
+## Verbose Mode
+
+Enable detailed logging for troubleshooting:
+
+```bash
+openclaw gateway --verbose
+```
+
+This adds:
+- Full request/response details
+- Tool call parameters and results
+- Session loading/saving events
+- WebSocket frame details
+
+<Callout title="Performance" type="warn">
+  Verbose mode generates significantly more output. Use only for debugging, not production.
+</Callout>
+
+## Log Rotation
+
+### Automatic (Docker)
+
+Docker handles log rotation. Configure in `docker-compose.yml`:
+
+```yaml
+services:
+  openclaw-gateway:
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+```
+
+### Manual (Native)
+
+Use logrotate or similar:
+
+```bash
+# /etc/logrotate.d/openclaw
+/tmp/openclaw/*.log {
+    daily
+    rotate 7
+    compress
+    missingok
+    notifempty
+}
+```
+
+## Filtering Logs
+
+### By Component
+
+```bash
+# Only gateway logs
+docker compose logs -f openclaw-gateway 2>&1 | grep '\[gateway\]'
+
+# Only errors
+docker compose logs -f openclaw-gateway 2>&1 | grep '✗'
+```
+
+### By Time
+
+```bash
+# Last hour
+docker compose logs --since 1h openclaw-gateway
+
+# Specific window
+docker compose logs --since "2026-02-05T09:00:00" --until "2026-02-05T10:00:00"
+```
+
+## Structured Log Analysis
+
+### Parse JSON Logs
+
+```bash
+# Count errors per component
+cat /tmp/openclaw/openclaw-2026-02-05.log | \
+  jq 'select(.level == "error") | .component' | \
+  sort | uniq -c
+
+# Find slow model calls
+cat /tmp/openclaw/openclaw-2026-02-05.log | \
+  jq 'select(.component == "model" and .metadata.duration > 5000)'
+```
+
+## Debug Environment Variables
+
+```bash
+# Enable specific debug namespaces
+DEBUG=openclaw:gateway,openclaw:agent openclaw gateway
+
+# Enable all debug output
+DEBUG=openclaw:* openclaw gateway
+```

@@ -1,0 +1,191 @@
+---
+title: WhatsApp
+description: Set up WhatsApp integration using Baileys
+icon: MessageCircle
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Card, Cards } from 'fumadocs-ui/components/card';
+
+# WhatsApp Integration
+
+WhatsApp integration uses the Baileys library to connect via the WhatsApp Web protocol. This allows OpenClaw to send and receive messages through your personal or business WhatsApp account.
+
+## Prerequisites
+
+- A WhatsApp account (personal or business)
+- A smartphone with WhatsApp installed
+- OpenClaw gateway running
+
+## Setup
+
+### Step 1: Start the Login Flow
+
+```bash
+# Docker
+docker compose run --rm openclaw-cli providers login
+
+# Native
+openclaw providers login
+```
+
+### Step 2: Scan the QR Code
+
+A QR code will appear in your terminal. On your phone:
+
+1. Open WhatsApp
+2. Go to **Settings** → **Linked Devices**
+3. Tap **Link a Device**
+4. Scan the QR code shown in the terminal
+
+<Callout title="QR Code Expiration" type="warn">
+  The QR code expires after about 60 seconds. If it expires, the login flow will generate a new one automatically.
+</Callout>
+
+### Step 3: Verify Connection
+
+```bash
+# Check channel status
+openclaw channels status
+
+# Or via health check
+openclaw health --json
+```
+
+You should see:
+```json
+{
+  "channels": {
+    "whatsapp": "connected"
+  }
+}
+```
+
+## Configuration
+
+### Enable/Disable WhatsApp
+
+```bash
+# Enable
+openclaw config set channels.whatsapp.enabled true
+
+# Disable
+openclaw config set channels.whatsapp.enabled false
+```
+
+### DM Policy
+
+Control who can message your agent:
+
+```bash
+# Require pairing (default)
+openclaw config set channels.whatsapp.dmPolicy "pairing"
+
+# Allow specific numbers only
+openclaw config set channels.whatsapp.dmPolicy "allowlist"
+openclaw config set channels.whatsapp.allowFrom '["1234567890", "0987654321"]'
+
+# Allow anyone (not recommended)
+openclaw config set channels.whatsapp.dmPolicy "open"
+```
+
+<Callout title="Phone Number Format" type="info">
+  Use international format without the '+' sign. For example, US number +1-555-123-4567 becomes `15551234567`.
+</Callout>
+
+### Group Messages
+
+Configure group behavior:
+
+```bash
+# Enable group messages (default: disabled)
+openclaw config set channels.whatsapp.groups.enabled true
+
+# Only respond when mentioned
+openclaw config set channels.whatsapp.groups.mentionOnly true
+```
+
+## Session Management
+
+WhatsApp sessions are stored in:
+```
+~/.openclaw/agents/<agentId>/whatsapp/
+```
+
+### Reconnection
+
+If disconnected, the session usually reconnects automatically. To force reconnection:
+
+```bash
+# Restart the gateway
+docker compose restart openclaw-gateway
+
+# Or re-login
+openclaw providers login --provider whatsapp
+```
+
+### Logout
+
+To unlink the device:
+
+```bash
+# Via CLI
+openclaw providers logout --provider whatsapp
+
+# Or from your phone:
+# WhatsApp → Settings → Linked Devices → Select device → Log Out
+```
+
+## Features
+
+| Feature | Supported |
+|---------|-----------|
+| Text messages | ✅ |
+| Images | ✅ |
+| Audio messages | ✅ |
+| Documents | ✅ |
+| Group messages | ✅ |
+| Reactions | ✅ |
+| Reply quotes | ✅ |
+| Status updates | ❌ |
+
+## Troubleshooting
+
+| Issue | Solution |
+|-------|----------|
+| QR code won't scan | Ensure good lighting, clean camera lens |
+| Session keeps disconnecting | Check internet stability, phone battery |
+| "Conflict" error | WhatsApp logged in elsewhere; re-authenticate |
+| Messages delayed | Check phone internet connection |
+| Rate limited | WhatsApp limits message frequency; slow down |
+
+### Common Log Messages
+
+```
+✓ [whatsapp] connected
+✓ [whatsapp] session authenticated
+⚠ [whatsapp] connection closed, reconnecting...
+✗ [whatsapp] authentication failed - QR expired
+```
+
+## Limitations
+
+- **One Account**: Each OpenClaw instance supports one WhatsApp account
+- **Phone Required**: Your phone must stay connected to the internet
+- **No WhatsApp Business API**: Uses personal/web protocol, not official API
+- **Rate Limits**: WhatsApp may temporarily block accounts sending too many messages
+
+<Callout title="WhatsApp Terms" type="warn">
+  Using automated systems with WhatsApp may violate their Terms of Service. Use responsibly and avoid spam-like behavior.
+</Callout>
+
+## Next Steps
+
+<Cards>
+  <Card href="/docs/openclaw/channels/telegram" title="Add Telegram" icon="Send">
+    Connect a Telegram bot
+  </Card>
+  <Card href="/docs/openclaw/configuration/workspace" title="Configure Agent" icon="Settings">
+    Customize your agent's behavior
+  </Card>
+</Cards>

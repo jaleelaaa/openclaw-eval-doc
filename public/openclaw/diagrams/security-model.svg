@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="700" viewBox="0 0 1000 700">
+  <defs>
+    <style type="text/css">
+      .title { font-family: Arial, Helvetica, sans-serif; font-size: 22px; font-weight: bold; fill: #333333; }
+      .layer-title { font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: bold; fill: #ffffff; }
+      .layer-desc { font-family: Arial, Helvetica, sans-serif; font-size: 11px; font-weight: bold; fill: #ffffff; }
+      .section-label { font-family: Arial, Helvetica, sans-serif; font-size: 13px; font-weight: bold; fill: #333333; }
+      .item-label { font-family: Arial, Helvetica, sans-serif; font-size: 11px; font-weight: bold; fill: #333333; }
+      .config-key { font-family: monospace; font-size: 10px; font-weight: bold; fill: #1976D2; }
+      .config-value { font-family: monospace; font-size: 10px; font-weight: bold; fill: #666666; }
+    </style>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1000" height="700" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="500" y="35" text-anchor="middle" class="title">Security Model</text>
+
+  <!-- Onion layers (concentric) -->
+  <!-- Outer: Network -->
+  <ellipse cx="300" cy="300" rx="250" ry="230" fill="#FFCDD2" stroke="#D32F2F" stroke-width="3"/>
+  <text x="300" y="95" text-anchor="middle" class="layer-title" style="fill:#D32F2F">NETWORK LAYER</text>
+
+  <!-- Middle: Authentication -->
+  <ellipse cx="300" cy="300" rx="180" ry="165" fill="#FFF3E0" stroke="#F57C00" stroke-width="3"/>
+  <text x="300" y="160" text-anchor="middle" class="layer-title" style="fill:#E65100">AUTHENTICATION</text>
+
+  <!-- Inner: Authorization -->
+  <ellipse cx="300" cy="300" rx="110" ry="100" fill="#E8F5E9" stroke="#388E3C" stroke-width="3"/>
+  <text x="300" y="230" text-anchor="middle" class="layer-title" style="fill:#2E7D32">AUTHORIZATION</text>
+
+  <!-- Core: Gateway -->
+  <circle cx="300" cy="310" r="50" fill="#1976D2" stroke="#0D47A1" stroke-width="3" filter="url(#shadow)"/>
+  <text x="300" y="305" text-anchor="middle" class="layer-title">Gateway</text>
+  <text x="300" y="322" text-anchor="middle" class="layer-desc">Core</text>
+
+  <!-- Network Layer Details -->
+  <rect x="580" y="60" width="390" height="140" rx="8" fill="#FFEBEE" stroke="#D32F2F" stroke-width="2"/>
+  <text x="600" y="85" class="section-label" style="fill:#D32F2F">Network Security</text>
+
+  <rect x="600" y="100" width="350" height="30" rx="4" fill="#ffffff" stroke="#EF9A9A" stroke-width="1"/>
+  <text x="615" y="120" class="item-label">Binding Mode:</text>
+  <text x="710" y="120" class="config-key">loopback</text>
+  <text x="770" y="120" class="config-value">| lan | 0.0.0.0</text>
+
+  <rect x="600" y="135" width="350" height="30" rx="4" fill="#ffffff" stroke="#EF9A9A" stroke-width="1"/>
+  <text x="615" y="155" class="item-label">Recommended:</text>
+  <text x="715" y="155" class="config-value">Tailscale VPN / SSH Tunnel</text>
+
+  <rect x="600" y="170" width="350" height="25" rx="4" fill="#FFCDD2" stroke="#EF9A9A" stroke-width="1"/>
+  <text x="615" y="187" class="item-label" style="fill:#C62828">Never expose directly to internet!</text>
+
+  <!-- Authentication Layer Details -->
+  <rect x="580" y="220" width="390" height="160" rx="8" fill="#FFF3E0" stroke="#F57C00" stroke-width="2"/>
+  <text x="600" y="245" class="section-label" style="fill:#E65100">Authentication</text>
+
+  <rect x="600" y="260" width="350" height="35" rx="4" fill="#ffffff" stroke="#FFB74D" stroke-width="1"/>
+  <text x="615" y="280" class="item-label">Gateway Token:</text>
+  <text x="615" y="293" class="config-key">64-character hex string</text>
+
+  <rect x="600" y="300" width="350" height="35" rx="4" fill="#ffffff" stroke="#FFB74D" stroke-width="1"/>
+  <text x="615" y="320" class="item-label">Device Pairing:</text>
+  <text x="715" y="320" class="config-value">Challenge-response approval</text>
+
+  <rect x="600" y="340" width="350" height="35" rx="4" fill="#ffffff" stroke="#FFB74D" stroke-width="1"/>
+  <text x="615" y="360" class="item-label">API Keys:</text>
+  <text x="680" y="360" class="config-value">Stored in environment variables</text>
+
+  <!-- Authorization Layer Details -->
+  <rect x="580" y="400" width="390" height="140" rx="8" fill="#E8F5E9" stroke="#388E3C" stroke-width="2"/>
+  <text x="600" y="425" class="section-label" style="fill:#2E7D32">Authorization (DM Policy)</text>
+
+  <rect x="600" y="440" width="110" height="45" rx="6" fill="#C8E6C9" stroke="#81C784" stroke-width="1"/>
+  <text x="655" y="460" text-anchor="middle" class="item-label">pairing</text>
+  <text x="655" y="478" text-anchor="middle" class="config-value">Approval</text>
+
+  <rect x="720" y="440" width="110" height="45" rx="6" fill="#C8E6C9" stroke="#81C784" stroke-width="1"/>
+  <text x="775" y="460" text-anchor="middle" class="item-label">allowlist</text>
+  <text x="775" y="478" text-anchor="middle" class="config-value">Explicit</text>
+
+  <rect x="840" y="440" width="110" height="45" rx="6" fill="#FFCDD2" stroke="#EF9A9A" stroke-width="1"/>
+  <text x="895" y="460" text-anchor="middle" class="item-label">open</text>
+  <text x="895" y="478" text-anchor="middle" class="config-value">Anyone</text>
+
+  <text x="600" y="510" class="item-label">Sandbox Mode:</text>
+  <text x="700" y="510" class="config-key">none</text>
+  <text x="745" y="510" class="config-value">| jailed | strict</text>
+
+  <text x="600" y="530" class="item-label">Tool Policy:</text>
+  <text x="680" y="530" class="config-value">allowed/denied tool lists</text>
+
+  <!-- Security Flow -->
+  <rect x="580" y="560" width="390" height="120" rx="8" fill="#f5f5f5" stroke="#E0E0E0" stroke-width="2"/>
+  <text x="600" y="585" class="section-label">Security Check Flow</text>
+
+  <rect x="600" y="600" width="80" height="30" rx="4" fill="#1976D2"/>
+  <text x="640" y="620" text-anchor="middle" class="layer-desc">Request</text>
+
+  <text x="690" y="620" class="item-label">→</text>
+
+  <rect x="700" y="600" width="80" height="30" rx="4" fill="#FFCDD2" stroke="#D32F2F" stroke-width="1"/>
+  <text x="740" y="620" text-anchor="middle" class="item-label">Network</text>
+
+  <text x="790" y="620" class="item-label">→</text>
+
+  <rect x="800" y="600" width="60" height="30" rx="4" fill="#FFF3E0" stroke="#F57C00" stroke-width="1"/>
+  <text x="830" y="620" text-anchor="middle" class="item-label">Auth</text>
+
+  <text x="870" y="620" class="item-label">→</text>
+
+  <rect x="880" y="600" width="70" height="30" rx="4" fill="#E8F5E9" stroke="#388E3C" stroke-width="1"/>
+  <text x="915" y="620" text-anchor="middle" class="item-label">Authz</text>
+
+  <text x="600" y="665" class="config-value">Each layer must pass before request reaches gateway core</text>
+
+  <!-- Legend -->
+  <rect x="30" y="560" width="200" height="120" rx="8" fill="#ffffff" stroke="#E0E0E0" stroke-width="1"/>
+  <text x="50" y="585" class="section-label">Security Levels</text>
+  <rect x="50" y="600" width="20" height="15" rx="3" fill="#FFCDD2" stroke="#D32F2F" stroke-width="1"/>
+  <text x="80" y="612" class="item-label">Critical</text>
+  <rect x="50" y="625" width="20" height="15" rx="3" fill="#FFF3E0" stroke="#F57C00" stroke-width="1"/>
+  <text x="80" y="637" class="item-label">Important</text>
+  <rect x="50" y="650" width="20" height="15" rx="3" fill="#E8F5E9" stroke="#388E3C" stroke-width="1"/>
+  <text x="80" y="662" class="item-label">Protected</text>
+</svg>

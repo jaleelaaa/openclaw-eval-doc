@@ -1,0 +1,9 @@
+{
+  "title": "Introduction",
+  "icon": "BookOpen",
+  "pages": [
+    "overview",
+    "architecture",
+    "quickstart"
+  ]
+}

@@ -1,0 +1,338 @@
+---
+title: Plugin SDK Reference
+description: Types, helpers, and utilities for plugin development
+icon: Package
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+# Plugin SDK Reference
+
+The OpenClaw Plugin SDK provides stable interfaces, type definitions, and helper utilities for building plugins. This reference covers the complete SDK API.
+
+## Installation
+
+```bash
+npm install @openclaw/plugin-sdk
+# or
+pnpm add @openclaw/plugin-sdk
+```
+
+## Core Interfaces
+
+### ChannelPlugin
+
+The main interface for channel connectors:
+
+```typescript
+interface ChannelPlugin {
+  // Identification
+  readonly id: string;
+  readonly name: string;
+  readonly version: string;
+
+  // Capabilities this channel supports
+  readonly capabilities: ChannelCapabilities[];
+
+  // Lifecycle
+  connect(): Promise<void>;
+  disconnect(): Promise<void>;
+
+  // Messaging
+  sendMessage(message: OutboundMessage): Promise<void>;
+  onMessage(handler: MessageHandler): void;
+
+  // Optional
+  setRuntime?(runtime: ChannelRuntime): void;
+  getStatus?(): ChannelStatus;
+}
+```
+
+### ChannelMeta
+
+Plugin metadata:
+
+```typescript
+interface ChannelMeta {
+  id: string;
+  name: string;
+  version: string;
+  description?: string;
+  author?: string;
+  homepage?: string;
+}
+```
+
+### ChannelCapabilities
+
+Supported features:
+
+```typescript
+enum ChannelCapabilities {
+  TEXT = 'text',
+  IMAGES = 'images',
+  AUDIO = 'audio',
+  VIDEO = 'video',
+  FILES = 'files',
+  REACTIONS = 'reactions',
+  THREADS = 'threads',
+  TYPING = 'typing',
+  READ_RECEIPTS = 'read_receipts',
+  EDITING = 'editing',
+  DELETION = 'deletion',
+}
+```
+
+## Message Types
+
+### InboundMessage
+
+Messages received from platforms:
+
+```typescript
+interface InboundMessage {
+  id: string;
+  channel: string;
+  peer: string;
+  sender: string;
+  content: string;
+  timestamp: Date;
+  metadata: {
+    isGroup: boolean;
+    groupId?: string;
+    groupName?: string;
+    replyTo?: string;
+    threadId?: string;
+  };
+  attachments?: Attachment[];
+}
+```
+
+### OutboundMessage
+
+Messages sent to platforms:
+
+```typescript
+interface OutboundMessage {
+  peer: string;
+  content: string;
+  replyTo?: string;
+  threadId?: string;
+  attachments?: Attachment[];
+  options?: {
+    silent?: boolean;
+    markdown?: boolean;
+  };
+}
+```
+
+### Attachment
+
+Media attachments:
+
+```typescript
+interface Attachment {
+  type: 'image' | 'audio' | 'video' | 'file';
+  url?: string;
+  buffer?: Buffer;
+  filename?: string;
+  mimeType?: string;
+  size?: number;
+}
+```
+
+## Config Helpers
+
+### buildConfigSchema
+
+Define plugin configuration:
+
+```typescript
+import { buildConfigSchema } from '@openclaw/plugin-sdk';
+
+const schema = buildConfigSchema({
+  enabled: {
+    type: 'boolean',
+    default: true,
+    description: 'Enable this channel',
+  },
+  token: {
+    type: 'string',
+    required: true,
+    secret: true,
+    description: 'Bot authentication token',
+  },
+  dmPolicy: {
+    type: 'enum',
+    values: ['pairing', 'allowlist', 'open'],
+    default: 'pairing',
+  },
+  allowFrom: {
+    type: 'array',
+    items: { type: 'string' },
+    default: [],
+  },
+});
+```
+
+### setAccountEnabled
+
+Toggle account state:
+
+```typescript
+import { setAccountEnabled } from '@openclaw/plugin-sdk';
+
+// Enable/disable a specific account
+setAccountEnabled(config, 'account-id', true);
+```
+
+### applyAccountName
+
+Set account display name:
+
+```typescript
+import { applyAccountName } from '@openclaw/plugin-sdk';
+
+applyAccountName(config, 'account-id', 'Work Slack');
+```
+
+## Pairing Helpers
+
+### formatPairingHint
+
+Generate user-friendly pairing instructions:
+
+```typescript
+import { formatPairingHint } from '@openclaw/plugin-sdk';
+
+const hint = formatPairingHint('telegram', userId);
+// Returns: "Send /pair to the bot to enable messaging"
+```
+
+### PAIRING_MESSAGE
+
+Standard pairing message template:
+
+```typescript
+import { PAIRING_MESSAGE } from '@openclaw/plugin-sdk';
+
+// "Pairing required. Please contact the administrator to enable messaging."
+```
+
+### buildPairingReply
+
+Create pairing response:
+
+```typescript
+import { buildPairingReply } from '@openclaw/plugin-sdk';
+
+const reply = buildPairingReply(peer, pairingCode);
+```
+
+## Tool Parameter Helpers
+
+### readStringParam
+
+Safely read string parameters:
+
+```typescript
+import { readStringParam } from '@openclaw/plugin-sdk';
+
+const path = readStringParam(input, 'path');
+const name = readStringParam(input, 'name', 'default'); // with default
+```
+
+### readNumberParam
+
+Safely read numeric parameters:
+
+```typescript
+import { readNumberParam } from '@openclaw/plugin-sdk';
+
+const limit = readNumberParam(input, 'limit', 100);
+const offset = readNumberParam(input, 'offset', 0);
+```
+
+### readBooleanParam
+
+Safely read boolean parameters:
+
+```typescript
+import { readBooleanParam } from '@openclaw/plugin-sdk';
+
+const recursive = readBooleanParam(input, 'recursive', false);
+```
+
+### jsonResult
+
+Format tool results:
+
+```typescript
+import { jsonResult } from '@openclaw/plugin-sdk';
+
+return jsonResult({ success: true, data: result });
+// Returns: '{"success":true,"data":...}'
+```
+
+## Utilities
+
+### formatDocsLink
+
+Generate documentation links:
+
+```typescript
+import { formatDocsLink } from '@openclaw/plugin-sdk';
+
+const link = formatDocsLink('channels/telegram');
+// Returns: "https://openclaw.dev/docs/channels/telegram"
+```
+
+### Validation
+
+Schema validation helpers:
+
+```typescript
+import { validateConfig, ValidationError } from '@openclaw/plugin-sdk';
+
+try {
+  validateConfig(config, schema);
+} catch (e) {
+  if (e instanceof ValidationError) {
+    console.error('Invalid config:', e.errors);
+  }
+}
+```
+
+## Type Exports
+
+The SDK exports all necessary types:
+
+```typescript
+import type {
+  ChannelPlugin,
+  ChannelMeta,
+  ChannelCapabilities,
+  ChannelStatus,
+  ChannelRuntime,
+  InboundMessage,
+  OutboundMessage,
+  Attachment,
+  MessageHandler,
+  ConfigSchema,
+  SkillPlugin,
+  HookPlugin,
+  ToolDefinition,
+} from '@openclaw/plugin-sdk';
+```
+
+## Best Practices
+
+<Callout title="SDK Version" type="info">
+  Always use the SDK version compatible with your OpenClaw installation. Check compatibility in the release notes.
+</Callout>
+
+1. **Import from SDK only** — Never import from `@openclaw/core` or internal modules
+2. **Use type definitions** — Leverage TypeScript for compile-time safety
+3. **Handle errors gracefully** — Wrap API calls in try/catch
+4. **Validate config early** — Check configuration during plugin initialization
+5. **Document capabilities** — Accurately declare supported features

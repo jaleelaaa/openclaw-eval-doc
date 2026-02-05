@@ -1,0 +1,301 @@
+---
+title: Security Configuration
+description: Secure your OpenClaw deployment with proper authentication
+icon: Shield
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Card, Cards } from 'fumadocs-ui/components/card';
+
+# Security Configuration
+
+Securing your OpenClaw deployment protects your conversations, API keys, and infrastructure. This guide covers authentication, network security, and best practices.
+
+## Authentication Layers
+
+OpenClaw uses multiple authentication layers:
+
+| Layer | Purpose | Scope |
+|-------|---------|-------|
+| **Gateway Token** | Control plane access | WebSocket/HTTP |
+| **Device Pairing** | Client approval | UI/CLI access |
+| **DM Policy** | Message filtering | Channel users |
+| **API Keys** | Provider auth | LLM/Channel APIs |
+
+## Gateway Token
+
+The 64-character hex token authenticates all gateway connections.
+
+### Generate Token
+
+```bash
+# Using OpenSSL
+openssl rand -hex 32
+
+# Using Python
+python3 -c "import secrets; print(secrets.token_hex(32))"
+```
+
+### Configure Token
+
+```bash
+# Environment variable (recommended)
+export OPENCLAW_GATEWAY_TOKEN="your-64-char-hex-token"
+
+# Or in config file
+openclaw config set gateway.auth.token "your-64-char-hex-token"
+```
+
+<Callout title="Token Security" type="warn">
+  - Never commit tokens to version control
+  - Rotate tokens regularly
+  - Use different tokens for different environments
+</Callout>
+
+### Token in Connections
+
+Include token in WebSocket URL:
+
+```
+ws://127.0.0.1:18789?token=<your-token>
+```
+
+Or in HTTP requests:
+
+```bash
+curl -H "Authorization: Bearer <your-token>" \
+  http://127.0.0.1:18789/__openclaw__/health
+```
+
+## Device Pairing
+
+Device pairing adds an additional approval step for new clients.
+
+### How It Works
+
+1. Client connects with valid token
+2. Gateway generates pairing challenge
+3. User approves in Control UI or CLI
+4. Device is added to trusted list
+
+### Enable/Disable
+
+```bash
+# Enable (default)
+openclaw config set gateway.controlUi.dangerouslyDisableDeviceAuth false
+
+# Disable (development only!)
+openclaw config set gateway.controlUi.dangerouslyDisableDeviceAuth true
+```
+
+### Approve Devices
+
+Via Control UI:
+1. Access `http://127.0.0.1:18789?token=<token>`
+2. See pending device requests
+3. Click "Approve" or "Deny"
+
+Via CLI:
+```bash
+openclaw devices list
+openclaw devices approve <device-id>
+openclaw devices revoke <device-id>
+```
+
+## DM Policy
+
+Control who can message your agent through each channel.
+
+### Policy Types
+
+| Policy | Behavior |
+|--------|----------|
+| `pairing` | Users must be approved first |
+| `allowlist` | Only specified users can message |
+| `open` | Anyone can message (not recommended) |
+
+### Configure Per Channel
+
+```bash
+# WhatsApp with allowlist
+openclaw config set channels.whatsapp.dmPolicy "allowlist"
+openclaw config set channels.whatsapp.allowFrom '["1234567890", "0987654321"]'
+
+# Telegram with pairing
+openclaw config set channels.telegram.dmPolicy "pairing"
+```
+
+### User Formats
+
+| Channel | Format | Example |
+|---------|--------|---------|
+| WhatsApp | Phone number | `"1234567890"` |
+| Telegram | User ID or @username | `"123456789"` or `"@username"` |
+| Discord | User ID | `"123456789012345678"` |
+| Slack | User ID | `"U01234567"` |
+
+## Network Security
+
+### Binding Options
+
+| Mode | Risk Level | Use Case |
+|------|------------|----------|
+| `loopback` | Low | Development, same-machine only |
+| `lan` | Medium | Local network access |
+| `0.0.0.0` | High | Requires additional security |
+
+```bash
+# Restrict to localhost
+openclaw gateway --bind loopback
+
+# Allow LAN access (default)
+openclaw gateway --bind lan
+```
+
+### Never Expose Directly
+
+<Callout title="Critical" type="error">
+  Never expose OpenClaw directly to the public internet. Always use:
+  - VPN (like Tailscale)
+  - Reverse proxy with authentication
+  - SSH tunnel
+</Callout>
+
+### Recommended: Tailscale
+
+```bash
+# Install Tailscale
+curl -fsSL https://tailscale.com/install.sh | sh
+
+# Connect to network
+tailscale up
+
+# Access via Tailscale IP
+http://100.x.x.x:18789?token=<token>
+```
+
+### SSH Tunnel
+
+```bash
+# On client machine
+ssh -N -L 18789:127.0.0.1:18789 user@server
+
+# Then access locally
+http://127.0.0.1:18789?token=<token>
+```
+
+## API Key Security
+
+### Environment Variables
+
+Store API keys in environment, not config files:
+
+```bash
+# Good
+export GOOGLE_API_KEY="your-key"
+
+# Bad - avoid in openclaw.json
+{
+  "providers": {
+    "google": {
+      "apiKey": "your-key"  // Don't do this!
+    }
+  }
+}
+```
+
+### Secrets Manager
+
+For production, use a secrets manager:
+
+```bash
+# AWS Secrets Manager
+export GOOGLE_API_KEY=$(aws secretsmanager get-secret-value --secret-id openclaw/google-api-key --query SecretString --output text)
+
+# HashiCorp Vault
+export GOOGLE_API_KEY=$(vault kv get -field=api_key secret/openclaw/google)
+```
+
+### Key Rotation
+
+Rotate API keys regularly:
+
+1. Generate new key in provider console
+2. Update environment variable
+3. Restart gateway
+4. Verify connectivity
+5. Revoke old key
+
+## Sandbox Mode
+
+Restrict agent file system access:
+
+```bash
+# Workspace-only access
+openclaw config set agents.defaults.sandbox.mode "jailed"
+
+# Full isolation (if available)
+openclaw config set agents.defaults.sandbox.mode "strict"
+```
+
+| Mode | Access |
+|------|--------|
+| `none` | Full host filesystem |
+| `jailed` | Workspace directory only |
+| `strict` | Container isolation |
+
+## Tool Policy
+
+Control which tools agents can use:
+
+```bash
+# Allow specific tools
+openclaw config set agents.defaults.tools.allowed '["read", "write"]'
+
+# Deny dangerous tools
+openclaw config set agents.defaults.tools.denied '["exec", "browser"]'
+```
+
+## Audit Logging
+
+Enable audit logging for compliance:
+
+```json
+{
+  "logging": {
+    "audit": {
+      "enabled": true,
+      "path": "/var/log/openclaw/audit.log",
+      "events": [
+        "auth_success",
+        "auth_failure",
+        "config_change",
+        "tool_execution"
+      ]
+    }
+  }
+}
+```
+
+## Security Checklist
+
+- [ ] Gateway token is 64 random hex characters
+- [ ] Token is stored in environment, not config
+- [ ] Device pairing is enabled
+- [ ] Network binding is `loopback` or `lan`
+- [ ] Remote access uses VPN or tunnel
+- [ ] API keys are in environment variables
+- [ ] Sandbox mode is enabled for untrusted input
+- [ ] Tool policy restricts dangerous operations
+- [ ] Audit logging is enabled (production)
+
+## Next Steps
+
+<Cards>
+  <Card href="/docs/openclaw/operations/troubleshooting" title="Troubleshooting" icon="AlertCircle">
+    Common issues and solutions
+  </Card>
+  <Card href="/docs/openclaw/operations/health" title="Health Checks" icon="Activity">
+    Monitor your deployment
+  </Card>
+</Cards>

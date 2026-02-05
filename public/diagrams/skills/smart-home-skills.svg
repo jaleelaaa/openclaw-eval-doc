@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" width="1200" height="700">
+  <defs>
+    <style>
+      .title { font: bold 22px Arial, sans-serif; fill: #1a1a2e; }
+      .label { font: bold 13px Arial, sans-serif; fill: #ffffff; }
+      .small-text { font: bold 11px Arial, sans-serif; fill: #4b5563; }
+      .code { font: bold 11px Consolas, monospace; fill: #1f2937; }
+    </style>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#1a1a2e"/>
+    </marker>
+    <linearGradient id="homeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#f59e0b"/>
+      <stop offset="100%" style="stop-color:#d97706"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="700" fill="#ffffff"/>
+
+  <!-- Header -->
+  <rect x="0" y="0" width="1200" height="70" fill="url(#homeGrad)"/>
+  <text x="600" y="40" text-anchor="middle" style="font: bold 28px Arial; fill: white;">SMART HOME SKILLS</text>
+  <text x="600" y="60" text-anchor="middle" style="font: bold 14px Arial; fill: #fef3c7;">OpenHue, SonosCLI, EightCTL, BluCLI</text>
+
+  <!-- OPENHUE SKILL -->
+  <rect x="20" y="85" width="285" height="280" fill="#fef3c7" stroke="#f59e0b" stroke-width="3" rx="10"/>
+  <rect x="20" y="85" width="285" height="40" fill="#f59e0b" rx="10"/>
+  <rect x="20" y="105" width="285" height="20" fill="#f59e0b"/>
+  <text x="162" y="112" text-anchor="middle" style="font: bold 18px Arial; fill: white;">OPENHUE (Lights)</text>
+
+  <text x="40" y="150" style="font: bold 14px Arial; fill: #1a1a2e;">Philips Hue Control</text>
+  <text x="40" y="175" class="small-text">* Turn lights on/off</text>
+  <text x="40" y="195" class="small-text">* Adjust brightness</text>
+  <text x="40" y="215" class="small-text">* Change colors</text>
+  <text x="40" y="235" class="small-text">* Control scenes</text>
+
+  <rect x="40" y="255" width="245" height="40" fill="#fef2f2" stroke="#dc2626" rx="5"/>
+  <text x="55" y="280" class="code">Missing: openhue CLI</text>
+
+  <text x="40" y="320" class="code">@openclaw turn on living room</text>
+  <text x="40" y="340" class="code">@openclaw dim lights to 50%</text>
+
+  <!-- SONOSCLI SKILL -->
+  <rect x="315" y="85" width="285" height="280" fill="#ecfdf5" stroke="#10b981" stroke-width="3" rx="10"/>
+  <rect x="315" y="85" width="285" height="40" fill="#10b981" rx="10"/>
+  <rect x="315" y="105" width="285" height="20" fill="#10b981"/>
+  <text x="457" y="112" text-anchor="middle" style="font: bold 18px Arial; fill: white;">SONOSCLI (Audio)</text>
+
+  <text x="335" y="150" style="font: bold 14px Arial; fill: #1a1a2e;">Sonos Speaker Control</text>
+  <text x="335" y="175" class="small-text">* Play/pause music</text>
+  <text x="335" y="195" class="small-text">* Adjust volume</text>
+  <text x="335" y="215" class="small-text">* Group speakers</text>
+  <text x="335" y="235" class="small-text">* Change sources</text>
+
+  <rect x="335" y="255" width="245" height="40" fill="#fef2f2" stroke="#dc2626" rx="5"/>
+  <text x="350" y="280" class="code">Missing: sonos CLI tool</text>
+
+  <text x="335" y="320" class="code">@openclaw play music in kitchen</text>
+  <text x="335" y="340" class="code">@openclaw set volume to 40%</text>
+
+  <!-- EIGHTCTL SKILL (Eight Sleep) -->
+  <rect x="610" y="85" width="285" height="280" fill="#dbeafe" stroke="#3b82f6" stroke-width="3" rx="10"/>
+  <rect x="610" y="85" width="285" height="40" fill="#3b82f6" rx="10"/>
+  <rect x="610" y="105" width="285" height="20" fill="#3b82f6"/>
+  <text x="752" y="112" text-anchor="middle" style="font: bold 18px Arial; fill: white;">EIGHTCTL (Sleep)</text>
+
+  <text x="630" y="150" style="font: bold 14px Arial; fill: #1a1a2e;">Eight Sleep Mattress</text>
+  <text x="630" y="175" class="small-text">* Adjust bed temperature</text>
+  <text x="630" y="195" class="small-text">* View sleep data</text>
+  <text x="630" y="215" class="small-text">* Control warming/cooling</text>
+  <text x="630" y="235" class="small-text">* Set sleep schedules</text>
+
+  <rect x="630" y="255" width="245" height="40" fill="#fef2f2" stroke="#dc2626" rx="5"/>
+  <text x="645" y="280" class="code">Missing: eightctl + auth</text>
+
+  <text x="630" y="320" class="code">@openclaw warm my bed to 75</text>
+  <text x="630" y="340" class="code">@openclaw show sleep stats</text>
+
+  <!-- BLUCLI SKILL (Bluetooth) -->
+  <rect x="905" y="85" width="275" height="280" fill="#f5f3ff" stroke="#7c3aed" stroke-width="3" rx="10"/>
+  <rect x="905" y="85" width="275" height="40" fill="#7c3aed" rx="10"/>
+  <rect x="905" y="105" width="275" height="20" fill="#7c3aed"/>
+  <text x="1042" y="112" text-anchor="middle" style="font: bold 18px Arial; fill: white;">BLUCLI (Bluetooth)</text>
+
+  <text x="925" y="150" style="font: bold 14px Arial; fill: #1a1a2e;">Bluetooth Device Control</text>
+  <text x="925" y="175" class="small-text">* Connect/disconnect devices</text>
+  <text x="925" y="195" class="small-text">* List paired devices</text>
+  <text x="925" y="215" class="small-text">* Manage pairings</text>
+  <text x="925" y="235" class="small-text">* Control audio routing</text>
+
+  <rect x="925" y="255" width="235" height="40" fill="#fef2f2" stroke="#dc2626" rx="5"/>
+  <text x="940" y="280" class="code">Missing: blucli binary</text>
+
+  <text x="925" y="320" class="code">@openclaw connect AirPods</text>
+  <text x="925" y="340" class="code">@openclaw list bluetooth</text>
+
+  <!-- Smart Home Architecture -->
+  <rect x="20" y="380" width="1160" height="300" fill="#fffbeb" stroke="#f59e0b" stroke-width="2" rx="10"/>
+  <text x="600" y="410" text-anchor="middle" style="font: bold 20px Arial; fill: #b45309;">SMART HOME ARCHITECTURE</text>
+
+  <!-- Home illustration -->
+  <rect x="60" y="440" width="250" height="200" fill="#ffffff" stroke="#6b7280" stroke-width="2" rx="8"/>
+  <text x="185" y="465" text-anchor="middle" style="font: bold 16px Arial; fill: #1a1a2e;">YOUR HOME</text>
+
+  <!-- Devices in home -->
+  <rect x="80" y="485" width="90" height="45" fill="#f59e0b" rx="4"/>
+  <text x="125" y="503" text-anchor="middle" style="font: bold 10px Arial; fill: white;">Hue</text>
+  <text x="125" y="518" text-anchor="middle" style="font: bold 10px Arial; fill: white;">Bridge</text>
+
+  <rect x="80" y="540" width="90" height="45" fill="#10b981" rx="4"/>
+  <text x="125" y="558" text-anchor="middle" style="font: bold 10px Arial; fill: white;">Sonos</text>
+  <text x="125" y="573" text-anchor="middle" style="font: bold 10px Arial; fill: white;">Speakers</text>
+
+  <rect x="180" y="485" width="90" height="45" fill="#3b82f6" rx="4"/>
+  <text x="225" y="503" text-anchor="middle" style="font: bold 10px Arial; fill: white;">Eight</text>
+  <text x="225" y="518" text-anchor="middle" style="font: bold 10px Arial; fill: white;">Sleep</text>
+
+  <rect x="180" y="540" width="90" height="45" fill="#7c3aed" rx="4"/>
+  <text x="225" y="558" text-anchor="middle" style="font: bold 10px Arial; fill: white;">Bluetooth</text>
+  <text x="225" y="573" text-anchor="middle" style="font: bold 10px Arial; fill: white;">Devices</text>
+
+  <!-- WiFi/Network -->
+  <rect x="80" y="595" width="190" height="30" fill="#6b7280" rx="4"/>
+  <text x="175" y="615" text-anchor="middle" style="font: bold 10px Arial; fill: white;">Local Network / WiFi</text>
+
+  <!-- OpenClaw Gateway -->
+  <rect x="380" y="480" width="150" height="80" fill="#3b82f6" rx="8"/>
+  <text x="455" y="515" text-anchor="middle" class="label">OPENCLAW</text>
+  <text x="455" y="535" text-anchor="middle" class="label">GATEWAY</text>
+
+  <!-- Arrows from home to gateway -->
+  <line x1="310" y1="520" x2="370" y2="520" stroke="#1a1a2e" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="340" y="510" style="font: bold 9px Arial; fill: #6b7280;">LAN</text>
+
+  <!-- CLI Tools -->
+  <rect x="600" y="440" width="200" height="180" fill="#ffffff" stroke="#6b7280" stroke-width="2" rx="8"/>
+  <text x="700" y="465" text-anchor="middle" style="font: bold 14px Arial; fill: #1a1a2e;">CLI TOOLS REQUIRED</text>
+
+  <rect x="620" y="485" width="75" height="30" fill="#f59e0b" rx="4"/>
+  <text x="657" y="505" text-anchor="middle" style="font: bold 9px Arial; fill: white;">openhue</text>
+
+  <rect x="705" y="485" width="75" height="30" fill="#10b981" rx="4"/>
+  <text x="742" y="505" text-anchor="middle" style="font: bold 9px Arial; fill: white;">sonos</text>
+
+  <rect x="620" y="525" width="75" height="30" fill="#3b82f6" rx="4"/>
+  <text x="657" y="545" text-anchor="middle" style="font: bold 9px Arial; fill: white;">eightctl</text>
+
+  <rect x="705" y="525" width="75" height="30" fill="#7c3aed" rx="4"/>
+  <text x="742" y="545" text-anchor="middle" style="font: bold 9px Arial; fill: white;">blucli</text>
+
+  <text x="620" y="580" class="small-text">Install via:</text>
+  <text x="620" y="600" class="code">brew install [tool]</text>
+
+  <!-- Arrow from gateway to CLI -->
+  <line x1="530" y1="520" x2="590" y2="520" stroke="#1a1a2e" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="555" y="510" style="font: bold 9px Arial; fill: #6b7280;">calls</text>
+
+  <!-- Cloud Services (optional) -->
+  <rect x="870" y="440" width="290" height="180" fill="#f0f9ff" stroke="#3b82f6" stroke-width="2" rx="8"/>
+  <text x="1015" y="465" text-anchor="middle" style="font: bold 14px Arial; fill: #1e40af;">CLOUD SERVICES (Optional)</text>
+
+  <rect x="890" y="490" width="120" height="35" fill="#f59e0b" rx="4"/>
+  <text x="950" y="513" text-anchor="middle" style="font: bold 10px Arial; fill: white;">Hue Cloud</text>
+
+  <rect x="1020" y="490" width="120" height="35" fill="#10b981" rx="4"/>
+  <text x="1080" y="513" text-anchor="middle" style="font: bold 10px Arial; fill: white;">Sonos Cloud</text>
+
+  <rect x="890" y="535" width="120" height="35" fill="#3b82f6" rx="4"/>
+  <text x="950" y="558" text-anchor="middle" style="font: bold 10px Arial; fill: white;">Eight Sleep API</text>
+
+  <text x="890" y="590" class="small-text">Note: Most control is local,</text>
+  <text x="890" y="608" class="small-text">cloud used for remote access</text>
+
+  <!-- Arrow to cloud -->
+  <line x1="800" y1="520" x2="860" y2="520" stroke="#3b82f6" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arrow)"/>
+  <text x="825" y="510" style="font: bold 8px Arial; fill: #3b82f6;">internet</text>
+
+  <!-- User -->
+  <rect x="380" y="590" width="150" height="50" fill="#8b5cf6" rx="8"/>
+  <text x="455" y="620" text-anchor="middle" class="label">USER (Discord/CLI)</text>
+
+  <line x1="455" y1="590" x2="455" y2="570" stroke="#1a1a2e" stroke-width="2" marker-end="url(#arrow)"/>
+</svg>

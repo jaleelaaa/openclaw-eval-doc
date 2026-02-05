@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 650" width="900" height="650">
+  <defs>
+    <style>
+      .title { font: bold 22px Arial, sans-serif; fill: #1a1a2e; }
+      .label { font: bold 13px Arial, sans-serif; fill: #ffffff; }
+      .small-text { font: bold 11px Arial, sans-serif; fill: #4b5563; }
+      .code { font: bold 11px Consolas, monospace; fill: #1f2937; }
+    </style>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#1a1a2e"/>
+    </marker>
+    <linearGradient id="codeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#10b981"/>
+      <stop offset="100%" style="stop-color:#059669"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="650" fill="#ffffff"/>
+
+  <!-- Header -->
+  <rect x="0" y="0" width="900" height="70" fill="url(#codeGrad)"/>
+  <text x="450" y="40" text-anchor="middle" style="font: bold 28px Arial; fill: white;">🤖 CODING AGENT SKILL</text>
+  <text x="450" y="60" text-anchor="middle" style="font: bold 14px Arial; fill: #d1fae5;">AI-Powered Code Writing &amp; Execution</text>
+
+  <!-- Status Badge -->
+  <rect x="720" y="85" width="160" height="50" fill="#ecfdf5" stroke="#10b981" stroke-width="3" rx="8"/>
+  <text x="800" y="105" text-anchor="middle" style="font: bold 14px Arial; fill: #059669;">STATUS</text>
+  <text x="800" y="125" text-anchor="middle" style="font: bold 18px Arial; fill: #10b981;">🟢 ELIGIBLE</text>
+
+  <!-- Purpose Section -->
+  <rect x="20" y="85" width="340" height="180" fill="#f0fdf4" stroke="#10b981" stroke-width="2" rx="10"/>
+  <text x="40" y="115" style="font: bold 18px Arial; fill: #059669;">PURPOSE</text>
+  <text x="40" y="145" class="small-text">• Write new code files from scratch</text>
+  <text x="40" y="170" class="small-text">• Modify and refactor existing code</text>
+  <text x="40" y="195" class="small-text">• Execute shell commands safely</text>
+  <text x="40" y="220" class="small-text">• Debug and fix code issues</text>
+  <text x="40" y="245" class="small-text">• Explain code and suggest improvements</text>
+
+  <!-- Capabilities Section -->
+  <rect x="380" y="85" width="320" height="180" fill="#eff6ff" stroke="#3b82f6" stroke-width="2" rx="10"/>
+  <text x="400" y="115" style="font: bold 18px Arial; fill: #1d4ed8;">CAPABILITIES</text>
+  <text x="400" y="145" class="small-text">✓ Multi-language support (Python, JS, etc.)</text>
+  <text x="400" y="170" class="small-text">✓ File system read/write operations</text>
+  <text x="400" y="195" class="small-text">✓ Git operations (commit, push, etc.)</text>
+  <text x="400" y="220" class="small-text">✓ Package management (npm, pip)</text>
+  <text x="400" y="245" class="small-text">✓ Test execution and debugging</text>
+
+  <!-- Workflow Diagram -->
+  <rect x="20" y="280" width="860" height="200" fill="#f8fafc" stroke="#64748b" stroke-width="2" rx="10"/>
+  <text x="450" y="310" text-anchor="middle" style="font: bold 18px Arial; fill: #334155;">CODING AGENT WORKFLOW</text>
+
+  <!-- User -->
+  <rect x="50" y="340" width="100" height="60" fill="#8b5cf6" rx="8"/>
+  <text x="100" y="365" text-anchor="middle" class="label">USER</text>
+  <text x="100" y="382" text-anchor="middle" style="font: bold 10px Arial; fill: #c4b5fd;">"Write code"</text>
+
+  <!-- Arrow 1 -->
+  <line x1="150" y1="370" x2="200" y2="370" stroke="#1a1a2e" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Gateway -->
+  <rect x="210" y="340" width="120" height="60" fill="#3b82f6" rx="8"/>
+  <text x="270" y="365" text-anchor="middle" class="label">OPENCLAW</text>
+  <text x="270" y="382" text-anchor="middle" class="label">GATEWAY</text>
+
+  <!-- Arrow 2 -->
+  <line x1="330" y1="370" x2="380" y2="370" stroke="#1a1a2e" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Coding Agent -->
+  <rect x="390" y="330" width="140" height="80" fill="#10b981" rx="8"/>
+  <text x="460" y="360" text-anchor="middle" class="label">CODING</text>
+  <text x="460" y="380" text-anchor="middle" class="label">AGENT</text>
+  <text x="460" y="400" text-anchor="middle" style="font: bold 9px Arial; fill: #d1fae5;">AI Processing</text>
+
+  <!-- Arrow 3 -->
+  <line x1="530" y1="370" x2="580" y2="370" stroke="#1a1a2e" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Actions -->
+  <rect x="590" y="330" width="130" height="80" fill="#f59e0b" rx="8"/>
+  <text x="655" y="355" text-anchor="middle" class="label">ACTIONS</text>
+  <text x="655" y="375" text-anchor="middle" style="font: bold 10px Arial; fill: #fef3c7;">• Write files</text>
+  <text x="655" y="392" text-anchor="middle" style="font: bold 10px Arial; fill: #fef3c7;">• Run commands</text>
+
+  <!-- Arrow 4 -->
+  <line x1="720" y1="370" x2="770" y2="370" stroke="#1a1a2e" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Result -->
+  <rect x="780" y="340" width="80" height="60" fill="#22c55e" rx="8"/>
+  <text x="820" y="365" text-anchor="middle" class="label">CODE</text>
+  <text x="820" y="382" text-anchor="middle" class="label">OUTPUT</text>
+
+  <!-- Return arrow -->
+  <path d="M 820 400 L 820 450 L 100 450 L 100 410" fill="none" stroke="#10b981" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arrow)"/>
+  <text x="460" y="465" text-anchor="middle" style="font: bold 11px Arial; fill: #10b981;">Code written/executed → Result returned to user</text>
+
+  <!-- Example Commands -->
+  <rect x="20" y="495" width="860" height="140" fill="#fef3c7" stroke="#f59e0b" stroke-width="2" rx="10"/>
+  <text x="40" y="525" style="font: bold 18px Arial; fill: #d97706;">EXAMPLE COMMANDS</text>
+
+  <text x="40" y="555" class="code">@openclaw write a Python script to sort a list of numbers</text>
+  <text x="40" y="580" class="code">@openclaw fix the bug in main.js line 42</text>
+  <text x="40" y="605" class="code">@openclaw refactor this function to use async/await</text>
+  <text x="40" y="630" class="code">@openclaw run npm install and then npm test</text>
+
+  <text x="500" y="555" class="code">@openclaw create a React component for user login</text>
+  <text x="500" y="580" class="code">@openclaw add error handling to the API endpoint</text>
+  <text x="500" y="605" class="code">@openclaw explain how this algorithm works</text>
+  <text x="500" y="630" class="code">@openclaw commit these changes with message "..."</text>
+</svg>

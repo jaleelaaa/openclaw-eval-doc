@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="900" height="750" viewBox="0 0 900 750">
+  <defs>
+    <style type="text/css">
+      .title { font: bold 18px 'Helvetica Neue', Arial, sans-serif; fill: #1a1a2e; }
+      .subtitle { font: bold 12px 'Helvetica Neue', Arial, sans-serif; fill: #666666; }
+      .node-text { font: bold 12px 'Helvetica Neue', Arial, sans-serif; fill: #ffffff; }
+      .node-text-dark { font: bold 12px 'Helvetica Neue', Arial, sans-serif; fill: #1a1a2e; }
+      .decision-text { font: bold 11px 'Helvetica Neue', Arial, sans-serif; fill: #1a1a2e; text-anchor: middle; }
+      .label-text { font: bold 10px 'Helvetica Neue', Arial, sans-serif; fill: #666666; }
+      .yes-text { font: bold 10px 'Helvetica Neue', Arial, sans-serif; fill: #27ae60; }
+      .no-text { font: bold 10px 'Helvetica Neue', Arial, sans-serif; fill: #e74c3c; }
+      .arrow { fill: none; stroke: #4a5568; stroke-width: 2; marker-end: url(#arrowhead); }
+      .arrow-yes { fill: none; stroke: #27ae60; stroke-width: 2; marker-end: url(#arrowhead-green); }
+      .arrow-no { fill: none; stroke: #e74c3c; stroke-width: 2; marker-end: url(#arrowhead-red); }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#4a5568"/>
+    </marker>
+    <marker id="arrowhead-green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#27ae60"/>
+    </marker>
+    <marker id="arrowhead-red" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#e74c3c"/>
+    </marker>
+    <linearGradient id="startGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea"/>
+      <stop offset="100%" style="stop-color:#764ba2"/>
+    </linearGradient>
+    <linearGradient id="dockerGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#2196F3"/>
+      <stop offset="100%" style="stop-color:#1976D2"/>
+    </linearGradient>
+    <linearGradient id="nativeGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#4CAF50"/>
+      <stop offset="100%" style="stop-color:#388E3C"/>
+    </linearGradient>
+    <linearGradient id="configGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF9800"/>
+      <stop offset="100%" style="stop-color:#F57C00"/>
+    </linearGradient>
+    <linearGradient id="successGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#00C853"/>
+      <stop offset="100%" style="stop-color:#00A843"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="750" fill="#fafbfc"/>
+
+  <!-- Title -->
+  <text x="450" y="35" text-anchor="middle" class="title">OpenClaw Installation Decision Flow</text>
+  <text x="450" y="55" text-anchor="middle" class="subtitle">Choose the appropriate installation method based on your environment</text>
+
+  <!-- Start Node -->
+  <ellipse cx="450" cy="100" rx="80" ry="30" fill="url(#startGrad)" filter="url(#shadow)"/>
+  <text x="450" y="105" text-anchor="middle" class="node-text">Start Installation</text>
+
+  <!-- Decision 1: Docker Available? -->
+  <polygon points="450,160 550,210 450,260 350,210" fill="#ffffff" stroke="#4a5568" stroke-width="2" filter="url(#shadow)"/>
+  <text x="450" y="205" class="decision-text">Docker</text>
+  <text x="450" y="218" class="decision-text">Available?</text>
+
+  <!-- Arrow from Start to Decision 1 -->
+  <path d="M450,130 L450,158" class="arrow"/>
+
+  <!-- Decision 2: Prefer Isolation? (Yes path from Docker) -->
+  <polygon points="280,300 380,350 280,400 180,350" fill="#ffffff" stroke="#4a5568" stroke-width="2" filter="url(#shadow)"/>
+  <text x="280" y="345" class="decision-text">Prefer</text>
+  <text x="280" y="358" class="decision-text">Isolation?</text>
+
+  <!-- Arrow Yes from Decision 1 to Decision 2 -->
+  <path d="M350,210 L280,210 L280,298" class="arrow-yes"/>
+  <text x="310" y="200" class="yes-text">Yes</text>
+
+  <!-- Decision 3: Development? (No path from Docker) -->
+  <polygon points="620,300 720,350 620,400 520,350" fill="#ffffff" stroke="#4a5568" stroke-width="2" filter="url(#shadow)"/>
+  <text x="620" y="345" class="decision-text">Development</text>
+  <text x="620" y="358" class="decision-text">Setup?</text>
+
+  <!-- Arrow No from Decision 1 to Decision 3 -->
+  <path d="M550,210 L620,210 L620,298" class="arrow-no"/>
+  <text x="590" y="200" class="no-text">No</text>
+
+  <!-- Docker Installation Box -->
+  <rect x="130" y="440" width="180" height="70" rx="8" fill="url(#dockerGrad)" filter="url(#shadow)"/>
+  <text x="220" y="468" text-anchor="middle" class="node-text">Docker Installation</text>
+  <text x="220" y="485" text-anchor="middle" style="font: bold 10px 'Helvetica Neue', Arial, sans-serif; fill: #e3f2fd;">docker-compose up</text>
+  <text x="220" y="498" text-anchor="middle" style="font: bold 10px 'Helvetica Neue', Arial, sans-serif; fill: #e3f2fd;">Ports: 18789, 18790</text>
+
+  <!-- Arrow Yes from Decision 2 to Docker -->
+  <path d="M230,350 L180,350 L180,438" class="arrow-yes"/>
+  <text x="150" y="385" class="yes-text">Yes</text>
+
+  <!-- Native Production Box -->
+  <rect x="310" y="440" width="180" height="70" rx="8" fill="url(#nativeGrad)" filter="url(#shadow)"/>
+  <text x="400" y="468" text-anchor="middle" class="node-text">Native Installation</text>
+  <text x="400" y="485" text-anchor="middle" style="font: bold 10px 'Helvetica Neue', Arial, sans-serif; fill: #e8f5e9;">npm install -g openclaw</text>
+  <text x="400" y="498" text-anchor="middle" style="font: bold 10px 'Helvetica Neue', Arial, sans-serif; fill: #e8f5e9;">Node.js 22+ required</text>
+
+  <!-- Arrow No from Decision 2 to Native Production -->
+  <path d="M330,350 L400,350 L400,438" class="arrow-no"/>
+  <text x="365" y="340" class="no-text">No</text>
+
+  <!-- Native Dev Box -->
+  <rect x="500" y="440" width="180" height="70" rx="8" fill="url(#nativeGrad)" filter="url(#shadow)"/>
+  <text x="590" y="468" text-anchor="middle" class="node-text">Source Installation</text>
+  <text x="590" y="485" text-anchor="middle" style="font: bold 10px 'Helvetica Neue', Arial, sans-serif; fill: #e8f5e9;">git clone + pnpm install</text>
+  <text x="590" y="498" text-anchor="middle" style="font: bold 10px 'Helvetica Neue', Arial, sans-serif; fill: #e8f5e9;">Development mode</text>
+
+  <!-- Arrow Yes from Decision 3 to Native Dev -->
+  <path d="M620,400 L620,438" class="arrow-yes"/>
+  <text x="635" y="420" class="yes-text">Yes</text>
+
+  <!-- Arrow No from Decision 3 to Native Production -->
+  <path d="M520,350 L460,350 L460,420 L490,438" class="arrow-no"/>
+  <text x="490" y="340" class="no-text">No</text>
+
+  <!-- Configuration Step Box -->
+  <rect x="310" y="550" width="280" height="60" rx="8" fill="url(#configGrad)" filter="url(#shadow)"/>
+  <text x="450" y="575" text-anchor="middle" class="node-text">Configure Environment</text>
+  <text x="450" y="592" text-anchor="middle" style="font: bold 10px 'Helvetica Neue', Arial, sans-serif; fill: #fff3e0;">API Keys + Channel Setup + Gateway Token</text>
+
+  <!-- Arrows to Configuration -->
+  <path d="M220,510 L220,560 L308,580" class="arrow"/>
+  <path d="M400,510 L400,548" class="arrow"/>
+  <path d="M590,510 L590,560 L592,580" class="arrow"/>
+
+  <!-- Success Node -->
+  <ellipse cx="450" cy="680" rx="120" ry="35" fill="url(#successGrad)" filter="url(#shadow)"/>
+  <text x="450" y="675" text-anchor="middle" class="node-text">OpenClaw Ready</text>
+  <text x="450" y="692" text-anchor="middle" style="font: bold 10px 'Helvetica Neue', Arial, sans-serif; fill: #e8f5e9;">Gateway Running on Port 18789</text>
+
+  <!-- Arrow from Configuration to Success -->
+  <path d="M450,610 L450,643" class="arrow"/>
+
+  <!-- Legend -->
+  <rect x="700" y="580" width="180" height="120" rx="5" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="790" y="600" text-anchor="middle" style="font: bold 11px 'Helvetica Neue', Arial, sans-serif; fill: #1a1a2e;">Legend</text>
+  <line x1="720" y1="615" x2="750" y2="615" stroke="#27ae60" stroke-width="2"/>
+  <text x="760" y="618" class="label-text">Yes Path</text>
+  <line x1="720" y1="635" x2="750" y2="635" stroke="#e74c3c" stroke-width="2"/>
+  <text x="760" y="638" class="label-text">No Path</text>
+  <rect x="720" y="648" width="25" height="15" rx="3" fill="url(#dockerGrad)"/>
+  <text x="760" y="660" class="label-text">Docker</text>
+  <rect x="720" y="668" width="25" height="15" rx="3" fill="url(#nativeGrad)"/>
+  <text x="760" y="680" class="label-text">Native</text>
+
+  <!-- Version Info -->
+  <text x="450" y="740" text-anchor="middle" style="font: bold 10px 'Helvetica Neue', Arial, sans-serif; fill: #999999;">OpenClaw v2026.1.30 | Node.js >=22.12.0 | pnpm 10.23.0</text>
+</svg>

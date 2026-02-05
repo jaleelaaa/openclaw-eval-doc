@@ -1,0 +1,253 @@
+---
+title: Agent Workspace
+description: Configure agent personas, personalities, and user preferences
+icon: Folder
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Card, Cards } from 'fumadocs-ui/components/card';
+
+# Agent Workspace
+
+The workspace is where you define your agent's identity, personality, and behavior. OpenClaw uses markdown files to configure these aspects, making it easy to customize and version control.
+
+## Workspace Location
+
+The default workspace is located at:
+
+```
+~/.openclaw/workspace/
+```
+
+You can customize this with the `OPENCLAW_WORKSPACE_DIR` environment variable.
+
+## Workspace Structure
+
+```
+~/.openclaw/workspace/
+├── AGENTS.md          # Agent persona definitions
+├── SOUL.md            # Agent personality and behavior
+├── USER.md            # User preferences and context
+├── TOOLS.md           # Custom tool instructions (optional)
+├── MEMORY.md          # Persistent memory (optional)
+└── memory/            # Daily memory logs
+    └── YYYY-MM-DD.md
+```
+
+## Core Configuration Files
+
+### AGENTS.md — Agent Persona
+
+Defines who your agent is and how they should behave:
+
+```markdown
+# Agent Configuration
+
+## Identity
+- **Name**: Assistant
+- **Role**: Personal AI assistant
+- **Tone**: Friendly, helpful, and professional
+
+## Capabilities
+- Answer questions on any topic
+- Help with coding and technical tasks
+- Manage tasks and reminders
+- Research and summarize information
+
+## Boundaries
+- Do not make financial decisions
+- Always clarify before taking destructive actions
+- Respect user privacy
+```
+
+### SOUL.md — Personality Definition
+
+Shapes the agent's communication style and values:
+
+```markdown
+# Soul Configuration
+
+## Communication Style
+- Be concise but thorough
+- Use clear, simple language
+- Adapt tone to context (casual for chat, formal for business)
+
+## Values
+- Honesty and accuracy above all
+- Respect user's time
+- Proactive problem-solving
+
+## Quirks
+- Use analogies to explain complex topics
+- Occasionally use light humor when appropriate
+```
+
+### USER.md — User Preferences
+
+Provides context about you to personalize interactions:
+
+```markdown
+# User Profile
+
+## About Me
+- Name: [Your name]
+- Location: [Your timezone/location]
+- Language preference: English
+
+## Preferences
+- Prefer detailed explanations over brief answers
+- Like code examples in Python and TypeScript
+- Appreciate markdown formatting in responses
+
+## Context
+- Working on [project description]
+- Technical background: [your expertise level]
+```
+
+## Per-Agent Configuration
+
+For multi-agent setups, each agent has its own configuration directory:
+
+```
+~/.openclaw/agents/
+├── default/
+│   └── agent/
+│       ├── AGENTS.md
+│       ├── SOUL.md
+│       └── sessions/
+├── work-assistant/
+│   └── agent/
+│       ├── AGENTS.md      # Work-specific persona
+│       ├── SOUL.md
+│       └── sessions/
+└── coding-helper/
+    └── agent/
+        ├── AGENTS.md      # Code-focused persona
+        ├── SOUL.md
+        └── sessions/
+```
+
+## Memory System
+
+OpenClaw includes a memory system for persistent context:
+
+### MEMORY.md — Long-term Memory
+
+Curated important information:
+
+```markdown
+# Memory
+
+## User Preferences
+- Prefers dark mode in all applications
+- Uses VS Code as primary editor
+- Works primarily with React and Node.js
+
+## Important Dates
+- Project deadline: March 15, 2026
+
+## Learned Context
+- User's company uses microservices architecture
+- Deployment happens via GitHub Actions
+```
+
+### Daily Memory Logs
+
+Automatic daily notes in `memory/YYYY-MM-DD.md`:
+
+```markdown
+# 2026-02-05
+
+## Conversations
+- Discussed API design patterns
+- Helped debug authentication issue
+
+## Learned
+- User prefers JWT over session cookies
+- Project uses PostgreSQL database
+```
+
+<Callout title="Memory Management" type="info">
+  Memory is automatically managed by the agent. You can manually edit memory files to correct or add information.
+</Callout>
+
+## Creating Custom Agents
+
+### Step 1: Create Agent Directory
+
+```bash
+mkdir -p ~/.openclaw/agents/my-agent/agent
+```
+
+### Step 2: Define Persona (AGENTS.md)
+
+```bash
+cat > ~/.openclaw/agents/my-agent/agent/AGENTS.md << 'EOF'
+# My Custom Agent
+
+## Identity
+- **Name**: TechBot
+- **Role**: Technical documentation assistant
+- **Specialization**: Writing clear, accurate documentation
+
+## Behavior
+- Always verify technical accuracy
+- Include code examples when relevant
+- Use consistent formatting
+EOF
+```
+
+### Step 3: Define Personality (SOUL.md)
+
+```bash
+cat > ~/.openclaw/agents/my-agent/agent/SOUL.md << 'EOF'
+# TechBot Soul
+
+## Communication
+- Technical but accessible
+- Patient with questions
+- Thorough in explanations
+EOF
+```
+
+### Step 4: Configure Routing
+
+```bash
+openclaw config set agents.bindings '[{"agentId":"my-agent","match":{"channel":"slack","peer":"tech-docs"}}]'
+```
+
+## Best Practices
+
+1. **Keep personas focused** — Each agent should have a clear purpose
+2. **Update USER.md regularly** — More context leads to better responses
+3. **Review memory periodically** — Correct inaccuracies in learned information
+4. **Version control workspace** — Track changes to agent configurations
+5. **Test persona changes** — Verify behavior after modifying configuration
+
+## Configuration in Config File
+
+You can also configure workspace settings in `openclaw.json`:
+
+```json
+{
+  "agents": {
+    "defaults": {
+      "workspace": "~/.openclaw/workspace",
+      "bootstrap": {
+        "files": ["AGENTS.md", "SOUL.md", "USER.md"]
+      }
+    }
+  }
+}
+```
+
+## Next Steps
+
+<Cards>
+  <Card href="/docs/openclaw/channels" title="Connect Channels" icon="MessageSquare">
+    Link your agent to messaging platforms
+  </Card>
+  <Card href="/docs/openclaw/concepts/agents" title="Agent Runtime" icon="Bot">
+    Understand how agents process messages
+  </Card>
+</Cards>

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="800" viewBox="0 0 700 800">
+  <defs>
+    <style type="text/css">
+      .title { font-family: Arial, Helvetica, sans-serif; font-size: 22px; font-weight: bold; fill: #333333; }
+      .folder-name { font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: bold; fill: #1976D2; }
+      .file-name { font-family: Arial, Helvetica, sans-serif; font-size: 13px; font-weight: bold; fill: #333333; }
+      .description { font-family: Arial, Helvetica, sans-serif; font-size: 11px; font-weight: bold; fill: #666666; }
+      .section-title { font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: bold; fill: #ffffff; }
+    </style>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="2" dy="2" stdDeviation="2" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="700" height="800" fill="#fafbfc"/>
+
+  <!-- Title -->
+  <text x="350" y="35" text-anchor="middle" class="title">OpenClaw Workspace Structure</text>
+
+  <!-- Root folder -->
+  <rect x="30" y="60" width="640" height="720" rx="8" fill="#ffffff" stroke="#E0E0E0" stroke-width="2" filter="url(#shadow)"/>
+
+  <!-- ~/.openclaw header -->
+  <rect x="30" y="60" width="640" height="40" rx="8" fill="#1976D2"/>
+  <rect x="30" y="85" width="640" height="15" fill="#1976D2"/>
+  <text x="60" y="87" class="section-title">~/.openclaw/</text>
+
+  <!-- Config files -->
+  <g transform="translate(50, 120)">
+    <!-- openclaw.json -->
+    <rect x="0" y="0" width="280" height="50" rx="6" fill="#FFF3E0" stroke="#F57C00" stroke-width="2"/>
+    <text x="15" y="22" class="file-name">openclaw.json</text>
+    <text x="15" y="40" class="description">Main configuration file</text>
+
+    <!-- openclaw.json.bak -->
+    <rect x="300" y="0" width="280" height="50" rx="6" fill="#FFF3E0" stroke="#F57C00" stroke-width="2"/>
+    <text x="315" y="22" class="file-name">openclaw.json.bak</text>
+    <text x="315" y="40" class="description">Automatic backup</text>
+  </g>
+
+  <!-- identity folder -->
+  <g transform="translate(50, 190)">
+    <rect x="0" y="0" width="280" height="50" rx="6" fill="#E3F2FD" stroke="#1976D2" stroke-width="2"/>
+    <text x="15" y="22" class="folder-name">identity/</text>
+    <text x="15" y="40" class="description">Device identity keys</text>
+  </g>
+
+  <!-- canvas folder -->
+  <g transform="translate(350, 190)">
+    <rect x="0" y="0" width="280" height="50" rx="6" fill="#E3F2FD" stroke="#1976D2" stroke-width="2"/>
+    <text x="15" y="22" class="folder-name">canvas/</text>
+    <text x="15" y="40" class="description">Canvas file server root</text>
+  </g>
+
+  <!-- cron folder -->
+  <g transform="translate(50, 260)">
+    <rect x="0" y="0" width="280" height="50" rx="6" fill="#E3F2FD" stroke="#1976D2" stroke-width="2"/>
+    <text x="15" y="22" class="folder-name">cron/</text>
+    <text x="15" y="40" class="description">Scheduled task definitions</text>
+  </g>
+
+  <!-- agents folder -->
+  <g transform="translate(50, 330)">
+    <rect x="0" y="0" width="580" height="180" rx="6" fill="#E8F5E9" stroke="#388E3C" stroke-width="2"/>
+    <text x="15" y="22" class="folder-name">agents/</text>
+    <text x="15" y="40" class="description">Per-agent state and configuration</text>
+
+    <!-- agent subfolder -->
+    <rect x="20" y="55" width="540" height="110" rx="6" fill="#C8E6C9" stroke="#4CAF50" stroke-width="1"/>
+    <text x="35" y="77" class="folder-name">&lt;agentId&gt;/</text>
+
+    <!-- agent config -->
+    <rect x="40" y="90" width="150" height="35" rx="4" fill="#ffffff" stroke="#81C784" stroke-width="1"/>
+    <text x="55" y="112" class="file-name">agent/</text>
+
+    <!-- sessions -->
+    <rect x="210" y="90" width="150" height="35" rx="4" fill="#ffffff" stroke="#81C784" stroke-width="1"/>
+    <text x="225" y="112" class="file-name">sessions/</text>
+
+    <!-- whatsapp -->
+    <rect x="380" y="90" width="160" height="35" rx="4" fill="#ffffff" stroke="#81C784" stroke-width="1"/>
+    <text x="395" y="112" class="file-name">whatsapp/ (state)</text>
+
+    <!-- Session files -->
+    <text x="215" y="145" class="description">*.json, *.meta files</text>
+  </g>
+
+  <!-- workspace folder -->
+  <g transform="translate(50, 530)">
+    <rect x="0" y="0" width="580" height="230" rx="6" fill="#FCE4EC" stroke="#C2185B" stroke-width="2"/>
+    <text x="15" y="22" class="folder-name">workspace/</text>
+    <text x="15" y="40" class="description">Default agent workspace (bootstrap files)</text>
+
+    <!-- AGENTS.md -->
+    <rect x="20" y="55" width="260" height="60" rx="6" fill="#ffffff" stroke="#E91E63" stroke-width="1"/>
+    <text x="35" y="77" class="file-name">AGENTS.md</text>
+    <text x="35" y="95" class="description">Agent persona definition</text>
+    <text x="35" y="108" class="description">Identity, role, capabilities</text>
+
+    <!-- SOUL.md -->
+    <rect x="300" y="55" width="260" height="60" rx="6" fill="#ffffff" stroke="#E91E63" stroke-width="1"/>
+    <text x="315" y="77" class="file-name">SOUL.md</text>
+    <text x="315" y="95" class="description">Agent personality</text>
+    <text x="315" y="108" class="description">Communication style, values</text>
+
+    <!-- USER.md -->
+    <rect x="20" y="125" width="260" height="60" rx="6" fill="#ffffff" stroke="#E91E63" stroke-width="1"/>
+    <text x="35" y="147" class="file-name">USER.md</text>
+    <text x="35" y="165" class="description">User preferences</text>
+    <text x="35" y="178" class="description">Personal context</text>
+
+    <!-- MEMORY.md -->
+    <rect x="300" y="125" width="260" height="60" rx="6" fill="#ffffff" stroke="#E91E63" stroke-width="1"/>
+    <text x="315" y="147" class="file-name">MEMORY.md</text>
+    <text x="315" y="165" class="description">Persistent memory</text>
+    <text x="315" y="178" class="description">Long-term learnings</text>
+
+    <!-- memory folder -->
+    <rect x="20" y="195" width="540" height="25" rx="4" fill="#F8BBD9" stroke="#E91E63" stroke-width="1"/>
+    <text x="35" y="213" class="folder-name">memory/</text>
+    <text x="120" y="213" class="description">→ YYYY-MM-DD.md (daily logs)</text>
+  </g>
+
+  <!-- Legend -->
+  <g transform="translate(400, 60)">
+    <rect x="0" y="0" width="250" height="100" rx="6" fill="#ffffff" stroke="#E0E0E0" stroke-width="1"/>
+    <text x="15" y="22" class="file-name">Legend</text>
+
+    <rect x="15" y="35" width="20" height="15" rx="3" fill="#E3F2FD" stroke="#1976D2" stroke-width="1"/>
+    <text x="45" y="47" class="description">System directory</text>
+
+    <rect x="15" y="55" width="20" height="15" rx="3" fill="#E8F5E9" stroke="#388E3C" stroke-width="1"/>
+    <text x="45" y="67" class="description">Agent state</text>
+
+    <rect x="15" y="75" width="20" height="15" rx="3" fill="#FCE4EC" stroke="#C2185B" stroke-width="1"/>
+    <text x="45" y="87" class="description">Bootstrap files</text>
+  </g>
+</svg>

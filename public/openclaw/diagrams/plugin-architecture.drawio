@@ -1,0 +1,154 @@
+<mxfile host="app.diagrams.net" modified="2026-02-02T10:00:00.000Z" agent="Documentation" version="21.0.0" type="device">
+  <diagram id="plugin-arch" name="Plugin Architecture">
+    <mxGraphModel dx="1100" dy="700" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1000" pageHeight="700" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Title -->
+        <mxCell id="title" value="&lt;b&gt;&lt;font style=&quot;font-size: 22px;&quot;&gt;OpenClaw Plugin Architecture&lt;/font&gt;&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="300" y="15" width="400" height="35" as="geometry" />
+        </mxCell>
+
+        <!-- Subtitle -->
+        <mxCell id="subtitle" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;Two-Layer SDK + Runtime Extensibility Model&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="325" y="45" width="350" height="25" as="geometry" />
+        </mxCell>
+
+        <!-- SDK Layer Box -->
+        <mxCell id="sdk-box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#388E3C;strokeWidth=3;" vertex="1" parent="1">
+          <mxGeometry x="40" y="90" width="440" height="280" as="geometry" />
+        </mxCell>
+        <mxCell id="sdk-title" value="&lt;b&gt;Plugin SDK&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 11px;&quot;&gt;Compile-time, Stable, Publishable&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="155" y="95" width="210" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- SDK Components -->
+        <mxCell id="types" value="&lt;b&gt;Types&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;ChannelPlugin&lt;br&gt;ChannelMeta&lt;br&gt;ChannelCapabilities&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#388E3C;strokeColor=#1B5E20;fontColor=#ffffff;strokeWidth=2;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="60" y="145" width="130" height="90" as="geometry" />
+        </mxCell>
+
+        <mxCell id="config-helpers" value="&lt;b&gt;Config Helpers&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;buildChannelConfigSchema&lt;br&gt;setAccountEnabled&lt;br&gt;applyAccountName&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#388E3C;strokeColor=#1B5E20;fontColor=#ffffff;strokeWidth=2;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="200" y="145" width="140" height="90" as="geometry" />
+        </mxCell>
+
+        <mxCell id="pairing-helpers" value="&lt;b&gt;Pairing Helpers&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;formatPairingHint&lt;br&gt;PAIRING_MESSAGE&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#388E3C;strokeColor=#1B5E20;fontColor=#ffffff;strokeWidth=2;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="350" y="145" width="120" height="90" as="geometry" />
+        </mxCell>
+
+        <mxCell id="onboarding" value="&lt;b&gt;Onboarding&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;promptAccessConfig&lt;br&gt;addWildcardAllow&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#388E3C;strokeColor=#1B5E20;fontColor=#ffffff;strokeWidth=2;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="60" y="250" width="130" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="tool-params" value="&lt;b&gt;Tool Params&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;readStringParam&lt;br&gt;readNumberParam&lt;br&gt;jsonResult&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#388E3C;strokeColor=#1B5E20;fontColor=#ffffff;strokeWidth=2;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="200" y="250" width="130" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="docs-link" value="&lt;b&gt;Utilities&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;formatDocsLink&lt;br&gt;Validation&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#388E3C;strokeColor=#1B5E20;fontColor=#ffffff;strokeWidth=2;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="340" y="250" width="130" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Runtime Layer Box -->
+        <mxCell id="runtime-box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E3F2FD;strokeColor=#1976D2;strokeWidth=3;" vertex="1" parent="1">
+          <mxGeometry x="520" y="90" width="440" height="280" as="geometry" />
+        </mxCell>
+        <mxCell id="runtime-title" value="&lt;b&gt;Plugin Runtime&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 11px;&quot;&gt;Execution Surface, Injected at Runtime&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="620" y="95" width="240" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Runtime Components -->
+        <mxCell id="channel-text" value="&lt;b&gt;channel.text&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;chunkMarkdown&lt;br&gt;resolveChunkLimit&lt;br&gt;hasControlCommand&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1976D2;strokeColor=#0D47A1;fontColor=#ffffff;strokeWidth=2;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="540" y="145" width="130" height="85" as="geometry" />
+        </mxCell>
+
+        <mxCell id="channel-reply" value="&lt;b&gt;channel.reply&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;dispatchReply&lt;br&gt;bufferedDispatcher&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1976D2;strokeColor=#0D47A1;fontColor=#ffffff;strokeWidth=2;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="680" y="145" width="130" height="85" as="geometry" />
+        </mxCell>
+
+        <mxCell id="channel-routing" value="&lt;b&gt;channel.routing&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;resolveAgentRoute&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1976D2;strokeColor=#0D47A1;fontColor=#ffffff;strokeWidth=2;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="820" y="145" width="120" height="85" as="geometry" />
+        </mxCell>
+
+        <mxCell id="channel-pairing" value="&lt;b&gt;channel.pairing&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;buildPairingReply&lt;br&gt;readAllowFromStore&lt;br&gt;upsertPairingRequest&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1976D2;strokeColor=#0D47A1;fontColor=#ffffff;strokeWidth=2;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="540" y="245" width="135" height="85" as="geometry" />
+        </mxCell>
+
+        <mxCell id="channel-media" value="&lt;b&gt;channel.media&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;fetchRemoteMedia&lt;br&gt;saveMediaBuffer&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1976D2;strokeColor=#0D47A1;fontColor=#ffffff;strokeWidth=2;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="685" y="245" width="125" height="85" as="geometry" />
+        </mxCell>
+
+        <mxCell id="logging" value="&lt;b&gt;logging&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;getChildLogger&lt;br&gt;shouldLogVerbose&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1976D2;strokeColor=#0D47A1;fontColor=#ffffff;strokeWidth=2;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="820" y="245" width="120" height="85" as="geometry" />
+        </mxCell>
+
+        <!-- Plugin Implementation Box -->
+        <mxCell id="plugin-box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF3E0;strokeColor=#F57C00;strokeWidth=3;" vertex="1" parent="1">
+          <mxGeometry x="200" y="410" width="600" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="plugin-title" value="&lt;b&gt;Channel Plugin Implementation&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 11px;&quot;&gt;Example: Discord, Telegram, WhatsApp, Slack&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="350" y="415" width="300" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Plugin Components -->
+        <mxCell id="channel-impl" value="&lt;b&gt;channel.ts&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;implements&lt;br&gt;ChannelPlugin&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F57C00;strokeColor=#E65100;fontColor=#ffffff;strokeWidth=2;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="220" y="465" width="110" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="monitor-impl" value="&lt;b&gt;monitor.ts&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;Message handler&lt;br&gt;Event processing&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F57C00;strokeColor=#E65100;fontColor=#ffffff;strokeWidth=2;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="345" y="465" width="110" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="config-schema" value="&lt;b&gt;config-schema.ts&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;TypeBox schema&lt;br&gt;Validation&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F57C00;strokeColor=#E65100;fontColor=#ffffff;strokeWidth=2;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="470" y="465" width="110" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="onboard-impl" value="&lt;b&gt;onboarding.ts&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;Setup wizard&lt;br&gt;Auth flow&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F57C00;strokeColor=#E65100;fontColor=#ffffff;strokeWidth=2;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="595" y="465" width="110" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="runtime-impl" value="&lt;b&gt;runtime.ts&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;Lifecycle&lt;br&gt;Connection mgmt&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F57C00;strokeColor=#E65100;fontColor=#ffffff;strokeWidth=2;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="720" y="465" width="110" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- Plugin Manifest -->
+        <mxCell id="manifest" value="&lt;b&gt;openclaw.plugin.json&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;id, name, version, caps&lt;/font&gt;" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#FFF9C4;strokeColor=#F57C00;strokeWidth=2;fontSize=11;size=15;" vertex="1" parent="1">
+          <mxGeometry x="220" y="550" width="150" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Arrows - SDK to Plugin -->
+        <mxCell id="arr1" value="&lt;b&gt;imports&lt;/b&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#388E3C;endArrow=blockThin;endFill=1;curved=1;dashed=1;fontSize=10;" edge="1" parent="1" source="types" target="channel-impl">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Arrows - Runtime to Plugin -->
+        <mxCell id="arr2" value="&lt;b&gt;injected&lt;/b&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#1976D2;endArrow=blockThin;endFill=1;curved=1;dashed=1;fontSize=10;" edge="1" parent="1" source="channel-reply" target="monitor-impl">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Key Principles Box -->
+        <mxCell id="principles-box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E5F5;strokeColor=#7B1FA2;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="40" y="430" width="140" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="principles-title" value="&lt;b&gt;Key Principles&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="55" y="435" width="110" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="p1" value="&lt;font style=&quot;font-size: 10px;&quot;&gt;1. No direct src/** imports&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="50" y="465" width="120" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="p2" value="&lt;font style=&quot;font-size: 10px;&quot;&gt;2. SDK is stable API&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="50" y="490" width="120" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="p3" value="&lt;font style=&quot;font-size: 10px;&quot;&gt;3. Runtime is injected&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="50" y="515" width="120" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="p4" value="&lt;font style=&quot;font-size: 10px;&quot;&gt;4. Semver guarantees&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="50" y="540" width="120" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="p5" value="&lt;font style=&quot;font-size: 10px;&quot;&gt;5. TypeBox schemas&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="50" y="565" width="120" height="25" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

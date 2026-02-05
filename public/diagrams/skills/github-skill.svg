@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 550" width="800" height="550">
+  <defs>
+    <style>
+      .title { font: bold 22px Arial, sans-serif; fill: #ffffff; }
+      .section-title { font: bold 16px Arial, sans-serif; fill: #1a1a2e; }
+      .label { font: bold 13px Arial, sans-serif; fill: #ffffff; }
+      .label-dark { font: bold 13px Arial, sans-serif; fill: #1a1a2e; }
+      .small-text { font: bold 11px Arial, sans-serif; fill: #4b5563; }
+      .code { font: bold 11px Consolas, monospace; fill: #1f2937; }
+      .status-blocked { font: bold 12px Arial, sans-serif; fill: #dc2626; }
+    </style>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#1a1a2e"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="550" fill="#ffffff"/>
+
+  <!-- Header -->
+  <rect x="0" y="0" width="800" height="60" fill="#1a1a2e"/>
+  <text x="400" y="35" text-anchor="middle" class="title">🐙 GITHUB SKILL</text>
+  <text x="400" y="52" text-anchor="middle" style="font: bold 12px Arial; fill: #9ca3af;">Manage repos, issues, PRs via GitHub CLI (gh)</text>
+
+  <!-- Purpose Section -->
+  <rect x="20" y="75" width="370" height="140" fill="#f3f4f6" stroke="#6b7280" stroke-width="2" rx="8"/>
+  <text x="40" y="100" class="section-title">PURPOSE</text>
+  <text x="40" y="125" class="small-text">• List, create, close issues</text>
+  <text x="40" y="145" class="small-text">• Create, review, merge pull requests</text>
+  <text x="40" y="165" class="small-text">• Monitor CI/CD runs and logs</text>
+  <text x="40" y="185" class="small-text">• Clone, fork, star repositories</text>
+  <text x="40" y="205" class="small-text">• Advanced GitHub API queries</text>
+
+  <!-- Requirements Section -->
+  <rect x="410" y="75" width="370" height="140" fill="#fef2f2" stroke="#dc2626" stroke-width="2" rx="8"/>
+  <text x="430" y="100" class="section-title" style="fill: #dc2626;">STATUS: 🔴 BLOCKED</text>
+  <text x="430" y="125" class="small-text">Missing: bin:gh (GitHub CLI)</text>
+  <text x="430" y="150" class="status-blocked">INSTALLATION REQUIRED:</text>
+  <text x="430" y="170" class="code">Windows: choco install gh</text>
+  <text x="430" y="190" class="code">macOS: brew install gh</text>
+  <text x="430" y="210" class="code">Then run: gh auth login</text>
+
+  <!-- Flow Diagram -->
+  <text x="400" y="240" text-anchor="middle" class="section-title">WORKFLOW DIAGRAM</text>
+
+  <!-- User Box -->
+  <rect x="30" y="260" width="140" height="80" fill="#8b5cf6" stroke="#7c3aed" stroke-width="2" rx="8"/>
+  <text x="100" y="295" text-anchor="middle" class="label">USER</text>
+  <text x="100" y="315" text-anchor="middle" style="font: bold 10px Arial; fill: #e9d5ff;">"List PRs"</text>
+
+  <!-- Arrow 1 -->
+  <line x1="170" y1="300" x2="220" y2="300" stroke="#1a1a2e" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Gateway Box -->
+  <rect x="230" y="260" width="140" height="80" fill="#3b82f6" stroke="#1d4ed8" stroke-width="2" rx="8"/>
+  <text x="300" y="295" text-anchor="middle" class="label">OPENCLAW</text>
+  <text x="300" y="315" text-anchor="middle" class="label">GATEWAY</text>
+
+  <!-- Arrow 2 -->
+  <line x1="370" y1="300" x2="420" y2="300" stroke="#1a1a2e" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- GitHub CLI Box -->
+  <rect x="430" y="260" width="140" height="80" fill="#1a1a2e" stroke="#000" stroke-width="2" rx="8"/>
+  <text x="500" y="290" text-anchor="middle" class="label">GITHUB CLI</text>
+  <text x="500" y="310" text-anchor="middle" style="font: bold 10px Consolas; fill: #9ca3af;">gh pr list</text>
+  <text x="500" y="325" text-anchor="middle" style="font: bold 10px Consolas; fill: #9ca3af;">--repo owner/repo</text>
+
+  <!-- Arrow 3 -->
+  <line x1="570" y1="300" x2="620" y2="300" stroke="#1a1a2e" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- GitHub API Box -->
+  <rect x="630" y="260" width="140" height="80" fill="#f59e0b" stroke="#d97706" stroke-width="2" rx="8"/>
+  <text x="700" y="295" text-anchor="middle" class="label">GITHUB</text>
+  <text x="700" y="315" text-anchor="middle" class="label">API</text>
+
+  <!-- Return Arrow -->
+  <path d="M 630 340 L 630 370 L 170 370 L 170 340" fill="none" stroke="#10b981" stroke-width="2" marker-end="url(#arrow)" stroke-dasharray="5,3"/>
+  <text x="400" y="390" text-anchor="middle" style="font: bold 11px Arial; fill: #10b981;">Response: JSON → Formatted PR List</text>
+
+  <!-- Example Commands -->
+  <rect x="20" y="410" width="760" height="120" fill="#f0fdf4" stroke="#22c55e" stroke-width="2" rx="8"/>
+  <text x="40" y="435" class="section-title" style="fill: #16a34a;">EXAMPLE COMMANDS (After Installation)</text>
+
+  <text x="40" y="460" class="code">@openclaw list open issues in microsoft/vscode</text>
+  <text x="40" y="480" class="code">@openclaw create issue "Bug: Login fails" in my-org/my-repo</text>
+  <text x="40" y="500" class="code">@openclaw show PR #123 in owner/repo</text>
+  <text x="40" y="520" class="code">@openclaw what CI runs failed today?</text>
+</svg>

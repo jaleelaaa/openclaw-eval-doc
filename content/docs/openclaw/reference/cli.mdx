@@ -1,0 +1,459 @@
+---
+title: CLI Reference
+description: Complete OpenClaw command-line interface documentation
+icon: Terminal
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+# CLI Reference
+
+The OpenClaw CLI (`openclaw`) provides commands for managing the gateway, configuration, channels, agents, and more.
+
+## Global Options
+
+Options available on all commands:
+
+| Option | Description |
+|--------|-------------|
+| `--help`, `-h` | Show help for command |
+| `--version`, `-v` | Show version |
+| `--config <path>` | Custom config file path |
+| `--profile <name>` | Configuration profile |
+
+## Core Commands
+
+### gateway
+
+Start the OpenClaw gateway server.
+
+```bash
+openclaw gateway [options]
+```
+
+| Option | Default | Description |
+|--------|---------|-------------|
+| `--port <number>` | 18789 | Gateway port |
+| `--bind <mode>` | lan | Network binding: loopback, lan |
+| `--verbose` | false | Enable verbose logging |
+| `--skip-channels` | false | Skip channel initialization |
+| `--log-level <level>` | info | Log level: error, warn, info, debug |
+
+**Examples:**
+```bash
+openclaw gateway
+openclaw gateway --port 18790 --bind loopback
+openclaw gateway --verbose --skip-channels
+```
+
+### onboard
+
+Run the interactive setup wizard.
+
+```bash
+openclaw onboard [options]
+```
+
+| Option | Description |
+|--------|-------------|
+| `--install-daemon` | Install as system daemon |
+| `--mode <mode>` | Setup mode: production, dev |
+
+### health
+
+Check gateway health status.
+
+```bash
+openclaw health [options]
+```
+
+| Option | Description |
+|--------|-------------|
+| `--json` | Output as JSON |
+| `--detailed` | Include detailed metrics |
+| `--token <token>` | Gateway token for remote check |
+
+### doctor
+
+Run comprehensive diagnostics.
+
+```bash
+openclaw doctor [options]
+```
+
+| Option | Description |
+|--------|-------------|
+| `--network` | Include network tests |
+| `--full` | Run all diagnostics |
+
+## Configuration Commands
+
+### config get
+
+Get configuration values.
+
+```bash
+openclaw config get [key]
+```
+
+**Examples:**
+```bash
+openclaw config get                           # Show all config
+openclaw config get gateway.port              # Get specific key
+openclaw config get agents.defaults.model     # Get nested value
+```
+
+### config set
+
+Set configuration values.
+
+```bash
+openclaw config set <key> <value>
+```
+
+**Examples:**
+```bash
+openclaw config set gateway.port 18790
+openclaw config set agents.defaults.model.primary "google/gemini-3-flash-preview"
+openclaw config set channels.whatsapp.allowFrom '["1234567890"]'
+```
+
+### config edit
+
+Open configuration in editor.
+
+```bash
+openclaw config edit
+```
+
+### config validate
+
+Validate configuration file.
+
+```bash
+openclaw config validate
+```
+
+## Channel Commands
+
+### channels status
+
+Check status of all channels.
+
+```bash
+openclaw channels status
+```
+
+### providers login
+
+Start interactive login flow.
+
+```bash
+openclaw providers login [options]
+```
+
+| Option | Description |
+|--------|-------------|
+| `--provider <name>` | Specific provider to login |
+
+### providers add
+
+Add a provider with credentials.
+
+```bash
+openclaw providers add --provider <name> --token <token>
+```
+
+**Examples:**
+```bash
+openclaw providers add --provider telegram --token "123456:ABC..."
+openclaw providers add --provider discord --token "bot-token..."
+```
+
+### providers logout
+
+Logout from a provider.
+
+```bash
+openclaw providers logout --provider <name>
+```
+
+## Model Commands
+
+### models list
+
+List available models.
+
+```bash
+openclaw models list
+```
+
+### models set
+
+Set default model.
+
+```bash
+openclaw models set <model-id>
+```
+
+**Examples:**
+```bash
+openclaw models set google/gemini-3-flash-preview
+openclaw models set anthropic/claude-sonnet
+```
+
+### models status
+
+Check model provider status.
+
+```bash
+openclaw models status
+```
+
+### models fallbacks
+
+Manage fallback models.
+
+```bash
+openclaw models fallbacks add <model-id>
+openclaw models fallbacks remove <model-id>
+openclaw models fallbacks list
+```
+
+## Agent Commands
+
+### agent
+
+Run an agent turn.
+
+```bash
+openclaw agent [options]
+```
+
+| Option | Description |
+|--------|-------------|
+| `--message <text>` | Input message |
+| `--file <path>` | Input from file |
+| `--session-key <key>` | Session identifier |
+| `--agent-id <id>` | Specific agent |
+| `--model <id>` | Override model |
+
+**Examples:**
+```bash
+openclaw agent --message "Hello, how are you?"
+openclaw agent --file input.md --session-key main
+openclaw agent --message "Help me debug" --model anthropic/claude-opus
+```
+
+### agents list
+
+List configured agents.
+
+```bash
+openclaw agents list
+```
+
+### agents status
+
+Check agent status.
+
+```bash
+openclaw agents status [agent-id]
+```
+
+## Session Commands
+
+### sessions list
+
+List all sessions.
+
+```bash
+openclaw sessions list [options]
+```
+
+| Option | Description |
+|--------|-------------|
+| `--agent <id>` | Filter by agent |
+| `--limit <n>` | Limit results |
+
+### sessions get
+
+Get session details.
+
+```bash
+openclaw sessions get <session-key>
+```
+
+### sessions messages
+
+View session messages.
+
+```bash
+openclaw sessions messages <session-key> [options]
+```
+
+| Option | Description |
+|--------|-------------|
+| `--limit <n>` | Number of messages |
+| `--offset <n>` | Skip messages |
+
+### sessions reset
+
+Reset a session.
+
+```bash
+openclaw sessions reset <session-key>
+openclaw sessions reset --agent <id> --all
+```
+
+<Callout title="Caution" type="warn">
+  Resetting sessions permanently deletes conversation history.
+</Callout>
+
+### sessions export
+
+Export session data.
+
+```bash
+openclaw sessions export <session-key> [options]
+```
+
+| Option | Description |
+|--------|-------------|
+| `--format <fmt>` | Output format: json, text |
+| `--output <path>` | Output file path |
+
+## Plugin Commands
+
+### plugins list
+
+List installed plugins.
+
+```bash
+openclaw plugins list
+```
+
+### plugins install
+
+Install a plugin.
+
+```bash
+openclaw plugins install <package>
+```
+
+**Examples:**
+```bash
+openclaw plugins install @openclaw/channel-matrix
+openclaw plugins install ./my-local-plugin
+```
+
+### plugins enable/disable
+
+Toggle plugin state.
+
+```bash
+openclaw plugins enable <plugin-id>
+openclaw plugins disable <plugin-id>
+```
+
+### plugins remove
+
+Remove an installed plugin.
+
+```bash
+openclaw plugins remove <plugin-id>
+```
+
+## Device Commands
+
+### devices list
+
+List trusted devices.
+
+```bash
+openclaw devices list
+```
+
+### devices approve
+
+Approve a pending device.
+
+```bash
+openclaw devices approve <device-id>
+```
+
+### devices revoke
+
+Revoke device access.
+
+```bash
+openclaw devices revoke <device-id>
+```
+
+## Message Commands
+
+### message send
+
+Send a message through a channel.
+
+```bash
+openclaw message send [options]
+```
+
+| Option | Description |
+|--------|-------------|
+| `--channel <name>` | Channel to use |
+| `--to <peer>` | Recipient |
+| `--message <text>` | Message content |
+| `--file <path>` | Attach file |
+
+**Examples:**
+```bash
+openclaw message send --channel whatsapp --to "+1234567890" --message "Hello!"
+openclaw message send --channel discord --to "#general" --message "Announcement"
+```
+
+## Cron Commands
+
+### cron list
+
+List scheduled tasks.
+
+```bash
+openclaw cron list
+```
+
+### cron add
+
+Add a scheduled task.
+
+```bash
+openclaw cron add <name> --schedule "<cron>" --command "<cmd>"
+```
+
+### cron remove
+
+Remove a scheduled task.
+
+```bash
+openclaw cron remove <name>
+```
+
+## Exit Codes
+
+| Code | Meaning |
+|------|---------|
+| 0 | Success |
+| 1 | General error |
+| 2 | Configuration error |
+| 3 | Authentication error |
+| 4 | Network error |
+
+## Environment Variables
+
+| Variable | Description |
+|----------|-------------|
+| `OPENCLAW_GATEWAY_TOKEN` | Gateway auth token |
+| `OPENCLAW_CONFIG_DIR` | Config directory path |
+| `OPENCLAW_WORKSPACE_DIR` | Workspace directory |
+| `OPENCLAW_LOG_LEVEL` | Default log level |

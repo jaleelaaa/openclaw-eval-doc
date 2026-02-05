@@ -1,0 +1,299 @@
+---
+title: Message Processing
+description: How messages flow through OpenClaw's 13-step pipeline
+icon: GitBranch
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Card, Cards } from 'fumadocs-ui/components/card';
+
+# Message Processing Pipeline
+
+Every message in OpenClaw flows through a carefully designed pipeline that handles ingestion, processing, reasoning, and delivery. Understanding this flow is essential for troubleshooting and customization.
+
+![Message Flow Pipeline](/openclaw/diagrams/message-flow.svg)
+
+The diagram above illustrates the complete message processing pipeline, showing the five phases from ingestion through persistence.
+
+## Pipeline Overview
+
+The message pipeline consists of five phases:
+
+| Phase | Steps | Purpose |
+|-------|-------|---------|
+| **Ingestion** | 1-2 | Receive and normalize messages |
+| **Processing** | 3-4 | Access control and routing |
+| **Reasoning** | 5-8 | Session, agent, and LLM execution |
+| **Delivery** | 9-11 | Format and send response |
+| **Persistence** | 12-13 | Save state and history |
+
+## Phase 1: Ingestion
+
+### Step 1: External Message Receipt
+
+Messages arrive from external platforms via their respective connectors:
+
+```
+Platform → Channel Connector
+```
+
+Each connector handles platform-specific protocols:
+- **WhatsApp**: Baileys WebSocket
+- **Telegram**: Bot API (polling/webhook)
+- **Discord**: Gateway WebSocket
+- **Slack**: Events API
+
+### Step 2: Message Normalization
+
+Raw platform messages are converted to a unified internal format:
+
+```typescript
+interface NormalizedMessage {
+  id: string;
+  channel: string;
+  peer: string;
+  sender: string;
+  content: string;
+  timestamp: Date;
+  metadata: {
+    isGroup: boolean;
+    groupName?: string;
+    replyTo?: string;
+    attachments?: Attachment[];
+  };
+}
+```
+
+## Phase 2: Processing
+
+### Step 3: Access Control
+
+The gateway validates the message against configured policies:
+
+```
+Is sender allowed? → Check DM policy → Check allowlist
+                            ↓
+                    Reject if unauthorized
+```
+
+Access control checks:
+- **DM Policy**: `pairing`, `allowlist`, or `open`
+- **Allowlist**: Specific phone numbers, user IDs, or usernames
+- **Pairing Status**: Has this device been approved?
+
+### Step 4: Agent Routing
+
+The message router determines which agent should handle the message:
+
+```typescript
+interface AgentBinding {
+  agentId: string;
+  match: {
+    channel?: string;   // "whatsapp", "telegram", etc.
+    peer?: string;      // specific user/group
+    account?: string;   // specific channel account
+  };
+}
+```
+
+Routing priority:
+1. Exact match on all fields
+2. Partial matches (channel + peer)
+3. Channel-only match
+4. Default agent
+
+## Phase 3: Reasoning
+
+### Step 5: Session Lookup
+
+The session manager retrieves or creates conversation context:
+
+```
+Session Key: agent:<agentId>:<peerId>
+
+~/.openclaw/agents/<agentId>/sessions/
+├── <sessionKey>.json     # Conversation history
+└── <sessionKey>.meta     # Session metadata
+```
+
+### Step 6: Context Assembly
+
+The system prompt is assembled from multiple sources:
+
+```
+Base System Prompt
+    ↓
++ AGENTS.md (persona)
+    ↓
++ SOUL.md (personality)
+    ↓
++ USER.md (preferences)
+    ↓
++ TOOLS.md (tool instructions)
+    ↓
++ MEMORY.md (persistent memory)
+    ↓
++ Session History
+    ↓
+= Complete Context
+```
+
+### Step 7: LLM Invocation
+
+The agent runtime calls the configured LLM provider:
+
+```
+Context + User Message → LLM API → Response/Tool Calls
+```
+
+Features:
+- **Streaming**: Real-time response delivery
+- **Tool Execution**: Handle tool calls in the response
+- **Failover**: Automatic switch to backup providers
+- **Token Estimation**: Stay within context limits
+
+### Step 8: Tool Execution Loop
+
+If the LLM requests tool calls:
+
+```
+while (response.hasToolCalls) {
+  toolResults = executeTools(response.toolCalls);
+  response = callLLM(context + toolResults);
+}
+```
+
+Tools include:
+- File operations (read, write, edit)
+- Shell commands (exec)
+- Web browsing (fetch, screenshot)
+- Custom skills
+
+<Callout title="Tool Safety" type="info">
+  Tool execution is governed by policies. Configure allowed/denied tools in your agent settings.
+</Callout>
+
+## Phase 4: Delivery
+
+### Step 9: Response Formatting
+
+Agent output is formatted for the target platform:
+
+```
+Agent Response → Platform-specific formatting → Chunked if needed
+```
+
+Each platform has different limits:
+- **WhatsApp**: ~65,000 characters
+- **Telegram**: 4,096 characters
+- **Discord**: 2,000 characters
+- **Slack**: 40,000 characters
+
+### Step 10: Message Chunking
+
+Long responses are split intelligently:
+
+- Respect markdown formatting
+- Keep code blocks intact
+- Split at paragraph boundaries
+- Maintain context across chunks
+
+### Step 11: Response Delivery
+
+The formatted response is sent via the channel connector:
+
+```
+Formatted Response → Channel Connector → External Platform
+```
+
+Delivery handling:
+- Retry on temporary failures
+- Queue messages if rate-limited
+- Emit delivery confirmation events
+
+## Phase 5: Persistence
+
+### Step 12: Session Update
+
+The conversation history is updated:
+
+```json
+{
+  "messages": [
+    {"role": "user", "content": "..."},
+    {"role": "assistant", "content": "..."}
+  ],
+  "metadata": {
+    "lastUpdated": "2026-02-05T12:00:00Z",
+    "messageCount": 42
+  }
+}
+```
+
+### Step 13: Memory Flush
+
+If configured, learnings are saved to memory:
+
+```
+Session Summary → MEMORY.md / memory/YYYY-MM-DD.md
+```
+
+## Context Window Management
+
+### Token Estimation
+
+OpenClaw tracks approximate token usage:
+
+```
+System Prompt (~2000 tokens)
++ Session History (variable)
++ User Message (~100 tokens)
++ Tool Results (variable)
+= Total Context
+```
+
+### Compaction
+
+When context exceeds limits:
+
+1. **Soft Threshold**: Trigger memory flush
+2. **Summarization**: Compress older messages
+3. **Pruning**: Remove verbose tool results
+4. **Hard Limit**: Truncate if still over
+
+```bash
+# Configure compaction
+openclaw config set agents.defaults.compaction.reserveTokensFloor 20000
+```
+
+## Debugging Message Flow
+
+### Enable Verbose Logging
+
+```bash
+openclaw gateway --verbose
+```
+
+### Key Log Signals
+
+```
+[channel]   received message from +1234567890
+[router]    routing to agent: default
+[session]   loading session: agent:default:+1234567890
+[agent]     calling model: google/gemini-3-flash-preview
+[agent]     tool call: read {"path": "..."}
+[agent]     response complete (1234 tokens)
+[delivery]  sent response to whatsapp
+[session]   persisted transcript
+```
+
+## Next Steps
+
+<Cards>
+  <Card href="/docs/openclaw/concepts/agents" title="Agent Runtime" icon="Bot">
+    Deep dive into agent execution
+  </Card>
+  <Card href="/docs/openclaw/concepts/sessions" title="Session Management" icon="History">
+    Understand conversation persistence
+  </Card>
+</Cards>

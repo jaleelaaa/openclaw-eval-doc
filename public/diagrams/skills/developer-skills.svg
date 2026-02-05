@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900">
+  <defs>
+    <style>
+      .title { font: bold 22px Arial, sans-serif; fill: #1a1a2e; }
+      .label { font: bold 13px Arial, sans-serif; fill: #ffffff; }
+      .small-text { font: bold 11px Arial, sans-serif; fill: #4b5563; }
+      .code { font: bold 11px Consolas, monospace; fill: #1f2937; }
+    </style>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#1a1a2e"/>
+    </marker>
+    <linearGradient id="devGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#1f2937"/>
+      <stop offset="100%" style="stop-color:#374151"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="900" fill="#ffffff"/>
+
+  <!-- Header -->
+  <rect x="0" y="0" width="1200" height="70" fill="url(#devGrad)"/>
+  <text x="600" y="40" text-anchor="middle" style="font: bold 28px Arial; fill: white;">DEVELOPER SKILLS</text>
+  <text x="600" y="60" text-anchor="middle" style="font: bold 14px Arial; fill: #9ca3af;">Coding Agent, ClawHub, Oracle, MCPorter, Session Logs, TMux</text>
+
+  <!-- CODING AGENT SKILL -->
+  <rect x="20" y="85" width="380" height="250" fill="#ecfdf5" stroke="#10b981" stroke-width="3" rx="10"/>
+  <rect x="20" y="85" width="380" height="40" fill="#10b981" rx="10"/>
+  <rect x="20" y="105" width="380" height="20" fill="#10b981"/>
+  <text x="210" y="112" text-anchor="middle" style="font: bold 18px Arial; fill: white;">CODING AGENT</text>
+
+  <text x="40" y="150" style="font: bold 14px Arial; fill: #1a1a2e;">Purpose: AI-Powered Code Assistant</text>
+  <text x="40" y="175" class="small-text">* Write and modify code files</text>
+  <text x="40" y="195" class="small-text">* Execute shell commands</text>
+  <text x="40" y="215" class="small-text">* Debug and refactor code</text>
+
+  <rect x="40" y="235" width="340" height="40" fill="#ecfdf5" stroke="#10b981" rx="5"/>
+  <text x="60" y="260" style="font: bold 11px Arial; fill: #059669;">Status: ELIGIBLE (Ready)</text>
+
+  <text x="40" y="300" class="code">@openclaw write a Python script</text>
+  <text x="40" y="320" class="code">@openclaw fix the bug in main.js</text>
+
+  <!-- CLAWHUB SKILL -->
+  <rect x="410" y="85" width="380" height="250" fill="#f0f9ff" stroke="#3b82f6" stroke-width="3" rx="10"/>
+  <rect x="410" y="85" width="380" height="40" fill="#3b82f6" rx="10"/>
+  <rect x="410" y="105" width="380" height="20" fill="#3b82f6"/>
+  <text x="600" y="112" text-anchor="middle" style="font: bold 18px Arial; fill: white;">CLAWHUB</text>
+
+  <text x="430" y="150" style="font: bold 14px Arial; fill: #1a1a2e;">Purpose: Skill Marketplace</text>
+  <text x="430" y="175" class="small-text">* Browse available skills</text>
+  <text x="430" y="195" class="small-text">* Install/uninstall skills</text>
+  <text x="430" y="215" class="small-text">* Update skill versions</text>
+
+  <rect x="430" y="235" width="340" height="40" fill="#ecfdf5" stroke="#10b981" rx="5"/>
+  <text x="450" y="260" style="font: bold 11px Arial; fill: #059669;">Status: ELIGIBLE (Ready)</text>
+
+  <text x="430" y="300" class="code">@openclaw list available skills</text>
+  <text x="430" y="320" class="code">@openclaw install weather-skill</text>
+
+  <!-- ORACLE SKILL -->
+  <rect x="800" y="85" width="380" height="250" fill="#fef3c7" stroke="#f59e0b" stroke-width="3" rx="10"/>
+  <rect x="800" y="85" width="380" height="40" fill="#f59e0b" rx="10"/>
+  <rect x="800" y="105" width="380" height="20" fill="#f59e0b"/>
+  <text x="990" y="112" text-anchor="middle" style="font: bold 18px Arial; fill: white;">ORACLE</text>
+
+  <text x="820" y="150" style="font: bold 14px Arial; fill: #1a1a2e;">Purpose: Knowledge Query Engine</text>
+  <text x="820" y="175" class="small-text">* Query structured databases</text>
+  <text x="820" y="195" class="small-text">* Natural language to SQL</text>
+  <text x="820" y="215" class="small-text">* Data analysis assistance</text>
+
+  <rect x="820" y="235" width="340" height="40" fill="#ecfdf5" stroke="#10b981" rx="5"/>
+  <text x="840" y="260" style="font: bold 11px Arial; fill: #059669;">Status: ELIGIBLE (Ready)</text>
+
+  <text x="820" y="300" class="code">@openclaw query sales data</text>
+  <text x="820" y="320" class="code">@openclaw analyze user trends</text>
+
+  <!-- MCPORTER SKILL -->
+  <rect x="20" y="350" width="380" height="250" fill="#f5f3ff" stroke="#7c3aed" stroke-width="3" rx="10"/>
+  <rect x="20" y="350" width="380" height="40" fill="#7c3aed" rx="10"/>
+  <rect x="20" y="370" width="380" height="20" fill="#7c3aed"/>
+  <text x="210" y="377" text-anchor="middle" style="font: bold 18px Arial; fill: white;">MCPORTER</text>
+
+  <text x="40" y="415" style="font: bold 14px Arial; fill: #1a1a2e;">Purpose: MCP Server Manager</text>
+  <text x="40" y="440" class="small-text">* List running MCP servers</text>
+  <text x="40" y="460" class="small-text">* Start/stop MCP servers</text>
+  <text x="40" y="480" class="small-text">* Configure server settings</text>
+
+  <rect x="40" y="500" width="340" height="40" fill="#ecfdf5" stroke="#10b981" rx="5"/>
+  <text x="60" y="525" style="font: bold 11px Arial; fill: #059669;">Status: ELIGIBLE (Ready)</text>
+
+  <text x="40" y="565" class="code">@openclaw list mcp servers</text>
+  <text x="40" y="585" class="code">@openclaw restart github-mcp</text>
+
+  <!-- SESSION LOGS SKILL -->
+  <rect x="410" y="350" width="380" height="250" fill="#fce7f3" stroke="#ec4899" stroke-width="3" rx="10"/>
+  <rect x="410" y="350" width="380" height="40" fill="#ec4899" rx="10"/>
+  <rect x="410" y="370" width="380" height="20" fill="#ec4899"/>
+  <text x="600" y="377" text-anchor="middle" style="font: bold 18px Arial; fill: white;">SESSION LOGS</text>
+
+  <text x="430" y="415" style="font: bold 14px Arial; fill: #1a1a2e;">Purpose: Conversation History</text>
+  <text x="430" y="440" class="small-text">* View past conversations</text>
+  <text x="430" y="460" class="small-text">* Search through history</text>
+  <text x="430" y="480" class="small-text">* Export session data</text>
+
+  <rect x="430" y="500" width="340" height="40" fill="#ecfdf5" stroke="#10b981" rx="5"/>
+  <text x="450" y="525" style="font: bold 11px Arial; fill: #059669;">Status: ELIGIBLE (Ready)</text>
+
+  <text x="430" y="565" class="code">@openclaw show recent sessions</text>
+  <text x="430" y="585" class="code">@openclaw search logs "api error"</text>
+
+  <!-- TMUX SKILL -->
+  <rect x="800" y="350" width="380" height="250" fill="#f0fdf4" stroke="#22c55e" stroke-width="3" rx="10"/>
+  <rect x="800" y="350" width="380" height="40" fill="#22c55e" rx="10"/>
+  <rect x="800" y="370" width="380" height="20" fill="#22c55e"/>
+  <text x="990" y="377" text-anchor="middle" style="font: bold 18px Arial; fill: white;">TMUX</text>
+
+  <text x="820" y="415" style="font: bold 14px Arial; fill: #1a1a2e;">Purpose: Terminal Multiplexer</text>
+  <text x="820" y="440" class="small-text">* Create/manage tmux sessions</text>
+  <text x="820" y="460" class="small-text">* Split panes and windows</text>
+  <text x="820" y="480" class="small-text">* Run persistent commands</text>
+
+  <rect x="820" y="500" width="340" height="40" fill="#fef2f2" stroke="#dc2626" rx="5"/>
+  <text x="840" y="525" class="code">Missing: tmux installation</text>
+
+  <text x="820" y="565" class="code">@openclaw create tmux session dev</text>
+  <text x="820" y="585" class="code">@openclaw split pane horizontal</text>
+
+  <!-- Architecture Diagram -->
+  <rect x="20" y="620" width="1160" height="260" fill="#f8fafc" stroke="#64748b" stroke-width="2" rx="10"/>
+  <text x="600" y="650" text-anchor="middle" style="font: bold 20px Arial; fill: #1e293b;">DEVELOPER SKILLS ARCHITECTURE</text>
+
+  <!-- Flow diagram -->
+  <rect x="60" y="680" width="100" height="60" fill="#8b5cf6" rx="8"/>
+  <text x="110" y="715" text-anchor="middle" class="label">DEVELOPER</text>
+
+  <line x1="160" y1="710" x2="220" y2="710" stroke="#1a1a2e" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <rect x="230" y="680" width="120" height="60" fill="#3b82f6" rx="8"/>
+  <text x="290" y="705" text-anchor="middle" class="label">OPENCLAW</text>
+  <text x="290" y="722" text-anchor="middle" class="label">GATEWAY</text>
+
+  <!-- Skill boxes -->
+  <rect x="400" y="670" width="130" height="45" fill="#10b981" rx="6"/>
+  <text x="465" y="698" text-anchor="middle" class="label">CODING AGENT</text>
+
+  <rect x="400" y="725" width="130" height="45" fill="#3b82f6" rx="6"/>
+  <text x="465" y="753" text-anchor="middle" class="label">CLAWHUB</text>
+
+  <rect x="400" y="780" width="130" height="45" fill="#7c3aed" rx="6"/>
+  <text x="465" y="808" text-anchor="middle" class="label">MCPORTER</text>
+
+  <rect x="560" y="670" width="130" height="45" fill="#f59e0b" rx="6"/>
+  <text x="625" y="698" text-anchor="middle" class="label">ORACLE</text>
+
+  <rect x="560" y="725" width="130" height="45" fill="#ec4899" rx="6"/>
+  <text x="625" y="753" text-anchor="middle" class="label">SESSION LOGS</text>
+
+  <rect x="560" y="780" width="130" height="45" fill="#22c55e" rx="6"/>
+  <text x="625" y="808" text-anchor="middle" class="label">TMUX</text>
+
+  <!-- Arrows -->
+  <line x1="350" y1="700" x2="390" y2="692" stroke="#1a1a2e" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="350" y1="710" x2="390" y2="747" stroke="#1a1a2e" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="350" y1="720" x2="390" y2="802" stroke="#1a1a2e" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Outputs -->
+  <rect x="740" y="680" width="200" height="50" fill="#1f2937" rx="6"/>
+  <text x="840" y="700" text-anchor="middle" style="font: bold 10px Consolas; fill: #10b981;">$ code written</text>
+  <text x="840" y="718" text-anchor="middle" style="font: bold 10px Consolas; fill: #10b981;">$ commands executed</text>
+
+  <rect x="740" y="745" width="200" height="50" fill="#f3f4f6" stroke="#6b7280" rx="6"/>
+  <text x="840" y="775" text-anchor="middle" class="small-text">Skills installed/managed</text>
+
+  <rect x="740" y="810" width="200" height="50" fill="#f0f9ff" stroke="#3b82f6" rx="6"/>
+  <text x="840" y="840" text-anchor="middle" class="small-text">Session data retrieved</text>
+
+  <!-- Arrows to outputs -->
+  <line x1="530" y1="692" x2="730" y2="705" stroke="#1a1a2e" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="690" y1="747" x2="730" y2="770" stroke="#1a1a2e" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="690" y1="802" x2="730" y2="835" stroke="#1a1a2e" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- GitHub connection note -->
+  <rect x="980" y="680" width="180" height="130" fill="#ffffff" stroke="#1a1a2e" stroke-width="2" rx="8"/>
+  <text x="1070" y="705" text-anchor="middle" style="font: bold 14px Arial; fill: #1a1a2e;">INTEGRATIONS</text>
+  <text x="1000" y="730" class="small-text">* GitHub API</text>
+  <text x="1000" y="750" class="small-text">* File System</text>
+  <text x="1000" y="770" class="small-text">* Shell/Terminal</text>
+  <text x="1000" y="790" class="small-text">* MCP Servers</text>
+</svg>

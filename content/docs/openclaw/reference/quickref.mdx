@@ -1,0 +1,233 @@
+---
+title: Quick Reference
+description: Fast reference for common commands and configurations
+icon: Bookmark
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
+# Quick Reference Card
+
+Fast reference for common OpenClaw commands and configurations.
+
+## Docker Commands
+
+| Command | Description |
+|---------|-------------|
+| `docker compose up openclaw-gateway` | Start gateway |
+| `docker compose up -d openclaw-gateway` | Start in background |
+| `docker compose down` | Stop all services |
+| `docker compose restart openclaw-gateway` | Restart gateway |
+| `docker logs openclaw-openclaw-gateway-1 --tail 50` | View logs |
+| `docker logs -f openclaw-openclaw-gateway-1` | Follow logs |
+| `docker exec -it openclaw-openclaw-gateway-1 /bin/sh` | Enter container shell |
+
+## URLs
+
+| Service | URL |
+|---------|-----|
+| Control UI | `http://localhost:18789/?token=YOUR_TOKEN` |
+| Chat | `http://localhost:18789/chat?session=main&token=YOUR_TOKEN` |
+| Canvas | `http://localhost:18789/__openclaw__/canvas/` |
+| WebChat | `http://localhost:18789/__openclaw__/webchat/` |
+| Skills | `http://localhost:18789/skills` |
+
+## CLI Commands
+
+```bash
+# Using docker compose
+docker compose run --rm openclaw-cli <command>
+
+# Examples:
+docker compose run --rm openclaw-cli status
+docker compose run --rm openclaw-cli doctor
+docker compose run --rm openclaw-cli models list
+docker compose run --rm openclaw-cli models status
+docker compose run --rm openclaw-cli models set anthropic/claude-sonnet-4-5
+docker compose run --rm openclaw-cli agent --message "Hello"
+docker compose run --rm openclaw-cli onboard
+docker compose run --rm openclaw-cli pairing list discord
+docker compose run --rm openclaw-cli pairing approve discord <code>
+```
+
+## Ports
+
+| Port | Service |
+|------|---------|
+| 18789 | Gateway WebSocket + Control UI |
+| 18790 | Bridge |
+| 18793 | Canvas file server |
+
+## Environment Variables (.env)
+
+```bash
+OPENCLAW_CONFIG_DIR=~/.openclaw
+OPENCLAW_WORKSPACE_DIR=~/.openclaw/workspace
+OPENCLAW_GATEWAY_PORT=18789
+OPENCLAW_BRIDGE_PORT=18790
+OPENCLAW_GATEWAY_BIND=lan
+OPENCLAW_GATEWAY_TOKEN=your-token-here
+OPENCLAW_IMAGE=openclaw:local
+GEMINI_API_KEY=your-gemini-key
+ANTHROPIC_API_KEY=sk-ant-api03-xxxxx
+OPENAI_API_KEY=sk-xxxxx
+```
+
+## Configuration Files
+
+| File | Location | Purpose |
+|------|----------|---------|
+| `.env` | Project root | Docker environment |
+| `openclaw.json` | `~/.openclaw/openclaw.json` | Main config |
+| `paired.json` | `~/.openclaw/devices/paired.json` | Approved devices |
+| `pending.json` | `~/.openclaw/devices/pending.json` | Pending approvals |
+| `allowlist.json` | `~/.openclaw/senders/discord/allowlist.json` | Approved users |
+
+## Common Fixes
+
+### Control UI "pairing required"
+
+Add to `openclaw.json`:
+```json
+{
+  "gateway": {
+    "controlUi": {
+      "allowInsecureAuth": true,
+      "dangerouslyDisableDeviceAuth": true
+    }
+  }
+}
+```
+
+### Discord Bot Not Responding to DMs
+
+Add to `openclaw.json`:
+```json
+{
+  "channels": {
+    "discord": {
+      "dm": {
+        "enabled": true,
+        "policy": "open",
+        "allowFrom": ["*"]
+      }
+    }
+  }
+}
+```
+
+### Change AI Model
+
+<Tabs items={['Claude', 'Gemini', 'GPT']}>
+  <Tab value="Claude">
+    ```bash
+    docker compose run --rm openclaw-cli models set anthropic/claude-sonnet-4-5
+    ```
+  </Tab>
+  <Tab value="Gemini">
+    ```bash
+    docker compose run --rm openclaw-cli models set google/gemini-3-flash-preview
+    ```
+  </Tab>
+  <Tab value="GPT">
+    ```bash
+    docker compose run --rm openclaw-cli models set openai/gpt-4o
+    ```
+  </Tab>
+</Tabs>
+
+## Minimal Working Configuration
+
+```json
+{
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "google/gemini-3-flash-preview"
+      }
+    }
+  },
+  "channels": {
+    "discord": {
+      "enabled": true,
+      "token": "YOUR_DISCORD_BOT_TOKEN",
+      "groupPolicy": "open",
+      "dm": {
+        "enabled": true,
+        "policy": "open",
+        "allowFrom": ["*"]
+      }
+    }
+  },
+  "gateway": {
+    "port": 18789,
+    "mode": "local",
+    "bind": "loopback",
+    "auth": {
+      "mode": "token",
+      "token": "YOUR_GATEWAY_TOKEN"
+    },
+    "controlUi": {
+      "allowInsecureAuth": true,
+      "dangerouslyDisableDeviceAuth": true
+    }
+  },
+  "plugins": {
+    "entries": {
+      "discord": {
+        "enabled": true
+      }
+    }
+  }
+}
+```
+
+## DM Policy Options
+
+| Policy | Behavior |
+|--------|----------|
+| `"pairing"` | New users get a pairing code, owner must approve (default) |
+| `"open"` | Anyone can DM (requires `allowFrom: ["*"]`) |
+| `"allowlist"` | Only users in `allowFrom` list |
+| `"disabled"` | No DMs allowed |
+
+## Valid Auth Modes
+
+<Callout title="Important" type="warn">
+  Only `"token"` or `"password"` are valid auth modes. There is no `"none"` option.
+</Callout>
+
+```json
+{
+  "gateway": {
+    "auth": {
+      "mode": "token",
+      "token": "your-secure-token"
+    }
+  }
+}
+```
+
+## Troubleshooting Checklist
+
+- [ ] Docker Desktop is running
+- [ ] Gateway container is running: `docker ps`
+- [ ] No config errors in logs: `docker logs openclaw-openclaw-gateway-1 --tail 10`
+- [ ] Token included in URL for Control UI
+- [ ] Discord bot token is valid
+- [ ] DM policy set to "open" with allowFrom: ["*"]
+- [ ] Gateway restarted after config changes
+- [ ] Message Content Intent enabled in Discord Developer Portal
+
+## Key Learnings
+
+1. **Docker networking quirk**: Browser connections through Docker appear as remote (172.18.0.1), triggering pairing requirements.
+
+2. **Valid auth modes**: Only `"token"` or `"password"` - there is no way to disable auth completely.
+
+3. **Config changes require restart**: Always run `docker compose restart openclaw-gateway` after editing openclaw.json.
+
+4. **Discord requires both settings**: For open DMs, you need BOTH `policy: "open"` AND `allowFrom: ["*"]`.
+
+5. **CLI limitations in Docker**: The CLI container can't always reach the gateway. Edit config files directly on the mounted volume instead.

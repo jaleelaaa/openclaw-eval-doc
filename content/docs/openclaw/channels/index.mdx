@@ -1,0 +1,146 @@
+---
+title: Messaging Channels
+description: Connect OpenClaw to WhatsApp, Telegram, Discord, Slack, and more
+icon: MessageSquare
+---
+
+import { Card, Cards } from 'fumadocs-ui/components/card';
+import { Callout } from 'fumadocs-ui/components/callout';
+
+# Messaging Channels
+
+OpenClaw connects your AI assistant to multiple messaging platforms through a unified channel architecture. Each platform is integrated via a dedicated connector that handles authentication, message normalization, and delivery.
+
+## Supported Channels
+
+| Channel | Library | Authentication | Features |
+|---------|---------|----------------|----------|
+| **WhatsApp** | Baileys | QR Code | Personal accounts, media, groups |
+| **Telegram** | grammY | Bot Token | Bots, groups, inline queries |
+| **Discord** | discord.js | Bot Token | Servers, threads, slash commands |
+| **Slack** | Bolt | OAuth/Token | Workspaces, channels, DMs |
+| **Signal** | Native | Phone linking | End-to-end encryption |
+| **iMessage** | BlueBubbles | macOS bridge | Apple ecosystem |
+| **Matrix** | Extension | Access token | Federated messaging |
+| **MS Teams** | Extension | OAuth | Enterprise workspaces |
+
+## Channel Architecture
+
+Each channel follows a plugin architecture with standardized interfaces:
+
+```
+External Platform → Channel Connector → Message Normalization → Gateway Router
+                                                                     ↓
+External Platform ← Channel Connector ← Response Formatting ← Agent Response
+```
+
+**Key concepts:**
+- **Connectors** handle platform-specific authentication and API calls
+- **Normalization** converts platform messages to a unified internal format
+- **Routing** directs messages to the appropriate agent based on bindings
+- **Formatting** converts agent responses back to platform-specific format
+
+## Quick Setup
+
+### WhatsApp (Fastest)
+
+```bash
+# Start QR code authentication
+docker compose run --rm openclaw-cli providers login
+# Scan QR code with WhatsApp mobile app
+```
+
+### Telegram
+
+```bash
+# Add bot token from @BotFather
+openclaw providers add --provider telegram --token "123456:ABC-DEF..."
+```
+
+### Discord
+
+```bash
+# Add bot token from Developer Portal
+openclaw providers add --provider discord --token "your-bot-token"
+```
+
+<Callout title="Multiple Channels" type="info">
+  You can connect multiple channels simultaneously. Each channel operates independently with its own authentication and message queue.
+</Callout>
+
+## Channel Status
+
+Check connected channels:
+
+```bash
+# Via CLI
+openclaw channels status
+
+# Via health check
+openclaw health --json
+```
+
+**Expected output:**
+```json
+{
+  "channels": {
+    "whatsapp": "connected",
+    "telegram": "connected",
+    "discord": "disconnected"
+  }
+}
+```
+
+## DM Policy
+
+Configure how your agent handles direct messages:
+
+| Policy | Description |
+|--------|-------------|
+| `pairing` | Require user to pair before interaction |
+| `allowlist` | Only respond to approved contacts |
+| `open` | Respond to anyone (use with caution) |
+
+```bash
+# Set DM policy
+openclaw config set channels.whatsapp.dmPolicy "allowlist"
+
+# Add to allowlist
+openclaw config set channels.whatsapp.allowFrom '["1234567890", "0987654321"]'
+```
+
+## Channel Guides
+
+<Cards>
+  <Card href="/docs/openclaw/channels/whatsapp" title="WhatsApp" icon="MessageCircle">
+    QR code authentication with Baileys
+  </Card>
+  <Card href="/docs/openclaw/channels/telegram" title="Telegram" icon="Send">
+    Bot setup with grammY
+  </Card>
+  <Card href="/docs/openclaw/channels/discord" title="Discord" icon="Hash">
+    Server bot with discord.js
+  </Card>
+  <Card href="/docs/openclaw/channels/slack" title="Slack" icon="Slack">
+    Workspace app with Bolt
+  </Card>
+  <Card href="/docs/openclaw/channels/others" title="Other Channels" icon="MoreHorizontal">
+    Signal, iMessage, Matrix, and more
+  </Card>
+</Cards>
+
+## Troubleshooting
+
+| Issue | Solution |
+|-------|----------|
+| Channel shows "disconnected" | Check authentication, restart gateway |
+| Messages not arriving | Verify allowlist/DM policy settings |
+| QR code expired | Run `providers login` again |
+| Rate limited | Wait and retry; consider message batching |
+
+## Next Steps
+
+Choose a channel to set up:
+- [WhatsApp](/docs/openclaw/channels/whatsapp) — Most common, QR code auth
+- [Telegram](/docs/openclaw/channels/telegram) — Easy bot setup
+- [Discord](/docs/openclaw/channels/discord) — Server integration

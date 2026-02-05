@@ -1,0 +1,216 @@
+---
+title: Glossary
+description: OpenClaw terminology and definitions
+icon: BookOpen
+---
+
+# Glossary
+
+This glossary defines key terms used throughout the OpenClaw documentation.
+
+## A
+
+### Agent
+A configured AI personality that processes messages and generates responses. Agents have their own configuration, workspace, and session history.
+
+### Agent Binding
+A routing rule that matches incoming messages to specific agents based on channel, peer, or account criteria.
+
+### Agent Runtime
+The component (`pi-agent-core`) that executes agent turns, managing LLM calls, tool execution, and response generation.
+
+### Allowlist
+A list of permitted users (phone numbers, user IDs) who can send messages to an agent when DM policy is set to `allowlist`.
+
+## B
+
+### Baileys
+The open-source library used for WhatsApp Web integration in OpenClaw.
+
+### Binding
+See *Agent Binding*.
+
+### Bolt
+The Slack framework used for Slack channel integration.
+
+## C
+
+### Canvas
+A file server (port 18793) for serving files created or used by agents.
+
+### Channel
+A messaging platform integration (WhatsApp, Telegram, Discord, Slack, etc.).
+
+### Channel Connector
+A plugin that handles communication with a specific messaging platform.
+
+### Compaction
+The process of summarizing older conversation history to stay within LLM context limits.
+
+### Context Window
+The maximum amount of text (measured in tokens) that an LLM can process in a single request.
+
+### Control UI
+The web-based dashboard for managing OpenClaw, accessible at the gateway's HTTP port.
+
+## D
+
+### Device Pairing
+An authentication mechanism requiring approval before new clients can access the gateway.
+
+### DM Policy
+Rules controlling who can send direct messages to an agent: `pairing`, `allowlist`, or `open`.
+
+### Docker Compose
+The container orchestration tool used to deploy OpenClaw services.
+
+## F
+
+### Fallback Model
+A backup LLM provider used when the primary model fails or is unavailable.
+
+### Frame
+A JSON message in the WebSocket protocol.
+
+## G
+
+### Gateway
+The central OpenClaw server that orchestrates channels, agents, and communication.
+
+### Gateway Token
+A 64-character hex string used to authenticate connections to the gateway.
+
+### grammY
+The Telegram Bot API framework used for Telegram integration.
+
+## H
+
+### Hook
+An extension point where plugins can intercept and modify OpenClaw behavior.
+
+### Hot Reload
+The ability to apply configuration changes without restarting the gateway.
+
+## I
+
+### Idempotency Key
+A unique identifier sent with requests to prevent duplicate execution on retries.
+
+### Ingestion
+The first phase of message processing where external messages are received and normalized.
+
+## L
+
+### LLM (Large Language Model)
+The AI model that generates agent responses (e.g., GPT-4, Claude, Gemini).
+
+### LLM Provider
+A service that hosts LLM models (Google, Anthropic, OpenAI, Ollama).
+
+## M
+
+### Memory
+Persistent information stored by agents across sessions, including `MEMORY.md` and daily logs.
+
+### Message Router
+The component that directs incoming messages to the appropriate agent based on bindings.
+
+## N
+
+### Normalization
+Converting platform-specific message formats to OpenClaw's internal format.
+
+## O
+
+### Ollama
+A tool for running LLM models locally on your machine.
+
+### OpenClaw
+An open-source, self-hosted AI agent gateway for unified messaging platform integration.
+
+## P
+
+### Pairing
+See *Device Pairing*.
+
+### Peer
+The sender/recipient identifier in a conversation (phone number, user ID, etc.).
+
+### pi-agent-core
+The underlying agent runtime library used by OpenClaw.
+
+### Plugin
+An extension that adds channels, skills, or behaviors to OpenClaw.
+
+### Plugin SDK
+The stable interface library for developing OpenClaw plugins.
+
+### Primary Model
+The default LLM used by an agent for generating responses.
+
+## R
+
+### Runtime Layer
+The execution-time capabilities injected into plugins by the gateway.
+
+## S
+
+### Sandbox
+Isolation mode that restricts agent file system access (`none`, `jailed`, `strict`).
+
+### SDK Layer
+The stable, compile-time interfaces provided for plugin development.
+
+### Session
+The persistent state for a conversation between a specific user and agent.
+
+### Session Key
+The unique identifier for a session: `agent:<agentId>:<peerId>`.
+
+### Skill
+A collection of tools and capabilities that can be added to an agent.
+
+### Snapshot
+The current state information sent to clients upon connection.
+
+### Streaming
+Real-time delivery of agent responses as they're generated.
+
+### System Prompt
+The initial instructions and context provided to the LLM before user messages.
+
+## T
+
+### Token
+1. A unit of text processing in LLMs (roughly 4 characters or 3/4 of a word).
+2. An authentication credential (e.g., Gateway Token, Bot Token).
+
+### Tool
+A capability an agent can use during response generation (read files, execute commands, browse web).
+
+### Tool Policy
+Rules controlling which tools an agent can execute.
+
+## W
+
+### WebSocket
+The bidirectional communication protocol used by the gateway.
+
+### Workspace
+The directory containing agent configuration files (AGENTS.md, SOUL.md, USER.md).
+
+## Abbreviations
+
+| Abbreviation | Meaning |
+|--------------|---------|
+| API | Application Programming Interface |
+| CLI | Command Line Interface |
+| DM | Direct Message |
+| HTTP | Hypertext Transfer Protocol |
+| JSON | JavaScript Object Notation |
+| LAN | Local Area Network |
+| LLM | Large Language Model |
+| SDK | Software Development Kit |
+| TLS | Transport Layer Security |
+| UI | User Interface |
+| WS | WebSocket |

@@ -1,0 +1,164 @@
+---
+title: Environment Variables
+description: Complete reference for OpenClaw environment variables
+icon: Variable
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+# Environment Variables
+
+OpenClaw uses environment variables for sensitive configuration like API keys and for overriding default settings. This page provides a complete reference.
+
+## Core Gateway Variables
+
+| Variable | Description | Default | Required |
+|----------|-------------|---------|----------|
+| `OPENCLAW_GATEWAY_TOKEN` | Authentication token (64-char hex) | Auto-generated | Yes (production) |
+| `OPENCLAW_CONFIG_DIR` | Configuration directory | `~/.openclaw` | No |
+| `OPENCLAW_WORKSPACE_DIR` | Agent workspace directory | `~/.openclaw/workspace` | No |
+| `OPENCLAW_GATEWAY_PORT` | Gateway HTTP/WebSocket port | `18789` | No |
+| `OPENCLAW_GATEWAY_BIND` | Network binding mode | `lan` | No |
+| `OPENCLAW_BRIDGE_PORT` | Legacy bridge protocol port | `18790` | No |
+| `OPENCLAW_IMAGE` | Docker image name | `openclaw:local` | No |
+| `OPENCLAW_PROFILE` | Configuration profile name | `default` | No |
+| `OPENCLAW_SKIP_CHANNELS` | Skip channel initialization | `false` | No |
+
+## LLM Provider API Keys
+
+| Variable | Provider | How to Obtain |
+|----------|----------|---------------|
+| `GOOGLE_API_KEY` | Google Gemini | [Google AI Studio](https://makersuite.google.com/app/apikey) |
+| `ANTHROPIC_API_KEY` | Anthropic Claude | [Anthropic Console](https://console.anthropic.com/) |
+| `OPENAI_API_KEY` | OpenAI GPT | [OpenAI Platform](https://platform.openai.com/api-keys) |
+| `GEMINI_API_KEY` | Google Gemini (Image) | Same as GOOGLE_API_KEY |
+
+<Callout title="API Key Security" type="warn">
+  Never commit API keys to version control. Use environment variables or a secrets manager.
+</Callout>
+
+## Messaging Channel Tokens
+
+| Variable | Channel | How to Obtain |
+|----------|---------|---------------|
+| `DISCORD_BOT_TOKEN` | Discord | [Discord Developer Portal](https://discord.com/developers/applications) |
+| `TELEGRAM_BOT_TOKEN` | Telegram | [@BotFather](https://t.me/botfather) |
+| `SLACK_BOT_TOKEN` | Slack | [Slack API](https://api.slack.com/apps) |
+
+## Optional Integration Variables
+
+| Variable | Purpose |
+|----------|---------|
+| `CLAUDE_AI_SESSION_KEY` | Claude.ai web integration |
+| `CLAUDE_WEB_SESSION_KEY` | Alternative Claude web auth |
+| `CLAUDE_WEB_COOKIE` | Browser cookie authentication |
+
+## Setting Environment Variables
+
+### Shell Session (Temporary)
+
+```bash
+export OPENCLAW_GATEWAY_TOKEN="your-token-here"
+export GOOGLE_API_KEY="your-api-key"
+```
+
+### Shell Profile (Persistent)
+
+Add to `~/.bashrc`, `~/.zshrc`, or equivalent:
+
+```bash
+# OpenClaw Configuration
+export OPENCLAW_GATEWAY_TOKEN="your-token-here"
+export OPENCLAW_CONFIG_DIR="$HOME/.openclaw"
+export OPENCLAW_WORKSPACE_DIR="$HOME/.openclaw/workspace"
+
+# LLM Provider Keys
+export GOOGLE_API_KEY="your-google-key"
+export ANTHROPIC_API_KEY="your-anthropic-key"
+export OPENAI_API_KEY="your-openai-key"
+
+# Messaging Tokens
+export DISCORD_BOT_TOKEN="your-discord-token"
+export TELEGRAM_BOT_TOKEN="your-telegram-token"
+```
+
+Then reload:
+```bash
+source ~/.bashrc  # or ~/.zshrc
+```
+
+### Docker Compose (.env file)
+
+Create a `.env` file in your OpenClaw directory:
+
+```bash
+# Gateway
+OPENCLAW_CONFIG_DIR=/home/user/.openclaw
+OPENCLAW_WORKSPACE_DIR=/home/user/.openclaw/workspace
+OPENCLAW_GATEWAY_PORT=18789
+OPENCLAW_GATEWAY_BIND=lan
+OPENCLAW_GATEWAY_TOKEN=your-64-char-hex-token
+OPENCLAW_IMAGE=openclaw:local
+
+# LLM Providers
+GOOGLE_API_KEY=your-google-key
+ANTHROPIC_API_KEY=your-anthropic-key
+OPENAI_API_KEY=your-openai-key
+
+# Channels
+DISCORD_BOT_TOKEN=your-discord-token
+TELEGRAM_BOT_TOKEN=your-telegram-token
+```
+
+### systemd Service
+
+For Linux systemd services, create an environment file:
+
+```bash
+# /etc/openclaw/environment
+OPENCLAW_GATEWAY_TOKEN=your-token
+GOOGLE_API_KEY=your-key
+```
+
+Reference in the service file:
+```ini
+[Service]
+EnvironmentFile=/etc/openclaw/environment
+```
+
+## Generating a Gateway Token
+
+```bash
+# Using OpenSSL
+openssl rand -hex 32
+
+# Using Python
+python3 -c "import secrets; print(secrets.token_hex(32))"
+
+# Using Node.js
+node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+```
+
+## Verifying Configuration
+
+```bash
+# Check if variables are set
+echo $OPENCLAW_GATEWAY_TOKEN
+echo $GOOGLE_API_KEY
+
+# Verify in OpenClaw
+openclaw config get gateway.auth.token
+openclaw health --json
+```
+
+## Common Issues
+
+| Issue | Cause | Solution |
+|-------|-------|----------|
+| `token_mismatch` | Token in env doesn't match config | Ensure consistency between `.env` and config file |
+| `unauthorized` | Missing or invalid API key | Verify API key is set and valid |
+| `No model configured` | Missing LLM provider key | Set at least one provider API key |
+
+<Callout title="Debugging" type="info">
+  Use `printenv | grep OPENCLAW` to list all OpenClaw-related environment variables currently set.
+</Callout>

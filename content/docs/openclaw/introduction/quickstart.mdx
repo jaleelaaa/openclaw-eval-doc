@@ -1,0 +1,199 @@
+---
+title: Quick Start Guide
+description: Get OpenClaw running in 15 minutes with Docker
+icon: Rocket
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Card, Cards } from 'fumadocs-ui/components/card';
+
+# Quick Start Guide
+
+Get OpenClaw up and running in about 15 minutes using Docker. This guide walks you through the fastest path to a working AI assistant gateway.
+
+![Installation Decision Flow](/openclaw/diagrams/installation-decision-flow.svg)
+
+The decision flow above helps you choose between Docker (recommended for most users) and native installation. This quick start covers the Docker path.
+
+## Prerequisites
+
+Before you begin, ensure you have:
+
+| Requirement | Minimum Version | Check Command |
+|-------------|-----------------|---------------|
+| Docker | 24.0+ | `docker --version` |
+| Docker Compose | v2.20+ | `docker compose version` |
+| Disk Space | 2GB free | `df -h` |
+| Memory | 512MB available | `free -m` |
+
+<Callout title="Don't have Docker?" type="warn">
+  If you prefer not to use Docker, see the [Native Installation](/docs/openclaw/installation/native) guide instead.
+</Callout>
+
+## Step 1: Clone the Repository
+
+```bash
+git clone https://github.com/openclaw/openclaw.git
+cd openclaw
+```
+
+## Step 2: Run Automated Setup
+
+The setup script handles everything automatically:
+
+```bash
+bash ./docker-setup.sh
+```
+
+**What the script does:**
+1. Validates Docker and Docker Compose installation
+2. Creates configuration directories (`~/.openclaw`, `~/.openclaw/workspace`)
+3. Generates a secure 64-character gateway token
+4. Builds the Docker image with all dependencies
+5. Runs the interactive onboarding wizard
+6. Starts the gateway service
+
+## Step 3: Configure an LLM Provider
+
+During onboarding, you'll be prompted to set up at least one LLM provider. Choose based on your needs:
+
+<Tabs items={['Google Gemini (Free)', 'Anthropic Claude', 'OpenAI', 'Local (Ollama)']}>
+  <Tab value="Google Gemini (Free)">
+    Google Gemini offers a generous free tier, making it ideal for getting started:
+
+    1. Get an API key from [Google AI Studio](https://makersuite.google.com/app/apikey)
+    2. Set the environment variable:
+    ```bash
+    export GOOGLE_API_KEY="your-api-key"
+    ```
+    3. Configure as default model:
+    ```bash
+    docker compose run --rm openclaw-cli config set agents.defaults.model.primary "google/gemini-3-flash-preview"
+    ```
+  </Tab>
+  <Tab value="Anthropic Claude">
+    Claude offers superior reasoning capabilities:
+
+    1. Get an API key from [Anthropic Console](https://console.anthropic.com/)
+    2. Set the environment variable:
+    ```bash
+    export ANTHROPIC_API_KEY="your-api-key"
+    ```
+    3. Configure as default model:
+    ```bash
+    docker compose run --rm openclaw-cli config set agents.defaults.model.primary "anthropic/claude-sonnet"
+    ```
+  </Tab>
+  <Tab value="OpenAI">
+    OpenAI provides a wide range of models:
+
+    1. Get an API key from [OpenAI Platform](https://platform.openai.com/api-keys)
+    2. Set the environment variable:
+    ```bash
+    export OPENAI_API_KEY="your-api-key"
+    ```
+    3. Configure as default model:
+    ```bash
+    docker compose run --rm openclaw-cli config set agents.defaults.model.primary "openai/gpt-4"
+    ```
+  </Tab>
+  <Tab value="Local (Ollama)">
+    Run models locally for complete privacy:
+
+    1. Install [Ollama](https://ollama.com/download)
+    2. Pull a model:
+    ```bash
+    ollama pull llama3
+    ```
+    3. Start Ollama service:
+    ```bash
+    ollama serve
+    ```
+    4. Configure OpenClaw:
+    ```bash
+    docker compose run --rm openclaw-cli config set agents.defaults.model.primary "ollama/llama3"
+    ```
+  </Tab>
+</Tabs>
+
+## Step 4: Connect a Messaging Channel
+
+Connect at least one messaging platform. WhatsApp is the quickest to set up:
+
+```bash
+# Start the provider login flow
+docker compose run --rm openclaw-cli providers login
+```
+
+A QR code will appear in your terminal. Scan it with your WhatsApp mobile app to link the web client.
+
+<Callout title="Other Channels" type="info">
+  For Telegram, Discord, Slack, and other channels, see the [Channels](/docs/openclaw/channels) section.
+</Callout>
+
+## Step 5: Verify Installation
+
+Check that everything is working:
+
+```bash
+# Run health check
+docker compose run --rm openclaw-cli health --token "$OPENCLAW_GATEWAY_TOKEN"
+```
+
+**Expected output:**
+```json
+{
+  "status": "healthy",
+  "gateway": { "status": "running", "port": 18789 },
+  "channels": { "whatsapp": "connected" },
+  "model": "google/gemini-3-flash-preview"
+}
+```
+
+## Step 6: Access the Control UI
+
+Open your browser to view the web dashboard:
+
+```
+http://127.0.0.1:18789?token=<your-gateway-token>
+```
+
+You should see:
+- **Health Online** status indicator
+- Connected channels listed
+- Agent configuration visible
+
+## Test Your Setup
+
+Send a message to your connected channel (e.g., WhatsApp). The AI assistant should respond!
+
+```bash
+# Or test via CLI
+docker compose run --rm openclaw-cli message send \
+  --channel whatsapp \
+  --to "<your-phone-number>" \
+  --message "Hello from OpenClaw!"
+```
+
+## Common Issues
+
+| Issue | Solution |
+|-------|----------|
+| **Port in use** | Change port: Edit `.env` file, set `OPENCLAW_GATEWAY_PORT=18790` |
+| **Token mismatch** | Verify `OPENCLAW_GATEWAY_TOKEN` matches in `.env` and config |
+| **Provider not connecting** | Check API key is set correctly, run `docker compose logs -f` |
+
+## Next Steps
+
+<Cards>
+  <Card href="/docs/openclaw/installation/docker" title="Docker Details" icon="Container">
+    Deep dive into Docker configuration options
+  </Card>
+  <Card href="/docs/openclaw/channels" title="Add More Channels" icon="MessageSquare">
+    Connect Telegram, Discord, Slack, and more
+  </Card>
+  <Card href="/docs/openclaw/configuration" title="Configure OpenClaw" icon="Settings">
+    Customize behavior, add skills, and tune performance
+  </Card>
+</Cards>

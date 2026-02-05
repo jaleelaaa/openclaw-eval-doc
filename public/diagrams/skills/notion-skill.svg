@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520" width="800" height="520">
+  <defs>
+    <style>
+      .title { font: bold 22px Arial, sans-serif; fill: #1a1a2e; }
+      .label { font: bold 13px Arial, sans-serif; fill: #ffffff; }
+      .small-text { font: bold 11px Arial, sans-serif; fill: #4b5563; }
+      .code { font: bold 11px Consolas, monospace; fill: #1f2937; }
+    </style>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#1a1a2e"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="520" fill="#ffffff"/>
+
+  <!-- Header -->
+  <rect x="0" y="0" width="800" height="60" fill="#1a1a2e"/>
+  <text x="400" y="35" text-anchor="middle" style="font: bold 24px Arial; fill: white;">📝 NOTION SKILL</text>
+  <text x="400" y="52" text-anchor="middle" style="font: bold 12px Arial; fill: #9ca3af;">Create and manage pages, databases, and blocks</text>
+
+  <!-- Purpose Box -->
+  <rect x="20" y="75" width="370" height="130" fill="#f3f4f6" stroke="#6b7280" stroke-width="2" rx="8"/>
+  <text x="40" y="100" style="font: bold 16px Arial; fill: #1a1a2e;">PURPOSE</text>
+  <text x="40" y="125" class="small-text">• Create and edit Notion pages</text>
+  <text x="40" y="145" class="small-text">• Manage databases and properties</text>
+  <text x="40" y="165" class="small-text">• Add blocks (text, images, code)</text>
+  <text x="40" y="185" class="small-text">• Search across workspace</text>
+
+  <!-- Requirements Box -->
+  <rect x="410" y="75" width="370" height="130" fill="#fef2f2" stroke="#dc2626" stroke-width="2" rx="8"/>
+  <text x="430" y="100" style="font: bold 16px Arial; fill: #dc2626;">STATUS: 🔴 BLOCKED</text>
+  <text x="430" y="125" class="small-text">Missing: env:NOTION_API_KEY</text>
+  <text x="430" y="150" style="font: bold 11px Arial; fill: #dc2626;">SETUP STEPS:</text>
+  <text x="430" y="170" class="code">1. Go to notion.so/my-integrations</text>
+  <text x="430" y="190" class="code">2. Create integration → Copy token</text>
+  <text x="430" y="210" class="code">3. Add to Skills page or .env</text>
+
+  <!-- Flow Diagram -->
+  <rect x="20" y="220" width="760" height="180" fill="#f0f9ff" stroke="#3b82f6" stroke-width="2" rx="8"/>
+  <text x="400" y="245" text-anchor="middle" style="font: bold 16px Arial; fill: #1e40af;">WORKFLOW DIAGRAM</text>
+
+  <!-- User -->
+  <rect x="50" y="270" width="120" height="60" fill="#8b5cf6" rx="6"/>
+  <text x="110" y="305" text-anchor="middle" class="label">USER</text>
+
+  <!-- Arrow -->
+  <line x1="170" y1="300" x2="210" y2="300" stroke="#1a1a2e" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="190" y="290" style="font: bold 8px Arial; fill: #6b7280;">"Create page"</text>
+
+  <!-- Gateway -->
+  <rect x="220" y="270" width="120" height="60" fill="#3b82f6" rx="6"/>
+  <text x="280" y="295" text-anchor="middle" class="label">OPENCLAW</text>
+  <text x="280" y="312" text-anchor="middle" class="label">GATEWAY</text>
+
+  <!-- Arrow -->
+  <line x1="340" y1="300" x2="380" y2="300" stroke="#1a1a2e" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="360" y="290" style="font: bold 8px Arial; fill: #6b7280;">POST</text>
+
+  <!-- Notion API -->
+  <rect x="390" y="270" width="120" height="60" fill="#1a1a2e" rx="6"/>
+  <text x="450" y="295" text-anchor="middle" class="label">NOTION</text>
+  <text x="450" y="312" text-anchor="middle" class="label">API</text>
+
+  <!-- Arrow -->
+  <line x1="510" y1="300" x2="550" y2="300" stroke="#1a1a2e" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Notion Workspace -->
+  <rect x="560" y="260" width="200" height="80" fill="#ffffff" stroke="#1a1a2e" stroke-width="2" rx="6"/>
+  <text x="660" y="285" text-anchor="middle" style="font: bold 14px Arial; fill: #1a1a2e;">NOTION WORKSPACE</text>
+  <rect x="575" y="295" width="50" height="35" fill="#f3f4f6" stroke="#d1d5db" rx="3"/>
+  <text x="600" y="317" text-anchor="middle" style="font: bold 9px Arial; fill: #6b7280;">Page 1</text>
+  <rect x="635" y="295" width="50" height="35" fill="#f3f4f6" stroke="#d1d5db" rx="3"/>
+  <text x="660" y="317" text-anchor="middle" style="font: bold 9px Arial; fill: #6b7280;">Page 2</text>
+  <rect x="695" y="295" width="50" height="35" fill="#f3f4f6" stroke="#d1d5db" rx="3"/>
+  <text x="720" y="317" text-anchor="middle" style="font: bold 9px Arial; fill: #6b7280;">DB</text>
+
+  <!-- Return Arrow -->
+  <path d="M 560 340 L 560 370 L 170 370 L 170 330" fill="none" stroke="#10b981" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arrow)"/>
+  <text x="360" y="385" text-anchor="middle" style="font: bold 10px Arial; fill: #10b981;">Page created → URL returned</text>
+
+  <!-- Examples -->
+  <rect x="20" y="415" width="760" height="90" fill="#fef3c7" stroke="#f59e0b" stroke-width="2" rx="8"/>
+  <text x="40" y="440" style="font: bold 16px Arial; fill: #d97706;">EXAMPLE COMMANDS</text>
+  <text x="40" y="465" class="code">@openclaw create a Notion page titled "Meeting Notes - Feb 4"</text>
+  <text x="40" y="485" class="code">@openclaw search my Notion for "project plan"</text>
+  <text x="40" y="505" class="code">@openclaw add a task to my Tasks database: "Review PR"</text>
+</svg>

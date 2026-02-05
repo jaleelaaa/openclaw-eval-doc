@@ -1,0 +1,10 @@
+{
+  "title": "Reference",
+  "icon": "Book",
+  "pages": [
+    "quickref",
+    "cli",
+    "api",
+    "glossary"
+  ]
+}

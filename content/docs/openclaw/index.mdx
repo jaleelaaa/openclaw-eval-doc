@@ -1,0 +1,78 @@
+---
+title: OpenClaw Documentation
+description: Self-hosted AI agent gateway for unified messaging platform integration
+icon: Bot
+---
+
+import { Card, Cards } from 'fumadocs-ui/components/card';
+import { Callout } from 'fumadocs-ui/components/callout';
+
+# OpenClaw
+
+**OpenClaw** is an open-source, self-hosted AI agent gateway that provides a unified interface for AI assistants across multiple messaging platforms. Connect your favorite LLM to WhatsApp, Telegram, Discord, Slack, and more—all from a single, privacy-respecting deployment.
+
+![OpenClaw System Architecture](/openclaw/diagrams/system-architecture.svg)
+
+The architecture above shows how OpenClaw connects external messaging platforms through a central gateway to LLM providers, with persistent storage for configuration and sessions.
+
+## Key Features
+
+<Cards>
+  <Card href="/docs/openclaw/configuration/providers" title="Multi-Model Support" icon="Brain">
+    Connect to Anthropic Claude, Google Gemini, OpenAI GPT, or run local models with Ollama
+  </Card>
+  <Card href="/docs/openclaw/channels" title="Multi-Channel Integration" icon="MessageSquare">
+    WhatsApp, Telegram, Discord, Slack, Signal, iMessage—unified under one gateway
+  </Card>
+  <Card href="/docs/openclaw/plugins" title="Plugin Architecture" icon="Puzzle">
+    Extend functionality with custom channel connectors and skills
+  </Card>
+  <Card href="/docs/openclaw/installation" title="Self-Hosted" icon="Server">
+    Full control over your data with Docker or native deployment options
+  </Card>
+</Cards>
+
+## At a Glance
+
+| Aspect | Description |
+|--------|-------------|
+| **Architecture** | Gateway-centric, WebSocket-based control plane |
+| **Deployment** | Docker containerized or native Node.js |
+| **AI Integration** | 15+ LLM providers supported |
+| **Extensibility** | Plugin-based channel connectors and skills |
+| **State Management** | File-based JSON configuration with hot-reload |
+| **License** | MIT (Open Source) |
+
+## Quick Start
+
+Get OpenClaw running in minutes with Docker:
+
+```bash
+# Clone the repository
+git clone https://github.com/openclaw/openclaw.git
+cd openclaw
+
+# Run automated setup
+bash ./docker-setup.sh
+```
+
+<Callout title="Choose Your Path" type="info">
+  New to OpenClaw? Start with the [Quick Start Guide](/docs/openclaw/introduction/quickstart) for a 15-minute setup walkthrough, or explore the [Architecture Overview](/docs/openclaw/introduction/architecture) to understand how the system works.
+</Callout>
+
+## Next Steps
+
+<Cards>
+  <Card href="/docs/openclaw/introduction/overview" title="Learn More" icon="BookOpen">
+    Understand what OpenClaw is and how it can help you
+  </Card>
+  <Card href="/docs/openclaw/installation" title="Install OpenClaw" icon="Download">
+    Choose between Docker and native installation methods
+  </Card>
+  <Card href="/docs/openclaw/channels" title="Connect Channels" icon="Plug">
+    Set up WhatsApp, Telegram, Discord, and more
+  </Card>
+  <Card href="/docs/openclaw/concepts/message-flow" title="How It Works" icon="GitBranch">
+    Dive deep into the message processing pipeline
+  </Card>
+</Cards>

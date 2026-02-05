@@ -1,0 +1,25 @@
+{
+  "title": "OpenClaw",
+  "description": "Self-hosted AI Agent Gateway",
+  "icon": "Bot",
+  "root": true,
+  "pages": [
+    "---Getting Started---",
+    "index",
+    "...introduction",
+    "---Installation---",
+    "...installation",
+    "---Configuration---",
+    "...configuration",
+    "---Channels---",
+    "...channels",
+    "---Core Concepts---",
+    "...concepts",
+    "---Extensibility---",
+    "...plugins",
+    "---Operations---",
+    "...operations",
+    "---Reference---",
+    "...reference"
+  ]
+}

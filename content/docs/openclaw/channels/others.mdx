@@ -1,0 +1,261 @@
+---
+title: Other Channels
+description: Signal, iMessage, Matrix, Teams, and WebChat setup
+icon: MoreHorizontal
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Card, Cards } from 'fumadocs-ui/components/card';
+
+# Other Channels
+
+Beyond the core platforms, OpenClaw supports additional messaging channels through built-in connectors and community extensions.
+
+## Built-in Channels
+
+<Tabs items={['Signal', 'iMessage', 'WebChat']}>
+  <Tab value="Signal">
+    ### Signal Integration
+
+    Signal provides end-to-end encrypted messaging. OpenClaw integrates via the Signal CLI.
+
+    #### Prerequisites
+    - Signal account with phone number
+    - signal-cli installed
+
+    #### Setup
+
+    ```bash
+    # Install signal-cli
+    # macOS
+    brew install signal-cli
+
+    # Linux
+    # Download from https://github.com/AsamK/signal-cli/releases
+    ```
+
+    ```bash
+    # Register or link
+    signal-cli -a +1234567890 register
+    # Or link to existing account
+    signal-cli -a +1234567890 link
+
+    # Configure OpenClaw
+    openclaw providers add --provider signal --account "+1234567890"
+    ```
+
+    #### Configuration
+    ```bash
+    openclaw config set channels.signal.enabled true
+    openclaw config set channels.signal.account "+1234567890"
+    ```
+
+    #### Features
+    | Feature | Supported |
+    |---------|-----------|
+    | Text messages | ✅ |
+    | Images | ✅ |
+    | Groups | ✅ |
+    | End-to-end encryption | ✅ |
+    | Disappearing messages | ✅ |
+  </Tab>
+
+  <Tab value="iMessage">
+    ### iMessage Integration
+
+    iMessage integration requires macOS and uses BlueBubbles as a bridge.
+
+    <Callout title="macOS Only" type="warn">
+      iMessage integration only works on macOS with an Apple ID signed in.
+    </Callout>
+
+    #### Prerequisites
+    - macOS computer (always-on)
+    - Apple ID signed in to Messages
+    - [BlueBubbles](https://bluebubbles.app/) server installed
+
+    #### Setup
+
+    1. **Install BlueBubbles Server** on your Mac
+    2. Configure BlueBubbles to expose an API
+    3. Connect OpenClaw:
+
+    ```bash
+    openclaw config set channels.imessage.enabled true
+    openclaw config set channels.imessage.bluebubbles.url "http://localhost:1234"
+    openclaw config set channels.imessage.bluebubbles.password "your-password"
+    ```
+
+    #### Features
+    | Feature | Supported |
+    |---------|-----------|
+    | Text messages | ✅ |
+    | Images | ✅ |
+    | Reactions (Tapbacks) | ✅ |
+    | Group chats | ✅ |
+    | Read receipts | ✅ |
+  </Tab>
+
+  <Tab value="WebChat">
+    ### WebChat Integration
+
+    Embed a chat widget on your website for direct AI interaction.
+
+    #### Setup
+
+    WebChat is automatically available when the gateway runs:
+
+    ```
+    http://localhost:18789/__openclaw__/webchat/
+    ```
+
+    #### Embedding
+
+    Add to your website:
+    ```html
+    <script src="http://your-gateway:18789/__openclaw__/webchat/embed.js"></script>
+    <openclaw-chat token="your-token"></openclaw-chat>
+    ```
+
+    #### Configuration
+    ```bash
+    openclaw config set channels.webchat.enabled true
+    openclaw config set channels.webchat.allowedOrigins '["https://yoursite.com"]'
+    ```
+
+    #### Features
+    | Feature | Supported |
+    |---------|-----------|
+    | Text messages | ✅ |
+    | File uploads | ✅ |
+    | Markdown rendering | ✅ |
+    | Code highlighting | ✅ |
+    | Custom styling | ✅ |
+  </Tab>
+</Tabs>
+
+## Extension Channels
+
+These channels are available through the extensions system:
+
+### Microsoft Teams
+
+```bash
+# Install Teams extension
+openclaw plugins install @openclaw/channel-teams
+
+# Configure
+openclaw config set channels.teams.enabled true
+openclaw config set channels.teams.appId "your-app-id"
+openclaw config set channels.teams.appPassword "your-app-password"
+```
+
+| Feature | Supported |
+|---------|-----------|
+| Direct messages | ✅ |
+| Channel messages | ✅ |
+| Adaptive Cards | ⚠️ |
+
+### Matrix
+
+```bash
+# Install Matrix extension
+openclaw plugins install @openclaw/channel-matrix
+
+# Configure
+openclaw config set channels.matrix.enabled true
+openclaw config set channels.matrix.homeserver "https://matrix.org"
+openclaw config set channels.matrix.userId "@bot:matrix.org"
+openclaw config set channels.matrix.accessToken "your-token"
+```
+
+| Feature | Supported |
+|---------|-----------|
+| Direct messages | ✅ |
+| Room messages | ✅ |
+| End-to-end encryption | ⚠️ |
+
+### Mattermost
+
+```bash
+# Install Mattermost extension
+openclaw plugins install @openclaw/channel-mattermost
+
+# Configure
+openclaw config set channels.mattermost.enabled true
+openclaw config set channels.mattermost.url "https://your-mattermost.com"
+openclaw config set channels.mattermost.token "your-bot-token"
+```
+
+### Google Chat
+
+```bash
+# Install Google Chat extension
+openclaw plugins install @openclaw/channel-google-chat
+
+# Configure with service account
+openclaw config set channels.googlechat.enabled true
+openclaw config set channels.googlechat.credentials "/path/to/service-account.json"
+```
+
+## Community Extensions
+
+The OpenClaw community maintains additional channel connectors:
+
+| Channel | Extension | Status |
+|---------|-----------|--------|
+| Line | `@openclaw-community/channel-line` | Maintained |
+| Zalo | `@openclaw-community/channel-zalo` | Beta |
+| Nostr | `@openclaw-community/channel-nostr` | Experimental |
+| Twitch | `@openclaw-community/channel-twitch` | Beta |
+
+Install community extensions:
+```bash
+openclaw plugins install @openclaw-community/channel-line
+```
+
+<Callout title="Community Support" type="info">
+  Community extensions may have different support levels. Check the extension documentation for details.
+</Callout>
+
+## Creating Custom Channels
+
+Build your own channel connector using the Plugin SDK:
+
+```typescript
+import { ChannelPlugin, ChannelMeta } from '@openclaw/plugin-sdk';
+
+export const meta: ChannelMeta = {
+  id: 'my-channel',
+  name: 'My Custom Channel',
+  version: '1.0.0',
+};
+
+export default class MyChannel implements ChannelPlugin {
+  async connect() {
+    // Initialize connection
+  }
+
+  async sendMessage(message) {
+    // Send message to platform
+  }
+
+  async onMessage(handler) {
+    // Register message handler
+  }
+}
+```
+
+See [Plugin Development](/docs/openclaw/plugins/development) for full details.
+
+## Next Steps
+
+<Cards>
+  <Card href="/docs/openclaw/concepts/message-flow" title="Message Flow" icon="GitBranch">
+    Understand how messages are processed
+  </Card>
+  <Card href="/docs/openclaw/plugins/development" title="Build a Channel" icon="Puzzle">
+    Create your own channel connector
+  </Card>
+</Cards>

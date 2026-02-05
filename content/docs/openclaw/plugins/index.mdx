@@ -1,0 +1,268 @@
+---
+title: Plugin Architecture
+description: OpenClaw's two-layer SDK and runtime extensibility model
+icon: Puzzle
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Card, Cards } from 'fumadocs-ui/components/card';
+
+# Plugin Architecture
+
+OpenClaw uses a plugin architecture to enable extensibility for channels, skills, and integrations. The system is designed with a two-layer model that separates stable SDK interfaces from runtime behavior.
+
+![Plugin Architecture](/openclaw/diagrams/plugin-architecture.svg)
+
+The diagram above shows the two-layer extensibility model: the SDK layer provides stable, compile-time interfaces, while the runtime layer injects execution capabilities.
+
+## Architecture Overview
+
+### Two-Layer Model
+
+| Layer | Purpose | Stability |
+|-------|---------|-----------|
+| **SDK Layer** | Types, schemas, helpers | Stable, versioned |
+| **Runtime Layer** | Execution, state access | Internal, injected |
+
+This separation ensures:
+- **Plugins don't import internal modules** directly
+- **SDK provides stable contracts** for development
+- **Runtime is injected** at execution time
+- **Independent versioning** of plugins and core
+
+## SDK Layer (Compile-Time)
+
+The SDK provides stable interfaces for plugin development:
+
+### Type Definitions
+
+```typescript
+// Channel plugin interface
+interface ChannelPlugin {
+  id: string;
+  name: string;
+  version: string;
+  capabilities: ChannelCapabilities[];
+
+  connect(): Promise<void>;
+  disconnect(): Promise<void>;
+  sendMessage(message: OutboundMessage): Promise<void>;
+  onMessage(handler: MessageHandler): void;
+}
+
+// Channel capabilities
+enum ChannelCapabilities {
+  TEXT = 'text',
+  IMAGES = 'images',
+  FILES = 'files',
+  REACTIONS = 'reactions',
+  THREADS = 'threads',
+}
+```
+
+### Config Helpers
+
+```typescript
+import { buildConfigSchema, setAccountEnabled } from '@openclaw/plugin-sdk';
+
+// Define plugin configuration schema
+const schema = buildConfigSchema({
+  enabled: { type: 'boolean', default: true },
+  token: { type: 'string', required: true },
+  dmPolicy: { type: 'enum', values: ['pairing', 'allowlist', 'open'] },
+});
+```
+
+### Pairing Helpers
+
+```typescript
+import { formatPairingHint, PAIRING_MESSAGE } from '@openclaw/plugin-sdk';
+
+// Generate pairing instructions for users
+const hint = formatPairingHint('discord', userId);
+```
+
+### Tool Parameter Helpers
+
+```typescript
+import { readStringParam, readNumberParam, jsonResult } from '@openclaw/plugin-sdk';
+
+// Parse tool inputs safely
+const path = readStringParam(input, 'path');
+const limit = readNumberParam(input, 'limit', 100); // with default
+```
+
+## Runtime Layer (Execution)
+
+At runtime, the gateway injects capabilities:
+
+### Channel Runtime
+
+```typescript
+// Injected at runtime
+interface ChannelRuntime {
+  // Text processing
+  chunkMarkdown(text: string, limit: number): string[];
+  resolveChunkLimit(channel: string): number;
+
+  // Reply handling
+  dispatchReply(message: OutboundMessage): Promise<void>;
+  bufferedDispatcher(options: BufferOptions): Dispatcher;
+
+  // Routing
+  resolveAgentRoute(message: InboundMessage): string;
+
+  // Pairing
+  buildPairingReply(peer: string): string;
+  readAllowFromStore(channel: string): string[];
+
+  // Media
+  fetchRemoteMedia(url: string): Promise<Buffer>;
+  saveMediaBuffer(buffer: Buffer, ext: string): string;
+}
+```
+
+### Plugin Lifecycle
+
+```typescript
+// Plugin is instantiated
+const plugin = new MyChannelPlugin();
+
+// Runtime is injected
+plugin.setRuntime(runtime);
+
+// Plugin is connected
+await plugin.connect();
+
+// Messages flow
+plugin.onMessage(async (msg) => {
+  const agentId = runtime.resolveAgentRoute(msg);
+  // ... process message
+});
+```
+
+## Plugin Types
+
+### Channel Plugins
+
+Connect to messaging platforms:
+
+```typescript
+export default class TelegramPlugin implements ChannelPlugin {
+  readonly id = 'telegram';
+  readonly name = 'Telegram';
+  readonly capabilities = [
+    ChannelCapabilities.TEXT,
+    ChannelCapabilities.IMAGES,
+    ChannelCapabilities.REACTIONS,
+  ];
+
+  async connect() {
+    // Initialize Telegram connection
+  }
+
+  async sendMessage(message) {
+    // Send via Telegram API
+  }
+}
+```
+
+### Skill Plugins
+
+Add agent capabilities:
+
+```typescript
+export default class GitHubSkill implements SkillPlugin {
+  readonly id = 'github';
+  readonly name = 'GitHub Integration';
+
+  tools = [
+    {
+      name: 'github_create_issue',
+      description: 'Create a GitHub issue',
+      parameters: {...},
+      execute: async (params) => {...}
+    }
+  ];
+}
+```
+
+### Hook Plugins
+
+Intercept and modify behavior:
+
+```typescript
+export default class LoggingPlugin implements HookPlugin {
+  hooks = {
+    before_agent_start: async (ctx) => {
+      console.log('Agent starting:', ctx.agentId);
+    },
+    after_tool_call: async (ctx, result) => {
+      console.log('Tool result:', result);
+    }
+  };
+}
+```
+
+## Plugin Hooks
+
+Available hook points:
+
+| Hook | Timing | Use Case |
+|------|--------|----------|
+| `before_agent_start` | Before agent processes message | Add context, modify prompt |
+| `agent_end` | After agent completes | Log results, cleanup |
+| `before_tool_call` | Before tool executes | Validate, transform input |
+| `after_tool_call` | After tool executes | Log, transform output |
+| `message_received` | When message arrives | Filter, route |
+| `message_sending` | Before sending response | Modify, block |
+| `message_sent` | After response sent | Log, trigger actions |
+| `gateway_start` | Gateway initialization | Setup resources |
+| `gateway_stop` | Gateway shutdown | Cleanup |
+
+## Installing Plugins
+
+### From npm
+
+```bash
+openclaw plugins install @openclaw/channel-matrix
+openclaw plugins install @openclaw-community/skill-notion
+```
+
+### From Local Path
+
+```bash
+openclaw plugins install ./my-custom-plugin
+```
+
+### Enable/Disable
+
+```bash
+openclaw plugins enable my-plugin
+openclaw plugins disable my-plugin
+```
+
+## Plugin Discovery
+
+Plugins are discovered from:
+
+1. **Built-in**: `node_modules/@openclaw/...`
+2. **Installed**: `~/.openclaw/plugins/...`
+3. **Workspace**: `<workspace>/plugins/...` (highest priority)
+
+Workspace plugins override built-in plugins with the same ID.
+
+<Callout title="Development" type="info">
+  For development, place plugins in your workspace's `plugins/` directory for easy iteration.
+</Callout>
+
+## Next Steps
+
+<Cards>
+  <Card href="/docs/openclaw/plugins/sdk" title="SDK Reference" icon="Package">
+    Complete SDK API documentation
+  </Card>
+  <Card href="/docs/openclaw/plugins/development" title="Create a Plugin" icon="Wrench">
+    Step-by-step plugin development guide
+  </Card>
+</Cards>

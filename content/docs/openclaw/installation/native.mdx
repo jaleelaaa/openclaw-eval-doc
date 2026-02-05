@@ -1,0 +1,250 @@
+---
+title: Native Installation
+description: Install OpenClaw directly with npm for development or lightweight deployments
+icon: Terminal
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Card, Cards } from 'fumadocs-ui/components/card';
+
+# Native Installation
+
+Native installation runs OpenClaw directly on your system without Docker. This is ideal for development, debugging, or environments where Docker is not available.
+
+![Native Installation Architecture](/openclaw/diagrams/native-installation-architecture.svg)
+
+The diagram above compares NPM global installation with source installation, showing the steps and components involved in each approach.
+
+## Prerequisites
+
+| Requirement | Minimum Version | Recommended | Verification |
+|-------------|-----------------|-------------|--------------|
+| Node.js | 22.12.0 | Latest LTS | `node --version` |
+| npm | 10.0+ | Latest | `npm --version` |
+| pnpm | 10.23.0+ | Latest | `pnpm --version` |
+| Git | 2.0+ | Latest | `git --version` |
+
+### Installing Node.js 22
+
+<Tabs items={['nvm (Recommended)', 'Official Installer', 'Package Manager']}>
+  <Tab value="nvm (Recommended)">
+    ```bash
+    # Install nvm first if you haven't
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+
+    # Install and use Node.js 22
+    nvm install 22
+    nvm use 22
+    nvm alias default 22
+    ```
+  </Tab>
+  <Tab value="Official Installer">
+    Download from [nodejs.org](https://nodejs.org/en/download/) and run the installer for your platform.
+  </Tab>
+  <Tab value="Package Manager">
+    ```bash
+    # macOS with Homebrew
+    brew install node@22
+
+    # Ubuntu/Debian
+    curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
+    sudo apt-get install -y nodejs
+
+    # Windows with Chocolatey
+    choco install nodejs --version=22.0.0
+    ```
+  </Tab>
+</Tabs>
+
+### Installing pnpm
+
+```bash
+# Using npm
+npm install -g pnpm@latest
+
+# Or using Corepack (built into Node.js)
+corepack enable
+corepack prepare pnpm@latest --activate
+```
+
+## NPM Global Installation
+
+The simplest method for end users:
+
+```bash
+# Install OpenClaw globally
+npm install -g openclaw@latest
+# Or: pnpm add -g openclaw@latest
+
+# Run onboarding wizard
+openclaw onboard --install-daemon
+
+# Start gateway
+openclaw gateway --port 18789 --verbose
+```
+
+### Installation Channels
+
+| Channel | npm Tag | Use Case |
+|---------|---------|----------|
+| Stable | `latest` | Production deployments |
+| Beta | `beta` | Testing new features |
+| Development | `dev` | Latest unreleased changes |
+
+```bash
+# Install specific channel
+npm install -g openclaw@beta
+npm install -g openclaw@dev
+```
+
+## System Daemon Installation
+
+For production deployments, install OpenClaw as a system daemon:
+
+<Tabs items={['macOS (LaunchD)', 'Linux (systemd)', 'Windows (WSL2)']}>
+  <Tab value="macOS (LaunchD)">
+    ```bash
+    # Install daemon during onboarding
+    openclaw onboard --install-daemon
+
+    # This creates: ~/Library/LaunchAgents/ai.openclaw.gateway.plist
+
+    # Manual control
+    launchctl load ~/Library/LaunchAgents/ai.openclaw.gateway.plist
+    launchctl unload ~/Library/LaunchAgents/ai.openclaw.gateway.plist
+    ```
+  </Tab>
+  <Tab value="Linux (systemd)">
+    ```bash
+    # Install daemon during onboarding
+    openclaw onboard --install-daemon
+
+    # This creates: ~/.config/systemd/user/openclaw-gateway.service
+
+    # Enable and start
+    systemctl --user enable openclaw-gateway
+    systemctl --user start openclaw-gateway
+
+    # Check status
+    systemctl --user status openclaw-gateway
+
+    # View logs
+    journalctl --user -u openclaw-gateway -f
+    ```
+  </Tab>
+  <Tab value="Windows (WSL2)">
+    ```bash
+    # First, set up WSL2 with Ubuntu
+    wsl --install Ubuntu
+    wsl -d Ubuntu
+
+    # Inside WSL2, follow the Linux installation steps
+    npm install -g openclaw@latest
+    openclaw onboard --install-daemon
+    ```
+
+    <Callout type="info">
+      Native Windows support is limited. WSL2 provides the best experience.
+    </Callout>
+  </Tab>
+</Tabs>
+
+## Configuration
+
+After installation, generate a gateway token and configure your environment:
+
+```bash
+# Generate secure token
+export OPENCLAW_GATEWAY_TOKEN=$(openssl rand -hex 32)
+
+# Add to shell profile (~/.bashrc, ~/.zshrc)
+echo "export OPENCLAW_GATEWAY_TOKEN=$OPENCLAW_GATEWAY_TOKEN" >> ~/.bashrc
+source ~/.bashrc
+```
+
+### Directory Structure
+
+OpenClaw creates the following directory structure:
+
+```
+~/.openclaw/
+├── openclaw.json          # Main configuration
+├── openclaw.json.bak      # Automatic backup
+├── agents/                # Per-agent state
+├── canvas/                # Canvas file server
+├── cron/                  # Scheduled tasks
+├── identity/              # Device keys
+└── workspace/             # Agent workspace
+```
+
+## Running the Gateway
+
+```bash
+# Start with default settings
+openclaw gateway
+
+# Start with verbose logging
+openclaw gateway --verbose
+
+# Start on specific port
+openclaw gateway --port 18790
+
+# Start with LAN binding (accessible from network)
+openclaw gateway --bind lan
+```
+
+## Verification
+
+```bash
+# Check gateway health
+openclaw health --json
+
+# Expected output:
+# {
+#   "status": "healthy",
+#   "gateway": { "status": "running", "port": 18789 },
+#   "channels": { ... },
+#   "model": "google/gemini-3-flash-preview"
+# }
+```
+
+## Updating
+
+```bash
+# Update to latest version
+npm update -g openclaw
+
+# Or reinstall specific version
+npm install -g openclaw@latest
+```
+
+## Troubleshooting
+
+| Issue | Solution |
+|-------|----------|
+| `command not found: openclaw` | Ensure npm global bin is in PATH |
+| `Unsupported engine` | Update Node.js to version 22+ |
+| Permission errors | Don't use `sudo` with npm global installs; fix npm permissions |
+| Port in use | Use `--port` flag to specify different port |
+
+<Callout title="npm Permissions" type="info">
+  If you encounter permission errors, configure npm to use a different directory:
+  ```bash
+  mkdir ~/.npm-global
+  npm config set prefix '~/.npm-global'
+  echo 'export PATH=~/.npm-global/bin:$PATH' >> ~/.bashrc
+  source ~/.bashrc
+  ```
+</Callout>
+
+## Next Steps
+
+<Cards>
+  <Card href="/docs/openclaw/configuration" title="Configure OpenClaw" icon="Settings">
+    Set up LLM providers and messaging channels
+  </Card>
+  <Card href="/docs/openclaw/installation/source" title="Build from Source" icon="Code">
+    For development and customization
+  </Card>
+</Cards>

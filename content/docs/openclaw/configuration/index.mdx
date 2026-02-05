@@ -1,0 +1,147 @@
+---
+title: Configuration Overview
+description: Understanding OpenClaw's configuration hierarchy and options
+icon: Settings
+---
+
+import { Card, Cards } from 'fumadocs-ui/components/card';
+import { Callout } from 'fumadocs-ui/components/callout';
+
+# Configuration Overview
+
+OpenClaw uses a layered configuration system that allows flexible customization through environment variables, configuration files, and CLI arguments. Understanding this hierarchy is essential for managing your deployment.
+
+![Configuration Hierarchy](/openclaw/diagrams/configuration-hierarchy.svg)
+
+The diagram above shows how configuration values are resolved from multiple sources, with higher-priority sources overriding lower ones.
+
+## Configuration Priority
+
+Configuration values are resolved in this order (highest to lowest priority):
+
+| Priority | Source | Example |
+|----------|--------|---------|
+| 1 (Highest) | **CLI Arguments** | `openclaw gateway --port 8080` |
+| 2 | **Environment Variables** | `OPENCLAW_GATEWAY_PORT=8080` |
+| 3 | **Configuration File** | `~/.openclaw/openclaw.json` |
+| 4 (Lowest) | **Default Values** | Built-in defaults |
+
+<Callout title="Hot Reload" type="info">
+  Configuration file changes are detected automatically. Most settings apply immediately without restarting the gateway.
+</Callout>
+
+## Configuration File Location
+
+The main configuration file is located at:
+
+```
+~/.openclaw/openclaw.json
+```
+
+A backup is automatically created at `~/.openclaw/openclaw.json.bak` when changes are made.
+
+## Configuration Structure
+
+```json
+{
+  "gateway": {
+    "auth": {
+      "token": "your-64-char-hex-token"
+    },
+    "port": 18789,
+    "bind": "lan",
+    "controlUi": {
+      "enabled": true
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "google/gemini-3-flash-preview"
+      }
+    }
+  },
+  "channels": {
+    "whatsapp": { "enabled": true },
+    "telegram": { "enabled": true },
+    "discord": { "enabled": true }
+  },
+  "plugins": []
+}
+```
+
+## Managing Configuration
+
+### Via CLI
+
+```bash
+# Get a configuration value
+openclaw config get agents.defaults.model.primary
+
+# Set a configuration value
+openclaw config set agents.defaults.model.primary "anthropic/claude-sonnet"
+
+# View full configuration
+openclaw config get
+```
+
+### Via Environment Variables
+
+Environment variables use the `OPENCLAW_` prefix with underscores:
+
+```bash
+# Gateway settings
+export OPENCLAW_GATEWAY_PORT=18789
+export OPENCLAW_GATEWAY_BIND=lan
+
+# LLM provider keys
+export GOOGLE_API_KEY="your-key"
+export ANTHROPIC_API_KEY="your-key"
+export OPENAI_API_KEY="your-key"
+```
+
+### Via Configuration File
+
+Edit `~/.openclaw/openclaw.json` directly, or use:
+
+```bash
+# Open in default editor
+openclaw config edit
+```
+
+## Configuration Sections
+
+<Cards>
+  <Card href="/docs/openclaw/configuration/environment" title="Environment Variables" icon="Variable">
+    Complete reference for all environment variables
+  </Card>
+  <Card href="/docs/openclaw/configuration/providers" title="LLM Providers" icon="Brain">
+    Configure Anthropic, Google, OpenAI, and local models
+  </Card>
+  <Card href="/docs/openclaw/configuration/workspace" title="Agent Workspace" icon="Folder">
+    Set up agent personas, personalities, and preferences
+  </Card>
+</Cards>
+
+## Quick Reference
+
+### Essential Settings
+
+| Setting | CLI | Environment | Config File |
+|---------|-----|-------------|-------------|
+| Gateway Port | `--port 18789` | `OPENCLAW_GATEWAY_PORT` | `gateway.port` |
+| Network Bind | `--bind lan` | `OPENCLAW_GATEWAY_BIND` | `gateway.bind` |
+| Auth Token | N/A | `OPENCLAW_GATEWAY_TOKEN` | `gateway.auth.token` |
+| Primary Model | N/A | N/A | `agents.defaults.model.primary` |
+
+### Network Binding Options
+
+| Value | Description |
+|-------|-------------|
+| `loopback` | Only accessible from localhost (127.0.0.1) |
+| `lan` | Accessible from local network |
+| `0.0.0.0` | Accessible from all interfaces |
+
+<Callout title="Security" type="warn">
+  Use `loopback` binding for development. For production, use `lan` with proper firewall rules or a VPN like Tailscale.
+</Callout>

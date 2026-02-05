@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900">
+  <defs>
+    <style>
+      .title { font: bold 22px Arial, sans-serif; fill: #1a1a2e; }
+      .label { font: bold 13px Arial, sans-serif; fill: #ffffff; }
+      .small-text { font: bold 11px Arial, sans-serif; fill: #4b5563; }
+      .code { font: bold 11px Consolas, monospace; fill: #1f2937; }
+    </style>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#1a1a2e"/>
+    </marker>
+    <linearGradient id="mediaGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#1db954"/>
+      <stop offset="100%" style="stop-color:#22c55e"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="900" fill="#ffffff"/>
+
+  <!-- Header -->
+  <rect x="0" y="0" width="1200" height="70" fill="url(#mediaGrad)"/>
+  <text x="600" y="40" text-anchor="middle" style="font: bold 28px Arial; fill: white;">MEDIA SKILLS</text>
+  <text x="600" y="60" text-anchor="middle" style="font: bold 14px Arial; fill: #bbf7d0;">Spotify, Video Frames, SongSee, GifGrep, CamSnap, Peekaboo</text>
+
+  <!-- SPOTIFY PLAYER SKILL -->
+  <rect x="20" y="85" width="380" height="250" fill="#f0fdf4" stroke="#1db954" stroke-width="3" rx="10"/>
+  <rect x="20" y="85" width="380" height="40" fill="#1db954" rx="10"/>
+  <rect x="20" y="105" width="380" height="20" fill="#1db954"/>
+  <text x="210" y="112" text-anchor="middle" style="font: bold 18px Arial; fill: white;">SPOTIFY PLAYER</text>
+
+  <text x="40" y="150" style="font: bold 14px Arial; fill: #1a1a2e;">Purpose: Music Playback Control</text>
+  <text x="40" y="175" class="small-text">* Play/pause/skip tracks</text>
+  <text x="40" y="195" class="small-text">* Search and play songs/artists</text>
+  <text x="40" y="215" class="small-text">* Control volume and shuffle</text>
+
+  <rect x="40" y="235" width="340" height="40" fill="#fef2f2" stroke="#dc2626" rx="5"/>
+  <text x="60" y="260" class="code">Missing: spotify_player CLI</text>
+
+  <text x="40" y="300" class="code">@openclaw play some jazz music</text>
+  <text x="40" y="320" class="code">@openclaw skip to next track</text>
+
+  <!-- VIDEO FRAMES SKILL -->
+  <rect x="410" y="85" width="380" height="250" fill="#f5f3ff" stroke="#7c3aed" stroke-width="3" rx="10"/>
+  <rect x="410" y="85" width="380" height="40" fill="#7c3aed" rx="10"/>
+  <rect x="410" y="105" width="380" height="20" fill="#7c3aed"/>
+  <text x="600" y="112" text-anchor="middle" style="font: bold 18px Arial; fill: white;">VIDEO FRAMES</text>
+
+  <text x="430" y="150" style="font: bold 14px Arial; fill: #1a1a2e;">Purpose: Video Frame Extraction</text>
+  <text x="430" y="175" class="small-text">* Extract frames from videos</text>
+  <text x="430" y="195" class="small-text">* Create thumbnails</text>
+  <text x="430" y="215" class="small-text">* Analyze video content</text>
+
+  <rect x="430" y="235" width="340" height="40" fill="#fef2f2" stroke="#dc2626" rx="5"/>
+  <text x="450" y="260" class="code">Missing: ffmpeg installation</text>
+
+  <text x="430" y="300" class="code">@openclaw extract frames [video]</text>
+  <text x="430" y="320" class="code">@openclaw get thumbnail at 5:00</text>
+
+  <!-- SONGSEE SKILL -->
+  <rect x="800" y="85" width="380" height="250" fill="#fef3c7" stroke="#f59e0b" stroke-width="3" rx="10"/>
+  <rect x="800" y="85" width="380" height="40" fill="#f59e0b" rx="10"/>
+  <rect x="800" y="105" width="380" height="20" fill="#f59e0b"/>
+  <text x="990" y="112" text-anchor="middle" style="font: bold 18px Arial; fill: white;">SONGSEE (Shazam)</text>
+
+  <text x="820" y="150" style="font: bold 14px Arial; fill: #1a1a2e;">Purpose: Music Recognition</text>
+  <text x="820" y="175" class="small-text">* Identify songs from audio</text>
+  <text x="820" y="195" class="small-text">* Get song info and lyrics</text>
+  <text x="820" y="215" class="small-text">* Shazam-like functionality</text>
+
+  <rect x="820" y="235" width="340" height="40" fill="#fef2f2" stroke="#dc2626" rx="5"/>
+  <text x="840" y="260" class="code">Missing: songsee CLI tool</text>
+
+  <text x="820" y="300" class="code">@openclaw what song is this?</text>
+  <text x="820" y="320" class="code">@openclaw identify [audio file]</text>
+
+  <!-- GIFGREP SKILL -->
+  <rect x="20" y="350" width="380" height="250" fill="#fce7f3" stroke="#ec4899" stroke-width="3" rx="10"/>
+  <rect x="20" y="350" width="380" height="40" fill="#ec4899" rx="10"/>
+  <rect x="20" y="370" width="380" height="20" fill="#ec4899"/>
+  <text x="210" y="377" text-anchor="middle" style="font: bold 18px Arial; fill: white;">GIFGREP</text>
+
+  <text x="40" y="415" style="font: bold 14px Arial; fill: #1a1a2e;">Purpose: GIF Search Engine</text>
+  <text x="40" y="440" class="small-text">* Search for GIFs by keyword</text>
+  <text x="40" y="460" class="small-text">* Browse trending GIFs</text>
+  <text x="40" y="480" class="small-text">* Direct GIF URLs returned</text>
+
+  <rect x="40" y="500" width="340" height="40" fill="#fef2f2" stroke="#dc2626" rx="5"/>
+  <text x="60" y="525" class="code">Missing: gifgrep installation</text>
+
+  <text x="40" y="565" class="code">@openclaw find a happy dance gif</text>
+  <text x="40" y="585" class="code">@openclaw show me cat gifs</text>
+
+  <!-- CAMSNAP SKILL -->
+  <rect x="410" y="350" width="380" height="250" fill="#dbeafe" stroke="#3b82f6" stroke-width="3" rx="10"/>
+  <rect x="410" y="350" width="380" height="40" fill="#3b82f6" rx="10"/>
+  <rect x="410" y="370" width="380" height="20" fill="#3b82f6"/>
+  <text x="600" y="377" text-anchor="middle" style="font: bold 18px Arial; fill: white;">CAMSNAP</text>
+
+  <text x="430" y="415" style="font: bold 14px Arial; fill: #1a1a2e;">Purpose: Camera Capture</text>
+  <text x="430" y="440" class="small-text">* Take photos from webcam</text>
+  <text x="430" y="460" class="small-text">* Capture screenshots</text>
+  <text x="430" y="480" class="small-text">* Quick visual capture</text>
+
+  <rect x="430" y="500" width="340" height="40" fill="#fef2f2" stroke="#dc2626" rx="5"/>
+  <text x="450" y="525" class="code">Missing: camsnap binary</text>
+
+  <text x="430" y="565" class="code">@openclaw take a photo</text>
+  <text x="430" y="585" class="code">@openclaw capture webcam</text>
+
+  <!-- PEEKABOO SKILL -->
+  <rect x="800" y="350" width="380" height="250" fill="#ecfdf5" stroke="#10b981" stroke-width="3" rx="10"/>
+  <rect x="800" y="350" width="380" height="40" fill="#10b981" rx="10"/>
+  <rect x="800" y="370" width="380" height="20" fill="#10b981"/>
+  <text x="990" y="377" text-anchor="middle" style="font: bold 18px Arial; fill: white;">PEEKABOO (macOS)</text>
+
+  <text x="820" y="415" style="font: bold 14px Arial; fill: #1a1a2e;">Purpose: Desktop Screenshots</text>
+  <text x="820" y="440" class="small-text">* Capture screen regions</text>
+  <text x="820" y="460" class="small-text">* Window screenshots</text>
+  <text x="820" y="480" class="small-text">* Full desktop capture</text>
+
+  <rect x="820" y="500" width="340" height="40" fill="#ecfdf5" stroke="#10b981" rx="5"/>
+  <text x="840" y="525" style="font: bold 11px Arial; fill: #059669;">Status: READY (macOS only)</text>
+
+  <text x="820" y="565" class="code">@openclaw take a screenshot</text>
+  <text x="820" y="585" class="code">@openclaw capture this window</text>
+
+  <!-- Architecture Diagram -->
+  <rect x="20" y="620" width="1160" height="260" fill="#f0fdf4" stroke="#22c55e" stroke-width="2" rx="10"/>
+  <text x="600" y="650" text-anchor="middle" style="font: bold 20px Arial; fill: #166534;">MEDIA SKILLS ARCHITECTURE</text>
+
+  <!-- Input Sources -->
+  <rect x="50" y="680" width="180" height="170" fill="#ffffff" stroke="#6b7280" stroke-width="2" rx="8"/>
+  <text x="140" y="705" text-anchor="middle" style="font: bold 14px Arial; fill: #1a1a2e;">INPUT SOURCES</text>
+
+  <rect x="65" y="720" width="70" height="30" fill="#1db954" rx="4"/>
+  <text x="100" y="740" text-anchor="middle" style="font: bold 9px Arial; fill: white;">Spotify</text>
+
+  <rect x="145" y="720" width="70" height="30" fill="#7c3aed" rx="4"/>
+  <text x="180" y="740" text-anchor="middle" style="font: bold 9px Arial; fill: white;">Video</text>
+
+  <rect x="65" y="760" width="70" height="30" fill="#3b82f6" rx="4"/>
+  <text x="100" y="780" text-anchor="middle" style="font: bold 9px Arial; fill: white;">Webcam</text>
+
+  <rect x="145" y="760" width="70" height="30" fill="#f59e0b" rx="4"/>
+  <text x="180" y="780" text-anchor="middle" style="font: bold 9px Arial; fill: white;">Audio</text>
+
+  <rect x="65" y="800" width="150" height="30" fill="#10b981" rx="4"/>
+  <text x="140" y="820" text-anchor="middle" style="font: bold 9px Arial; fill: white;">Screen/Desktop</text>
+
+  <!-- Gateway -->
+  <rect x="280" y="720" width="120" height="70" fill="#3b82f6" rx="8"/>
+  <text x="340" y="750" text-anchor="middle" class="label">OPENCLAW</text>
+  <text x="340" y="767" text-anchor="middle" class="label">GATEWAY</text>
+
+  <line x1="230" y1="765" x2="270" y2="755" stroke="#1a1a2e" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Media Processor -->
+  <rect x="450" y="720" width="140" height="70" fill="#22c55e" rx="8"/>
+  <text x="520" y="750" text-anchor="middle" class="label">MEDIA</text>
+  <text x="520" y="767" text-anchor="middle" class="label">PROCESSOR</text>
+
+  <line x1="400" y1="755" x2="440" y2="755" stroke="#1a1a2e" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Processing Options -->
+  <rect x="640" y="680" width="200" height="180" fill="#ffffff" stroke="#6b7280" stroke-width="2" rx="8"/>
+  <text x="740" y="705" text-anchor="middle" style="font: bold 14px Arial; fill: #1a1a2e;">PROCESSING</text>
+
+  <text x="660" y="730" class="small-text">* Frame extraction (ffmpeg)</text>
+  <text x="660" y="755" class="small-text">* Audio recognition (Shazam)</text>
+  <text x="660" y="780" class="small-text">* GIF search (GIPHY/Tenor)</text>
+  <text x="660" y="805" class="small-text">* Screen capture (native)</text>
+  <text x="660" y="830" class="small-text">* Music control (Spotify API)</text>
+
+  <line x1="590" y1="755" x2="630" y2="760" stroke="#1a1a2e" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Output Types -->
+  <rect x="890" y="680" width="180" height="180" fill="#ffffff" stroke="#10b981" stroke-width="2" rx="8"/>
+  <text x="980" y="705" text-anchor="middle" style="font: bold 14px Arial; fill: #059669;">OUTPUT TYPES</text>
+
+  <rect x="905" y="720" width="150" height="25" fill="#7c3aed" rx="4"/>
+  <text x="980" y="738" text-anchor="middle" style="font: bold 9px Arial; fill: white;">Image Files (PNG/JPG)</text>
+
+  <rect x="905" y="755" width="150" height="25" fill="#ec4899" rx="4"/>
+  <text x="980" y="773" text-anchor="middle" style="font: bold 9px Arial; fill: white;">GIF URLs</text>
+
+  <rect x="905" y="790" width="150" height="25" fill="#f59e0b" rx="4"/>
+  <text x="980" y="808" text-anchor="middle" style="font: bold 9px Arial; fill: white;">Song Info (JSON)</text>
+
+  <rect x="905" y="825" width="150" height="25" fill="#1db954" rx="4"/>
+  <text x="980" y="843" text-anchor="middle" style="font: bold 9px Arial; fill: white;">Playback Status</text>
+
+  <line x1="840" y1="770" x2="880" y2="780" stroke="#10b981" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Platform indicators -->
+  <rect x="50" y="855" width="300" height="20" fill="#f3f4f6" rx="3"/>
+  <text x="200" y="869" text-anchor="middle" style="font: bold 10px Arial; fill: #6b7280;">macOS: Peekaboo, Spotify Player | All: ffmpeg, gifgrep</text>
+</svg>

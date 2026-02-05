@@ -1,0 +1,384 @@
+---
+title: Troubleshooting
+description: Common issues and their resolutions
+icon: AlertCircle
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+# Troubleshooting
+
+This guide covers common issues you may encounter with OpenClaw and their solutions.
+
+## Quick Diagnostics
+
+Run the built-in diagnostic tool:
+
+```bash
+openclaw doctor
+```
+
+This checks:
+- Configuration validity
+- Network connectivity
+- API key verification
+- Channel authentication
+- System resources
+
+## Connection Issues
+
+### Gateway Won't Start
+
+**Symptom:** Gateway fails to start or immediately exits.
+
+| Cause | Solution |
+|-------|----------|
+| Port already in use | Change port: `openclaw gateway --port 18790` |
+| Invalid configuration | Run `openclaw config validate` |
+| Missing token | Set `OPENCLAW_GATEWAY_TOKEN` |
+| Permission denied | Check file permissions on `~/.openclaw` |
+
+**Debug:**
+```bash
+# Check what's using the port
+lsof -i :18789
+
+# Validate configuration
+openclaw config validate
+
+# Start with verbose logging
+openclaw gateway --verbose
+```
+
+### "Pairing Required" Error
+
+**Symptom:** Control UI shows "disconnected (1008): pairing required"
+
+**Root Cause:** Docker networking causes the browser connection to appear from `172.18.0.1` (Docker internal network) instead of `127.0.0.1` (localhost), so the gateway treats it as a "remote" connection requiring device pairing.
+
+**Solutions:**
+
+1. **Add Control UI bypass settings** (recommended for Docker):
+   ```json
+   {
+     "gateway": {
+       "controlUi": {
+         "allowInsecureAuth": true,
+         "dangerouslyDisableDeviceAuth": true
+       }
+     }
+   }
+   ```
+
+2. **Manually approve device:**
+   - Check pending devices: `~/.openclaw/devices/pending.json`
+   - Copy the device entry to: `~/.openclaw/devices/paired.json`
+   - Clear pending.json to empty: `{}`
+   - Restart gateway: `docker compose restart openclaw-gateway`
+
+3. **Approve via CLI** (if CLI can connect):
+   ```bash
+   openclaw pairing approve <device-code>
+   ```
+
+<Callout title="Key Learning" type="info">
+  Local connections (`127.0.0.1`) are auto-approved. Docker networking makes browser connections appear as remote, triggering pairing requirements.
+</Callout>
+
+### Token Mismatch
+
+**Symptom:** `token_mismatch` in logs, authentication failing
+
+**Solutions:**
+
+1. Verify token matches in all locations:
+   ```bash
+   # Check environment
+   echo $OPENCLAW_GATEWAY_TOKEN
+
+   # Check config file
+   openclaw config get gateway.auth.token
+   ```
+
+2. Regenerate token if compromised:
+   ```bash
+   export OPENCLAW_GATEWAY_TOKEN=$(openssl rand -hex 32)
+   openclaw config set gateway.auth.token "$OPENCLAW_GATEWAY_TOKEN"
+   ```
+
+## Channel Issues
+
+### WhatsApp Disconnects
+
+**Symptom:** WhatsApp keeps disconnecting or QR code won't scan
+
+**Solutions:**
+
+1. **QR expired:** Re-run `openclaw providers login`
+2. **Phone offline:** Ensure phone has internet connection
+3. **Multiple sessions:** WhatsApp allows limited linked devices
+4. **Account banned:** Wait and try with different number
+
+**Debug:**
+```bash
+# Check WhatsApp status
+docker compose logs -f openclaw-gateway 2>&1 | grep whatsapp
+```
+
+### Telegram Bot Not Responding
+
+**Symptom:** Messages sent to bot but no response
+
+**Solutions:**
+
+1. **Verify token:**
+   ```bash
+   # Test token directly
+   curl "https://api.telegram.org/bot<TOKEN>/getMe"
+   ```
+
+2. **Check bot permissions:** Ensure bot has message permissions
+
+3. **Start the bot:** Users must send `/start` first
+
+### Discord Bot Offline
+
+**Symptom:** Bot shows offline in Discord
+
+**Solutions:**
+
+1. **Enable intents:** In Developer Portal, enable "Message Content Intent"
+
+2. **Verify token:**
+   ```bash
+   # Check Discord connection
+   docker compose logs -f openclaw-gateway 2>&1 | grep discord
+   ```
+
+3. **Check bot permissions:** Ensure bot role has required permissions
+
+### Discord Bot Not Responding to DMs
+
+**Symptom:** User sends message to bot, no reply
+
+**Root Cause:** Discord DM policy defaults to "pairing" which requires manual approval for each user.
+
+**Solutions:**
+
+1. **Enable open DM policy:**
+   ```json
+   {
+     "channels": {
+       "discord": {
+         "dm": {
+           "enabled": true,
+           "policy": "open",
+           "allowFrom": ["*"]
+         }
+       }
+     }
+   }
+   ```
+
+2. **Key settings explained:**
+   - `dm.enabled: true` - Enables direct messages
+   - `dm.policy: "open"` - Allows anyone to DM without approval
+   - `dm.allowFrom: ["*"]` - Required when policy is "open", allows all users
+
+<Callout title="Important" type="warn">
+  For open DMs, you need BOTH `policy: "open"` AND `allowFrom: ["*"]` - one without the other won't work.
+</Callout>
+
+### Discord Bot Not Responding in Servers
+
+**Symptom:** Bot works in DMs but not in server channels
+
+**Solutions:**
+
+1. **Check if mention is required:**
+   ```json
+   {
+     "channels": {
+       "discord": {
+         "guilds": {
+           "*": {
+             "requireMention": false
+           }
+         }
+       }
+     }
+   }
+   ```
+
+2. **Set group policy to open:**
+   ```json
+   {
+     "channels": {
+       "discord": {
+         "groupPolicy": "open"
+       }
+     }
+   }
+   ```
+
+## Model Issues
+
+### "No Model Configured"
+
+**Symptom:** Agent doesn't respond, logs show "no model configured"
+
+**Solutions:**
+
+1. **Set a model:**
+   ```bash
+   openclaw config set agents.defaults.model.primary "google/gemini-3-flash-preview"
+   ```
+
+2. **Verify API key:**
+   ```bash
+   echo $GOOGLE_API_KEY  # or relevant provider key
+   ```
+
+### Model API Errors
+
+**Symptom:** `rate_limited`, `unauthorized`, or `quota_exceeded`
+
+| Error | Cause | Solution |
+|-------|-------|----------|
+| `rate_limited` | Too many requests | Wait, add fallback models |
+| `unauthorized` | Invalid API key | Regenerate key in provider console |
+| `quota_exceeded` | Billing limit | Check provider billing, add funds |
+| `context_length_exceeded` | Message too long | Enable compaction |
+
+### Slow Responses
+
+**Symptom:** Agent takes a long time to respond
+
+**Solutions:**
+
+1. **Use faster model:** Switch to `gemini-3-flash` instead of `pro`
+2. **Reduce context:** Enable aggressive compaction
+3. **Check network:** Verify low latency to provider
+4. **Add caching:** Enable response caching if available
+
+## Session Issues
+
+### Session Not Persisting
+
+**Symptom:** Conversations reset unexpectedly
+
+**Solutions:**
+
+1. **Check permissions:**
+   ```bash
+   ls -la ~/.openclaw/agents/*/sessions/
+   ```
+
+2. **Verify disk space:**
+   ```bash
+   df -h ~/.openclaw
+   ```
+
+3. **Check for errors:**
+   ```bash
+   docker compose logs openclaw-gateway 2>&1 | grep -i session
+   ```
+
+### Context Too Long
+
+**Symptom:** `context_length_exceeded` errors
+
+**Solutions:**
+
+1. **Enable compaction:**
+   ```bash
+   openclaw config set agents.defaults.compaction.reserveTokensFloor 20000
+   ```
+
+2. **Reset session:**
+   ```bash
+   openclaw sessions reset agent:default:+1234567890
+   ```
+
+## Docker Issues
+
+### Container Keeps Restarting
+
+**Symptom:** Container in restart loop
+
+**Debug:**
+```bash
+# Check exit code
+docker compose ps
+
+# View last logs before crash
+docker compose logs --tail 100 openclaw-gateway
+```
+
+**Common causes:**
+- Invalid configuration
+- Missing environment variables
+- Port conflict
+- Permission issues
+
+### Volume Mount Errors
+
+**Symptom:** Configuration not loading or persisting
+
+**Solutions:**
+
+1. **Check paths exist:**
+   ```bash
+   ls -la ~/.openclaw
+   ls -la ~/.openclaw/workspace
+   ```
+
+2. **Verify mount in compose:**
+   ```yaml
+   volumes:
+     - ${HOME}/.openclaw:/home/node/.openclaw
+   ```
+
+## Performance Issues
+
+### High Memory Usage
+
+**Symptom:** Memory usage keeps growing
+
+**Solutions:**
+
+1. **Enable compaction** to limit session sizes
+2. **Restart periodically** via cron job
+3. **Limit concurrent sessions**
+4. **Check for memory leaks** in custom plugins
+
+### High CPU Usage
+
+**Symptom:** CPU constantly high
+
+**Solutions:**
+
+1. **Check for tight loops** in logs
+2. **Reduce polling frequency** for webhooks
+3. **Disable unused channels**
+
+## Getting Help
+
+If you can't resolve an issue:
+
+1. **Search existing issues:** [GitHub Issues](https://github.com/openclaw/openclaw/issues)
+
+2. **Gather diagnostic info:**
+   ```bash
+   openclaw doctor > diagnostics.txt
+   docker compose logs openclaw-gateway > logs.txt
+   ```
+
+3. **Report a bug:**
+   - Include diagnostic output
+   - Include relevant log snippets
+   - Describe steps to reproduce
+
+<Callout title="Community Support" type="info">
+  Join the OpenClaw community for help from other users and maintainers.
+</Callout>

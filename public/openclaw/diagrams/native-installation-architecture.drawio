@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2026-02-02T00:00:00.000Z" agent="5.0" etag="openclaw-native-install" version="21.0.0" type="device">
+  <diagram id="native-installation-architecture" name="Native Installation Architecture">
+    <mxGraphModel dx="1422" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="800" math="0" shadow="1">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- Title -->
+        <mxCell id="title" value="OpenClaw Native Installation Architecture" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;fontStyle=1;fontColor=#1a1a2e;" vertex="1" parent="1">
+          <mxGeometry x="350" y="10" width="400" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="subtitle" value="Step-by-step installation without Docker" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="350" y="40" width="400" height="20" as="geometry"/>
+        </mxCell>
+
+        <!-- NPM Installation Path -->
+        <mxCell id="npm-path" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#4CAF50;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="50" y="80" width="500" height="700" as="geometry"/>
+        </mxCell>
+        <mxCell id="npm-title" value="NPM Global Installation (Recommended)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;fontStyle=1;fontColor=#1a1a2e;" vertex="1" parent="1">
+          <mxGeometry x="150" y="85" width="300" height="25" as="geometry"/>
+        </mxCell>
+
+        <!-- Source Installation Path -->
+        <mxCell id="source-path" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#efebe9;strokeColor=#795548;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="580" y="80" width="480" height="700" as="geometry"/>
+        </mxCell>
+        <mxCell id="source-title" value="Source Installation (Development)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;fontStyle=1;fontColor=#1a1a2e;" vertex="1" parent="1">
+          <mxGeometry x="700" y="85" width="250" height="25" as="geometry"/>
+        </mxCell>
+
+        <!-- Step 1: Prerequisites (NPM) -->
+        <mxCell id="prereq-npm" value="&lt;table&gt;&lt;tr&gt;&lt;td style=&quot;vertical-align:top&quot;&gt;&lt;div style=&quot;width:36px;height:36px;border-radius:18px;background:linear-gradient(#FF5722,#E64A19);color:white;font-weight:bold;font-size:16px;text-align:center;line-height:36px&quot;&gt;1&lt;/div&gt;&lt;/td&gt;&lt;td style=&quot;padding-left:10px&quot;&gt;&lt;b style=&quot;font-size:12px&quot;&gt;Prerequisites&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;code&gt;Node.js &gt;= 22.12.0&lt;/code&gt; LTS recommended&lt;br&gt;&lt;code&gt;npm or pnpm&lt;/code&gt; Package manager&lt;br&gt;&lt;code&gt;Git (optional)&lt;/code&gt; For version control&lt;br&gt;&lt;br&gt;&lt;code style=&quot;background:#fff;padding:2px 5px;border-radius:3px&quot;&gt;node --version&lt;/code&gt; &lt;code style=&quot;background:#fff;padding:2px 5px;border-radius:3px&quot;&gt;npm --version&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fbe9e7;strokeColor=#FF5722;strokeWidth=2;shadow=1;align=left;verticalAlign=top;spacingLeft=10;spacingTop=5;" vertex="1" parent="1">
+          <mxGeometry x="70" y="130" width="460" height="120" as="geometry"/>
+        </mxCell>
+
+        <!-- Step 1: Prerequisites (Source) -->
+        <mxCell id="prereq-source" value="&lt;table&gt;&lt;tr&gt;&lt;td style=&quot;vertical-align:top&quot;&gt;&lt;div style=&quot;width:36px;height:36px;border-radius:18px;background:linear-gradient(#FF5722,#E64A19);color:white;font-weight:bold;font-size:16px;text-align:center;line-height:36px&quot;&gt;1&lt;/div&gt;&lt;/td&gt;&lt;td style=&quot;padding-left:10px&quot;&gt;&lt;b style=&quot;font-size:12px&quot;&gt;Prerequisites&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;code&gt;Node.js &gt;= 22.12.0&lt;/code&gt;&lt;br&gt;&lt;code&gt;pnpm &gt;= 10.23.0&lt;/code&gt; Required&lt;br&gt;&lt;code&gt;Git&lt;/code&gt; Required for clone&lt;br&gt;&lt;br&gt;&lt;code style=&quot;background:#fff;padding:2px 5px;border-radius:3px&quot;&gt;npm install -g pnpm&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fbe9e7;strokeColor=#FF5722;strokeWidth=2;shadow=1;align=left;verticalAlign=top;spacingLeft=10;spacingTop=5;" vertex="1" parent="1">
+          <mxGeometry x="600" y="130" width="440" height="120" as="geometry"/>
+        </mxCell>
+
+        <!-- Step 2: Install (NPM) -->
+        <mxCell id="install-npm" value="&lt;table&gt;&lt;tr&gt;&lt;td style=&quot;vertical-align:top&quot;&gt;&lt;div style=&quot;width:36px;height:36px;border-radius:18px;background:linear-gradient(#4CAF50,#388E3C);color:white;font-weight:bold;font-size:16px;text-align:center;line-height:36px&quot;&gt;2&lt;/div&gt;&lt;/td&gt;&lt;td style=&quot;padding-left:10px&quot;&gt;&lt;b style=&quot;font-size:12px&quot;&gt;Install OpenClaw Globally&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;div style=&quot;background:#fff;padding:8px;border-radius:5px;border:1px solid #A5D6A7&quot;&gt;&lt;code&gt;npm install -g openclaw@latest&lt;/code&gt;&lt;br&gt;&lt;span style=&quot;font-size:9px;color:#666&quot;&gt;# Or: pnpm add -g openclaw@latest&lt;/span&gt;&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#4CAF50;strokeWidth=2;shadow=1;align=left;verticalAlign=top;spacingLeft=10;spacingTop=5;" vertex="1" parent="1">
+          <mxGeometry x="70" y="270" width="460" height="100" as="geometry"/>
+        </mxCell>
+
+        <!-- Step 2: Clone (Source) -->
+        <mxCell id="clone-source" value="&lt;table&gt;&lt;tr&gt;&lt;td style=&quot;vertical-align:top&quot;&gt;&lt;div style=&quot;width:36px;height:36px;border-radius:18px;background:linear-gradient(#795548,#5D4037);color:white;font-weight:bold;font-size:16px;text-align:center;line-height:36px&quot;&gt;2&lt;/div&gt;&lt;/td&gt;&lt;td style=&quot;padding-left:10px&quot;&gt;&lt;b style=&quot;font-size:12px&quot;&gt;Clone and Build&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;div style=&quot;background:#fff;padding:8px;border-radius:5px;border:1px solid #BCAAA4;font-family:monospace;font-size:10px&quot;&gt;git clone https://github.com/openclaw/openclaw.git&lt;br&gt;cd openclaw&lt;br&gt;pnpm install&lt;br&gt;pnpm build &amp;amp;&amp;amp; pnpm ui:build&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d7ccc8;strokeColor=#795548;strokeWidth=2;shadow=1;align=left;verticalAlign=top;spacingLeft=10;spacingTop=5;" vertex="1" parent="1">
+          <mxGeometry x="600" y="270" width="440" height="150" as="geometry"/>
+        </mxCell>
+
+        <!-- Step 3: Onboard (NPM) -->
+        <mxCell id="onboard-npm" value="&lt;table&gt;&lt;tr&gt;&lt;td style=&quot;vertical-align:top&quot;&gt;&lt;div style=&quot;width:36px;height:36px;border-radius:18px;background:linear-gradient(#2196F3,#1976D2);color:white;font-weight:bold;font-size:16px;text-align:center;line-height:36px&quot;&gt;3&lt;/div&gt;&lt;/td&gt;&lt;td style=&quot;padding-left:10px&quot;&gt;&lt;b style=&quot;font-size:12px&quot;&gt;Run Onboarding Wizard&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;div style=&quot;background:#fff;padding:5px 8px;border-radius:5px;border:1px solid #90CAF9;font-family:monospace;font-size:11px&quot;&gt;openclaw onboard --install-daemon&lt;/div&gt;&lt;br&gt;&lt;span style=&quot;font-size:9px;color:#666&quot;&gt;This wizard will:&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size:10px;color:#27ae60;font-weight:bold&quot;&gt;✓ Create ~/.openclaw directory&lt;/span&gt; &lt;span style=&quot;font-size:10px;color:#27ae60;font-weight:bold&quot;&gt;✓ Generate gateway token&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;font-size:10px;color:#27ae60;font-weight:bold&quot;&gt;✓ Configure LLM provider&lt;/span&gt; &lt;span style=&quot;font-size:10px;color:#27ae60;font-weight:bold&quot;&gt;✓ Install system daemon&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#2196F3;strokeWidth=2;shadow=1;align=left;verticalAlign=top;spacingLeft=10;spacingTop=5;" vertex="1" parent="1">
+          <mxGeometry x="70" y="390" width="460" height="120" as="geometry"/>
+        </mxCell>
+
+        <!-- Step 3: Onboard (Source) -->
+        <mxCell id="onboard-source" value="&lt;table&gt;&lt;tr&gt;&lt;td style=&quot;vertical-align:top&quot;&gt;&lt;div style=&quot;width:36px;height:36px;border-radius:18px;background:linear-gradient(#2196F3,#1976D2);color:white;font-weight:bold;font-size:16px;text-align:center;line-height:36px&quot;&gt;3&lt;/div&gt;&lt;/td&gt;&lt;td style=&quot;padding-left:10px&quot;&gt;&lt;b style=&quot;font-size:12px&quot;&gt;Run Onboarding (Dev Mode)&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;div style=&quot;background:#fff;padding:5px 8px;border-radius:5px;border:1px solid #90CAF9;font-family:monospace;font-size:11px&quot;&gt;pnpm openclaw onboard&lt;/div&gt;&lt;br&gt;&lt;span style=&quot;font-size:9px;color:#666&quot;&gt;# Skip daemon for development&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#2196F3;strokeWidth=2;shadow=1;align=left;verticalAlign=top;spacingLeft=10;spacingTop=5;" vertex="1" parent="1">
+          <mxGeometry x="600" y="440" width="440" height="100" as="geometry"/>
+        </mxCell>
+
+        <!-- Step 4: Configure (NPM) -->
+        <mxCell id="config-npm" value="&lt;table&gt;&lt;tr&gt;&lt;td style=&quot;vertical-align:top&quot;&gt;&lt;div style=&quot;width:36px;height:36px;border-radius:18px;background:linear-gradient(#2196F3,#1976D2);color:white;font-weight:bold;font-size:16px;text-align:center;line-height:36px&quot;&gt;4&lt;/div&gt;&lt;/td&gt;&lt;td style=&quot;padding-left:10px&quot;&gt;&lt;b style=&quot;font-size:12px&quot;&gt;Configure API Keys&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;span style=&quot;font-size:9px;color:#666&quot;&gt;Set environment variables or use CLI:&lt;/span&gt;&lt;br&gt;&lt;div style=&quot;background:#fff;padding:5px 8px;border-radius:5px;border:1px solid #90CAF9;font-family:monospace;font-size:10px&quot;&gt;export GOOGLE_API_KEY=&quot;your-key&quot;&lt;br&gt;openclaw config set agents.defaults.model.primary \&lt;br&gt;  &quot;google/gemini-3-flash-preview&quot;&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#2196F3;strokeWidth=2;shadow=1;align=left;verticalAlign=top;spacingLeft=10;spacingTop=5;" vertex="1" parent="1">
+          <mxGeometry x="70" y="530" width="460" height="120" as="geometry"/>
+        </mxCell>
+
+        <!-- Step 4: Configure (Source) -->
+        <mxCell id="config-source" value="&lt;table&gt;&lt;tr&gt;&lt;td style=&quot;vertical-align:top&quot;&gt;&lt;div style=&quot;width:36px;height:36px;border-radius:18px;background:linear-gradient(#2196F3,#1976D2);color:white;font-weight:bold;font-size:16px;text-align:center;line-height:36px&quot;&gt;4&lt;/div&gt;&lt;/td&gt;&lt;td style=&quot;padding-left:10px&quot;&gt;&lt;b style=&quot;font-size:12px&quot;&gt;Development Configuration&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;div style=&quot;background:#fff;padding:5px 8px;border-radius:5px;border:1px solid #90CAF9;font-family:monospace;font-size:11px&quot;&gt;cp .env.example .env&lt;/div&gt;&lt;br&gt;&lt;span style=&quot;font-size:9px;color:#666&quot;&gt;# Edit .env with your API keys&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e3f2fd;strokeColor=#2196F3;strokeWidth=2;shadow=1;align=left;verticalAlign=top;spacingLeft=10;spacingTop=5;" vertex="1" parent="1">
+          <mxGeometry x="600" y="560" width="440" height="100" as="geometry"/>
+        </mxCell>
+
+        <!-- Step 5: Start (NPM) -->
+        <mxCell id="start-npm" value="&lt;table&gt;&lt;tr&gt;&lt;td style=&quot;vertical-align:top&quot;&gt;&lt;div style=&quot;width:36px;height:36px;border-radius:18px;background:linear-gradient(#9C27B0,#7B1FA2);color:white;font-weight:bold;font-size:16px;text-align:center;line-height:36px&quot;&gt;5&lt;/div&gt;&lt;/td&gt;&lt;td style=&quot;padding-left:10px&quot;&gt;&lt;b style=&quot;font-size:12px&quot;&gt;Start Gateway&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;div style=&quot;background:#fff;padding:5px 8px;border-radius:5px;border:1px solid #CE93D8;font-family:monospace;font-size:11px&quot;&gt;openclaw gateway --port 18789 --verbose&lt;/div&gt;&lt;br&gt;&lt;span style=&quot;font-size:9px;color:#666&quot;&gt;# Access Control UI at http://127.0.0.1:18789&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f3e5f5;strokeColor=#9C27B0;strokeWidth=2;shadow=1;align=left;verticalAlign=top;spacingLeft=10;spacingTop=5;" vertex="1" parent="1">
+          <mxGeometry x="70" y="670" width="460" height="90" as="geometry"/>
+        </mxCell>
+
+        <!-- Step 5: Start (Source) -->
+        <mxCell id="start-source" value="&lt;table&gt;&lt;tr&gt;&lt;td style=&quot;vertical-align:top&quot;&gt;&lt;div style=&quot;width:36px;height:36px;border-radius:18px;background:linear-gradient(#9C27B0,#7B1FA2);color:white;font-weight:bold;font-size:16px;text-align:center;line-height:36px&quot;&gt;5&lt;/div&gt;&lt;/td&gt;&lt;td style=&quot;padding-left:10px&quot;&gt;&lt;b style=&quot;font-size:12px&quot;&gt;Start Development Server&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;div style=&quot;background:#fff;padding:5px 8px;border-radius:5px;border:1px solid #CE93D8;font-family:monospace;font-size:11px&quot;&gt;pnpm gateway:dev&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f3e5f5;strokeColor=#9C27B0;strokeWidth=2;shadow=1;align=left;verticalAlign=top;spacingLeft=10;spacingTop=5;" vertex="1" parent="1">
+          <mxGeometry x="600" y="680" width="440" height="80" as="geometry"/>
+        </mxCell>
+
+        <!-- Arrows -->
+        <mxCell id="arrow1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#4a5568;strokeWidth=2;endArrow=classic;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="300" y="250" as="sourcePoint"/>
+            <mxPoint x="300" y="270" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,12 @@
+{
+  "title": "Channels",
+  "icon": "MessageSquare",
+  "pages": [
+    "index",
+    "whatsapp",
+    "telegram",
+    "discord",
+    "slack",
+    "others"
+  ]
+}

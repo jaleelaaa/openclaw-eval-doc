@@ -1,0 +1,225 @@
+---
+title: Slack
+description: Integrate with Slack workspaces using Bolt
+icon: Slack
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Card, Cards } from 'fumadocs-ui/components/card';
+
+# Slack Integration
+
+Slack integration uses the Bolt framework to connect your AI assistant to Slack workspaces. This enables interaction through direct messages, channels, and app mentions.
+
+## Prerequisites
+
+- A Slack workspace where you have permission to add apps
+- A Slack account with app creation permissions
+- OpenClaw gateway running
+
+## Create a Slack App
+
+### Step 1: Create the App
+
+1. Go to [Slack API](https://api.slack.com/apps)
+2. Click **"Create New App"**
+3. Choose **"From scratch"**
+4. Enter an app name and select your workspace
+5. Click **"Create App"**
+
+### Step 2: Configure OAuth & Permissions
+
+1. Navigate to **OAuth & Permissions** in the sidebar
+2. Under **Scopes** → **Bot Token Scopes**, add:
+   - `app_mentions:read` — Read mentions
+   - `channels:history` — Read channel messages
+   - `channels:read` — View channels
+   - `chat:write` — Send messages
+   - `groups:history` — Read private channel messages
+   - `groups:read` — View private channels
+   - `im:history` — Read DMs
+   - `im:read` — View DMs
+   - `im:write` — Send DMs
+   - `users:read` — View users
+
+### Step 3: Enable Event Subscriptions
+
+1. Go to **Event Subscriptions**
+2. Toggle **"Enable Events"** on
+3. Under **Subscribe to bot events**, add:
+   - `app_mention` — When someone mentions your app
+   - `message.channels` — Messages in public channels
+   - `message.groups` — Messages in private channels
+   - `message.im` — Direct messages
+4. You'll need a Request URL later (after configuring OpenClaw)
+
+### Step 4: Install to Workspace
+
+1. Go to **Install App**
+2. Click **"Install to Workspace"**
+3. Authorize the permissions
+4. Copy the **Bot User OAuth Token** (starts with `xoxb-`)
+
+### Step 5: Get App Credentials
+
+From **Basic Information**, copy:
+- **Signing Secret** (for verifying requests)
+
+### Step 6: Add to OpenClaw
+
+```bash
+# Add bot token
+openclaw providers add --provider slack --token "xoxb-..."
+
+# Set signing secret (for webhook verification)
+openclaw config set channels.slack.signingSecret "your-signing-secret"
+```
+
+## Configuration
+
+### Enable/Disable Slack
+
+```bash
+# Enable
+openclaw config set channels.slack.enabled true
+
+# Disable
+openclaw config set channels.slack.enabled false
+```
+
+### DM Policy
+
+```bash
+# Require pairing
+openclaw config set channels.slack.dmPolicy "pairing"
+
+# Allow specific users
+openclaw config set channels.slack.dmPolicy "allowlist"
+openclaw config set channels.slack.allowFrom '["U01234567", "U89012345"]'
+
+# Allow anyone in workspace
+openclaw config set channels.slack.dmPolicy "open"
+```
+
+### Channel Configuration
+
+```bash
+# Enable channel messages
+openclaw config set channels.slack.channels.enabled true
+
+# Only respond when mentioned (@app)
+openclaw config set channels.slack.channels.mentionOnly true
+
+# Specific channels only
+openclaw config set channels.slack.channels.list '["#general", "#ai-help"]'
+```
+
+## Socket Mode vs HTTP
+
+### Socket Mode (Recommended for Development)
+
+No public URL required:
+
+1. Go to **Socket Mode** in your app settings
+2. Toggle **"Enable Socket Mode"** on
+3. Generate an **App-Level Token** with `connections:write` scope
+4. Configure OpenClaw:
+
+```bash
+openclaw config set channels.slack.mode "socket"
+openclaw config set channels.slack.appToken "xapp-..."
+```
+
+### HTTP Mode (Production)
+
+Requires a public HTTPS URL:
+
+1. Go to **Event Subscriptions**
+2. Set Request URL to your public endpoint
+3. Configure OpenClaw:
+
+```bash
+openclaw config set channels.slack.mode "http"
+openclaw config set channels.slack.webhookPath "/slack/events"
+```
+
+<Callout title="HTTPS Required" type="info">
+  Slack requires HTTPS for webhook URLs. Use a tunnel like ngrok for development.
+</Callout>
+
+## Features
+
+| Feature | Supported |
+|---------|-----------|
+| Direct messages | ✅ |
+| Channel messages | ✅ |
+| App mentions | ✅ |
+| Threads | ✅ |
+| Reactions | ✅ |
+| File uploads | ✅ |
+| Block Kit UI | ⚠️ (partial) |
+| Slash commands | ✅ |
+| Shortcuts | ⚠️ (partial) |
+
+## Slash Commands
+
+To add slash commands:
+
+1. Go to **Slash Commands** in your app settings
+2. Click **"Create New Command"**
+3. Configure:
+   - Command: `/ask`
+   - Request URL: Your webhook URL
+   - Description: "Ask the AI assistant"
+
+## Troubleshooting
+
+| Issue | Solution |
+|-------|----------|
+| App not responding | Check token, verify gateway is running |
+| "Invalid token" | Regenerate Bot Token in OAuth settings |
+| Events not received | Check Event Subscriptions, verify URL |
+| Can't send to channels | Invite the app to the channel |
+| Signature verification failed | Check Signing Secret is correct |
+
+### Verify Connection
+
+```bash
+# Check status
+openclaw channels status
+
+# Check Slack-specific status
+openclaw health --json
+```
+
+### Debug Events
+
+```bash
+# Run with verbose logging
+openclaw gateway --verbose
+
+# Watch for Slack events in logs
+```
+
+## Multi-Workspace
+
+To support multiple workspaces:
+
+1. Enable **"Distribute App"** in your app settings
+2. Implement OAuth flow for workspace installation
+3. Store tokens per workspace
+
+<Callout title="Enterprise Grid" type="info">
+  For Enterprise Grid support, additional scopes and configuration may be required.
+</Callout>
+
+## Next Steps
+
+<Cards>
+  <Card href="/docs/openclaw/channels/others" title="Other Channels" icon="MoreHorizontal">
+    Signal, iMessage, Matrix, and more
+  </Card>
+  <Card href="/docs/openclaw/concepts/agents" title="Agent Routing" icon="Bot">
+    Route different channels to different agents
+  </Card>
+</Cards>

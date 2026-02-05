@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900">
+  <defs>
+    <style>
+      .title { font: bold 22px Arial, sans-serif; fill: #1a1a2e; }
+      .label { font: bold 13px Arial, sans-serif; fill: #ffffff; }
+      .small-text { font: bold 11px Arial, sans-serif; fill: #4b5563; }
+      .code { font: bold 11px Consolas, monospace; fill: #1f2937; }
+    </style>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#1a1a2e"/>
+    </marker>
+    <linearGradient id="aiGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#ec4899"/>
+      <stop offset="100%" style="stop-color:#8b5cf6"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="900" fill="#ffffff"/>
+
+  <!-- Header -->
+  <rect x="0" y="0" width="1200" height="70" fill="url(#aiGrad)"/>
+  <text x="600" y="40" text-anchor="middle" style="font: bold 28px Arial; fill: white;">AI / ML SKILLS</text>
+  <text x="600" y="60" text-anchor="middle" style="font: bold 14px Arial; fill: #fce7f3;">Nano Banana Pro, Gemini, SAG, Sherpa TTS, Summarize, Nano PDF</text>
+
+  <!-- NANO BANANA PRO SKILL -->
+  <rect x="20" y="85" width="380" height="250" fill="#fef3c7" stroke="#f59e0b" stroke-width="3" rx="10"/>
+  <rect x="20" y="85" width="380" height="40" fill="#f59e0b" rx="10"/>
+  <rect x="20" y="105" width="380" height="20" fill="#f59e0b"/>
+  <text x="210" y="112" text-anchor="middle" style="font: bold 18px Arial; fill: white;">NANO BANANA PRO</text>
+
+  <text x="40" y="150" style="font: bold 14px Arial; fill: #1a1a2e;">Purpose: Local LLM Inference</text>
+  <text x="40" y="175" class="small-text">* Run LLMs locally (no API needed)</text>
+  <text x="40" y="195" class="small-text">* Privacy-focused processing</text>
+  <text x="40" y="215" class="small-text">* Offline AI capabilities</text>
+
+  <rect x="40" y="235" width="340" height="40" fill="#fef2f2" stroke="#dc2626" rx="5"/>
+  <text x="60" y="260" class="code">Missing: nano-banana-pro binary</text>
+
+  <text x="40" y="300" class="code">@openclaw run local llm query</text>
+  <text x="40" y="320" class="code">@openclaw process offline</text>
+
+  <!-- GEMINI SKILL -->
+  <rect x="410" y="85" width="380" height="250" fill="#dbeafe" stroke="#3b82f6" stroke-width="3" rx="10"/>
+  <rect x="410" y="85" width="380" height="40" fill="#4285f4" rx="10"/>
+  <rect x="410" y="105" width="380" height="20" fill="#4285f4"/>
+  <text x="600" y="112" text-anchor="middle" style="font: bold 18px Arial; fill: white;">GEMINI (Google AI)</text>
+
+  <text x="430" y="150" style="font: bold 14px Arial; fill: #1a1a2e;">Purpose: Google's AI Model</text>
+  <text x="430" y="175" class="small-text">* Multi-modal AI queries</text>
+  <text x="430" y="195" class="small-text">* Image understanding</text>
+  <text x="430" y="215" class="small-text">* Long context conversations</text>
+
+  <rect x="430" y="235" width="340" height="40" fill="#fef2f2" stroke="#dc2626" rx="5"/>
+  <text x="450" y="260" class="code">Missing: env:GEMINI_API_KEY</text>
+
+  <text x="430" y="300" class="code">@openclaw ask gemini about this</text>
+  <text x="430" y="320" class="code">@openclaw analyze image with gemini</text>
+
+  <!-- SAG (Stable Audio) SKILL -->
+  <rect x="800" y="85" width="380" height="250" fill="#f5f3ff" stroke="#7c3aed" stroke-width="3" rx="10"/>
+  <rect x="800" y="85" width="380" height="40" fill="#7c3aed" rx="10"/>
+  <rect x="800" y="105" width="380" height="20" fill="#7c3aed"/>
+  <text x="990" y="112" text-anchor="middle" style="font: bold 18px Arial; fill: white;">SAG (Stable Audio)</text>
+
+  <text x="820" y="150" style="font: bold 14px Arial; fill: #1a1a2e;">Purpose: AI Audio Generation</text>
+  <text x="820" y="175" class="small-text">* Generate audio from text</text>
+  <text x="820" y="195" class="small-text">* Music creation</text>
+  <text x="820" y="215" class="small-text">* Sound effects synthesis</text>
+
+  <rect x="820" y="235" width="340" height="40" fill="#fef2f2" stroke="#dc2626" rx="5"/>
+  <text x="840" y="260" class="code">Missing: sag binary installation</text>
+
+  <text x="820" y="300" class="code">@openclaw generate ambient music</text>
+  <text x="820" y="320" class="code">@openclaw create sound effect</text>
+
+  <!-- SHERPA ONNX TTS SKILL -->
+  <rect x="20" y="350" width="380" height="250" fill="#ecfdf5" stroke="#10b981" stroke-width="3" rx="10"/>
+  <rect x="20" y="350" width="380" height="40" fill="#10b981" rx="10"/>
+  <rect x="20" y="370" width="380" height="20" fill="#10b981"/>
+  <text x="210" y="377" text-anchor="middle" style="font: bold 18px Arial; fill: white;">SHERPA-ONNX TTS</text>
+
+  <text x="40" y="415" style="font: bold 14px Arial; fill: #1a1a2e;">Purpose: Text-to-Speech (Local)</text>
+  <text x="40" y="440" class="small-text">* Convert text to natural speech</text>
+  <text x="40" y="460" class="small-text">* Multiple voice models</text>
+  <text x="40" y="480" class="small-text">* Offline processing</text>
+
+  <rect x="40" y="500" width="340" height="40" fill="#fef2f2" stroke="#dc2626" rx="5"/>
+  <text x="60" y="525" class="code">Missing: sherpa-onnx installation</text>
+
+  <text x="40" y="565" class="code">@openclaw speak "Hello world"</text>
+  <text x="40" y="585" class="code">@openclaw read this article aloud</text>
+
+  <!-- SUMMARIZE SKILL -->
+  <rect x="410" y="350" width="380" height="250" fill="#fce7f3" stroke="#ec4899" stroke-width="3" rx="10"/>
+  <rect x="410" y="350" width="380" height="40" fill="#ec4899" rx="10"/>
+  <rect x="410" y="370" width="380" height="20" fill="#ec4899"/>
+  <text x="600" y="377" text-anchor="middle" style="font: bold 18px Arial; fill: white;">SUMMARIZE</text>
+
+  <text x="430" y="415" style="font: bold 14px Arial; fill: #1a1a2e;">Purpose: Content Summarization</text>
+  <text x="430" y="440" class="small-text">* Summarize long documents</text>
+  <text x="430" y="460" class="small-text">* Extract key points</text>
+  <text x="430" y="480" class="small-text">* Bullet point summaries</text>
+
+  <rect x="430" y="500" width="340" height="40" fill="#ecfdf5" stroke="#10b981" rx="5"/>
+  <text x="450" y="525" style="font: bold 11px Arial; fill: #059669;">Status: ELIGIBLE (Ready)</text>
+
+  <text x="430" y="565" class="code">@openclaw summarize this article</text>
+  <text x="430" y="585" class="code">@openclaw tldr this document</text>
+
+  <!-- NANO PDF SKILL -->
+  <rect x="800" y="350" width="380" height="250" fill="#fef3c7" stroke="#f59e0b" stroke-width="3" rx="10"/>
+  <rect x="800" y="350" width="380" height="40" fill="#f59e0b" rx="10"/>
+  <rect x="800" y="370" width="380" height="20" fill="#f59e0b"/>
+  <text x="990" y="377" text-anchor="middle" style="font: bold 18px Arial; fill: white;">NANO PDF</text>
+
+  <text x="820" y="415" style="font: bold 14px Arial; fill: #1a1a2e;">Purpose: PDF Processing</text>
+  <text x="820" y="440" class="small-text">* Extract text from PDFs</text>
+  <text x="820" y="460" class="small-text">* Summarize PDF content</text>
+  <text x="820" y="480" class="small-text">* Answer questions about PDFs</text>
+
+  <rect x="820" y="500" width="340" height="40" fill="#fef2f2" stroke="#dc2626" rx="5"/>
+  <text x="840" y="525" class="code">Missing: nano-pdf binary</text>
+
+  <text x="820" y="565" class="code">@openclaw read this PDF [attach]</text>
+  <text x="820" y="585" class="code">@openclaw summarize the PDF</text>
+
+  <!-- Architecture Diagram -->
+  <rect x="20" y="620" width="1160" height="260" fill="#fdf4ff" stroke="#a855f7" stroke-width="2" rx="10"/>
+  <text x="600" y="650" text-anchor="middle" style="font: bold 20px Arial; fill: #7c3aed;">AI/ML SKILLS ARCHITECTURE</text>
+
+  <!-- Input Types -->
+  <rect x="50" y="680" width="150" height="150" fill="#ffffff" stroke="#6b7280" stroke-width="2" rx="8"/>
+  <text x="125" y="705" text-anchor="middle" style="font: bold 14px Arial; fill: #1a1a2e;">INPUT TYPES</text>
+
+  <rect x="65" y="720" width="55" height="30" fill="#8b5cf6" rx="4"/>
+  <text x="92" y="740" text-anchor="middle" style="font: bold 9px Arial; fill: white;">Text</text>
+
+  <rect x="130" y="720" width="55" height="30" fill="#ec4899" rx="4"/>
+  <text x="157" y="740" text-anchor="middle" style="font: bold 9px Arial; fill: white;">Audio</text>
+
+  <rect x="65" y="760" width="55" height="30" fill="#f59e0b" rx="4"/>
+  <text x="92" y="780" text-anchor="middle" style="font: bold 9px Arial; fill: white;">Image</text>
+
+  <rect x="130" y="760" width="55" height="30" fill="#3b82f6" rx="4"/>
+  <text x="157" y="780" text-anchor="middle" style="font: bold 9px Arial; fill: white;">PDF</text>
+
+  <!-- Gateway -->
+  <rect x="250" y="710" width="120" height="70" fill="#3b82f6" rx="8"/>
+  <text x="310" y="740" text-anchor="middle" class="label">OPENCLAW</text>
+  <text x="310" y="757" text-anchor="middle" class="label">GATEWAY</text>
+
+  <line x1="200" y1="755" x2="240" y2="745" stroke="#1a1a2e" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- AI Router -->
+  <rect x="420" y="710" width="120" height="70" fill="#a855f7" rx="8"/>
+  <text x="480" y="740" text-anchor="middle" class="label">AI MODEL</text>
+  <text x="480" y="757" text-anchor="middle" class="label">ROUTER</text>
+
+  <line x1="370" y1="745" x2="410" y2="745" stroke="#1a1a2e" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Cloud APIs -->
+  <rect x="590" y="670" width="170" height="120" fill="#f0f9ff" stroke="#3b82f6" stroke-width="2" rx="8"/>
+  <text x="675" y="695" text-anchor="middle" style="font: bold 14px Arial; fill: #1e40af;">CLOUD APIs</text>
+
+  <rect x="605" y="710" width="65" height="30" fill="#10a37f" rx="4"/>
+  <text x="637" y="730" text-anchor="middle" style="font: bold 9px Arial; fill: white;">OpenAI</text>
+
+  <rect x="680" y="710" width="65" height="30" fill="#4285f4" rx="4"/>
+  <text x="712" y="730" text-anchor="middle" style="font: bold 9px Arial; fill: white;">Gemini</text>
+
+  <rect x="605" y="750" width="140" height="25" fill="#f59e0b" rx="4"/>
+  <text x="675" y="768" text-anchor="middle" style="font: bold 9px Arial; fill: white;">Whisper API</text>
+
+  <!-- Local Models -->
+  <rect x="590" y="800" width="170" height="70" fill="#f0fdf4" stroke="#10b981" stroke-width="2" rx="8"/>
+  <text x="675" y="825" text-anchor="middle" style="font: bold 14px Arial; fill: #059669;">LOCAL MODELS</text>
+  <text x="605" y="850" class="small-text">Nano Banana, Sherpa</text>
+
+  <!-- Arrows from router -->
+  <line x1="540" y1="725" x2="580" y2="720" stroke="#1a1a2e" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="540" y1="765" x2="580" y2="830" stroke="#1a1a2e" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Output Types -->
+  <rect x="810" y="680" width="170" height="180" fill="#ffffff" stroke="#10b981" stroke-width="2" rx="8"/>
+  <text x="895" y="705" text-anchor="middle" style="font: bold 14px Arial; fill: #059669;">OUTPUT TYPES</text>
+
+  <rect x="825" y="720" width="140" height="25" fill="#8b5cf6" rx="4"/>
+  <text x="895" y="738" text-anchor="middle" style="font: bold 9px Arial; fill: white;">Generated Text</text>
+
+  <rect x="825" y="755" width="140" height="25" fill="#ec4899" rx="4"/>
+  <text x="895" y="773" text-anchor="middle" style="font: bold 9px Arial; fill: white;">Audio/Speech</text>
+
+  <rect x="825" y="790" width="140" height="25" fill="#f59e0b" rx="4"/>
+  <text x="895" y="808" text-anchor="middle" style="font: bold 9px Arial; fill: white;">Summaries</text>
+
+  <rect x="825" y="825" width="140" height="25" fill="#3b82f6" rx="4"/>
+  <text x="895" y="843" text-anchor="middle" style="font: bold 9px Arial; fill: white;">Transcriptions</text>
+
+  <!-- Arrow to output -->
+  <line x1="760" y1="750" x2="800" y2="770" stroke="#10b981" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Privacy Note -->
+  <rect x="1010" y="700" width="150" height="120" fill="#fef2f2" stroke="#dc2626" stroke-width="2" rx="8"/>
+  <text x="1085" y="725" text-anchor="middle" style="font: bold 12px Arial; fill: #dc2626;">PRIVACY NOTE</text>
+  <text x="1025" y="750" style="font: bold 9px Arial; fill: #4b5563;">Cloud APIs send</text>
+  <text x="1025" y="765" style="font: bold 9px Arial; fill: #4b5563;">data externally.</text>
+  <text x="1025" y="790" style="font: bold 9px Arial; fill: #059669;">Local models keep</text>
+  <text x="1025" y="805" style="font: bold 9px Arial; fill: #059669;">data on device.</text>
+</svg>

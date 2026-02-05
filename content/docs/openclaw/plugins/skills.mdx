@@ -1,0 +1,466 @@
+---
+title: Skills
+description: Extend OpenClaw with 50+ modular skill capabilities
+icon: Zap
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Card, Cards } from 'fumadocs-ui/components/card';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
+# OpenClaw Skills
+
+Skills are modular capabilities that extend your AI assistant's functionality. Each skill provides specialized tools for specific tasks, from weather queries to code execution.
+
+## Skill Architecture Overview
+
+<img src="/diagrams/skills/skill-architecture.svg" alt="Skill Architecture" style={{width: '100%', maxWidth: '900px', margin: '20px 0'}} />
+
+Skills work as a routing layer between user requests and specialized capabilities. When a user sends a message, OpenClaw's gateway routes the request to the appropriate skill based on the context.
+
+## Skill Status Legend
+
+| Status | Badge | Meaning |
+|--------|-------|---------|
+| **Eligible** | 🟢 | Ready to use, all requirements met |
+| **Blocked** | 🔴 | Missing binary or configuration |
+| **Disabled** | ⚫ | Manually disabled in config |
+
+## Eligible Skills (Ready to Use)
+
+These skills work immediately without additional setup.
+
+### Weather
+
+Get current weather conditions and forecasts for any location worldwide without requiring an API key.
+
+<img src="/diagrams/skills/weather-skill.svg" alt="Weather Skill" style={{width: '100%', maxWidth: '700px', margin: '20px 0'}} />
+
+**Usage Examples:**
+```
+@openclaw What's the weather in New York?
+@openclaw Give me a 5-day forecast for Tokyo
+@openclaw Will it rain tomorrow in London?
+```
+
+### Healthcheck
+
+Perform security audits on your OpenClaw deployment, checking firewall, SSH, ports, and services.
+
+**Usage Examples:**
+```
+@openclaw run a security healthcheck
+@openclaw check my system security
+@openclaw audit SSH settings
+```
+
+### Skill-Creator
+
+Create custom skills with proper structure, manifest files, and packaging.
+
+**Usage Examples:**
+```
+@openclaw create a new skill called "my-custom-skill"
+@openclaw help me design a skill for tracking expenses
+```
+
+### Coding Agent
+
+<img src="/diagrams/skills/coding-agent-skill.svg" alt="Coding Agent Skill" style={{width: '100%', maxWidth: '800px', margin: '20px 0'}} />
+
+AI-Powered code writing, execution, and debugging assistant. One of the most powerful skills in OpenClaw.
+
+**Capabilities:**
+- ✓ Multi-language support (Python, JS, Go, Rust, etc.)
+- ✓ File system read/write operations
+- ✓ Git operations (commit, push, branch, etc.)
+- ✓ Package management (npm, pip, cargo)
+- ✓ Test execution and debugging
+- ✓ Code explanation and refactoring
+
+**Usage Examples:**
+```
+@openclaw write a Python script to sort a list
+@openclaw fix the bug in main.js line 42
+@openclaw refactor this function to use async/await
+@openclaw create a React component for user login
+@openclaw run npm install and then npm test
+```
+
+## Productivity Skills
+
+<img src="/diagrams/skills/productivity-skills.svg" alt="Productivity Skills" style={{width: '100%', maxWidth: '800px', margin: '20px 0'}} />
+
+### Notion
+
+Manage Notion pages, databases, and content.
+
+**Installation:**
+1. Go to [notion.so/my-integrations](https://notion.so/my-integrations)
+2. Create integration, copy token
+3. Share pages with integration
+4. Add `NOTION_API_KEY` to Skills page or `.env`
+
+**Usage Examples:**
+```
+@openclaw create a Notion page titled "Weekly Report"
+@openclaw search my Notion for "marketing plan"
+@openclaw add "Review PR" to my Tasks database
+```
+
+### Trello
+
+Manage Trello boards, lists, and cards.
+
+**Installation:**
+```bash
+# Install jq
+choco install jq  # Windows
+brew install jq   # macOS
+
+# Get credentials from trello.com/app-key
+# Add to .env:
+TRELLO_API_KEY=your_key
+TRELLO_TOKEN=your_token
+```
+
+### Obsidian
+
+Work with Obsidian vaults and markdown notes.
+
+**Installation:**
+```bash
+brew install obsidian-cli
+```
+
+### Apple Notes, Reminders, Bear Notes, Things
+
+macOS-specific productivity tools for managing native Apple apps.
+
+<Callout title="macOS Only" type="info">
+  These skills require macOS and the corresponding CLI tools installed via Homebrew.
+</Callout>
+
+## Developer Skills
+
+<img src="/diagrams/skills/developer-skills.svg" alt="Developer Skills" style={{width: '100%', maxWidth: '800px', margin: '20px 0'}} />
+
+### GitHub
+
+<img src="/diagrams/skills/github-skill.svg" alt="GitHub Skill" style={{width: '100%', maxWidth: '700px', margin: '20px 0'}} />
+
+Interact with GitHub repositories, issues, PRs, and CI.
+
+**Installation:**
+```bash
+# Windows
+choco install gh
+
+# macOS
+brew install gh
+
+# Linux
+curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+sudo apt install gh
+
+# Authenticate
+gh auth login
+```
+
+**Usage Examples:**
+```
+@openclaw list open issues in owner/repo
+@openclaw create issue "Bug: Login fails" in my-org/my-repo
+@openclaw show PR #123 in owner/repo
+@openclaw merge PR #456
+@openclaw what CI runs failed today?
+```
+
+### ClawHub
+
+Search, install, update, and publish skills from clawhub.com.
+
+**Installation:**
+```bash
+npm install -g clawhub
+```
+
+### Session-Logs
+
+Search and analyze session logs using jq.
+
+**Installation:**
+```bash
+brew install jq ripgrep
+```
+
+### Tmux
+
+Remote-control tmux sessions by sending keystrokes.
+
+**Installation:**
+```bash
+brew install tmux  # macOS
+apt install tmux   # Linux
+```
+
+## Communication Skills
+
+<img src="/diagrams/skills/communication-skills.svg" alt="Communication Skills" style={{width: '100%', maxWidth: '800px', margin: '20px 0'}} />
+
+### Slack
+
+<img src="/diagrams/skills/slack-skill.svg" alt="Slack Skill" style={{width: '100%', maxWidth: '700px', margin: '20px 0'}} />
+
+Control Slack - react, pin/unpin messages.
+
+**Installation:**
+1. Create Slack App at api.slack.com/apps
+2. Add bot scopes: chat:write, reactions:write, pins:write
+3. Enable Socket Mode, generate App Token
+4. Install to workspace, copy Bot Token
+5. Add tokens to openclaw.json channels.slack
+
+**Usage Examples:**
+```
+pin the message above
+react to that with 🎉
+unpin the announcement in #general
+```
+
+### Himalaya (Email)
+
+Full email management via IMAP/SMTP.
+
+**Installation:**
+```bash
+brew install himalaya
+# Configure ~/.config/himalaya/config.toml
+```
+
+### iMsg (macOS)
+
+iMessage/SMS CLI for listing, history, watch, and sending.
+
+### Voice-Call
+
+Start voice calls via OpenClaw voice-call plugin.
+
+**Enable:**
+```json
+{
+  "plugins": {
+    "entries": {
+      "voice-call": {
+        "enabled": true
+      }
+    }
+  }
+}
+```
+
+## AI/ML Skills
+
+<img src="/diagrams/skills/ai-ml-skills.svg" alt="AI/ML Skills" style={{width: '100%', maxWidth: '800px', margin: '20px 0'}} />
+
+### OpenAI Whisper API
+
+Transcribe audio via OpenAI Whisper.
+
+**Installation:**
+1. Get API key from platform.openai.com/api-keys
+2. Add `OPENAI_API_KEY` to Skills page or `.env`
+
+### OpenAI Whisper (Local)
+
+Local speech-to-text with Whisper CLI (no API key).
+
+**Installation:**
+```bash
+brew install openai-whisper
+# Requires Python and ffmpeg
+```
+
+### OpenAI Image Gen
+
+Generate images via DALL-E API.
+
+**Installation:**
+Add `OPENAI_API_KEY` to Skills page or `.env`
+
+### Gemini
+
+Gemini CLI for one-shot Q&A, summaries, and generation.
+
+**Installation:**
+```bash
+brew install gemini-cli
+```
+
+### Summarize
+
+Summarize text/transcripts from URLs, podcasts, local files.
+
+**Installation:**
+```bash
+brew install summarize
+```
+
+## Media Skills
+
+<img src="/diagrams/skills/media-skills.svg" alt="Media Skills" style={{width: '100%', maxWidth: '800px', margin: '20px 0'}} />
+
+### Spotify Player
+
+Terminal Spotify playback/search.
+
+**Installation:**
+```bash
+cargo install spotify_player
+```
+
+### Video-Frames
+
+Extract frames or short clips from videos using ffmpeg.
+
+**Installation:**
+```bash
+brew install ffmpeg
+```
+
+### GifGrep
+
+Search GIF providers, download, and extract stills.
+
+**Installation:**
+```bash
+brew install gifgrep
+```
+
+## Smart Home Skills
+
+<img src="/diagrams/skills/smart-home-skills.svg" alt="Smart Home Skills" style={{width: '100%', maxWidth: '800px', margin: '20px 0'}} />
+
+### OpenHue
+
+Control Philips Hue lights/scenes.
+
+**Installation:**
+```bash
+brew install openhue
+openhue setup  # Pair with Hue Bridge
+```
+
+**Usage Examples:**
+```
+@openclaw turn on living room lights
+@openclaw set bedroom to 50% brightness
+@openclaw activate "Movie Night" scene
+@openclaw turn all lights blue
+```
+
+### SonosCLI
+
+Control Sonos speakers (discover/status/play/volume/group).
+
+**Installation:**
+```bash
+go install github.com/sonos/sonoscli@latest
+```
+
+### EightCtl
+
+Control Eight Sleep pods (temperature, alarms, schedules).
+
+### BluCLI
+
+BluOS CLI for discovery, playback, grouping, and volume.
+
+## Utility Skills
+
+<img src="/diagrams/skills/utility-skills.svg" alt="Utility Skills" style={{width: '100%', maxWidth: '800px', margin: '20px 0'}} />
+
+### 1Password
+
+Use 1Password CLI for secrets and credentials.
+
+**Installation:**
+```bash
+brew install --cask 1password-cli
+# Enable desktop app integration in 1Password settings
+```
+
+### Bird (X/Twitter)
+
+X/Twitter CLI for reading, searching, posting, engagement.
+
+**Installation:**
+```bash
+npm install -g @steipete/bird
+```
+
+### GoG (Google Workspace)
+
+Google Workspace CLI for Gmail, Calendar, Drive, etc.
+
+**Installation:**
+```bash
+brew install gog
+gog auth  # OAuth login
+```
+
+## Enabling/Disabling Skills
+
+### Via Control UI
+
+1. Go to `http://localhost:18789/skills`
+2. Find the skill
+3. Click "Enable" or "Disable"
+4. Add API key if required
+
+### Via Config
+
+```json
+{
+  "skills": {
+    "entries": {
+      "skill-name": {
+        "enabled": true
+      }
+    }
+  }
+}
+```
+
+## Quick Reference Table
+
+| Skill | Status | Requirements | Purpose |
+|-------|--------|--------------|---------|
+| weather | 🟢 | None | Weather forecasts |
+| healthcheck | 🟢 | None | Security audits |
+| skill-creator | 🟢 | None | Create skills |
+| coding-agent | 🟢 | None | Code writing/debugging |
+| notion | 🔴 | NOTION_API_KEY | Note management |
+| trello | 🔴 | jq, TRELLO_API_KEY | Task boards |
+| obsidian | 🔴 | obsidian-cli | Markdown notes |
+| github | 🔴 | gh CLI | Code management |
+| slack | 🔴 | channels.slack config | Slack control |
+| himalaya | 🔴 | himalaya CLI | Email |
+| openai-whisper-api | 🔴 | OPENAI_API_KEY | Transcription |
+| openai-image-gen | 🔴 | OPENAI_API_KEY | Image generation |
+| summarize | 🔴 | summarize CLI | Content summaries |
+| 1password | 🔴 | op CLI | Password management |
+| spotify-player | 🔴 | spogo CLI | Music playback |
+| openhue | 🔴 | openhue CLI | Smart lights |
+| sonoscli | 🔴 | sonos CLI | Speakers |
+
+## Next Steps
+
+<Cards>
+  <Card href="/docs/openclaw/plugins/development" title="Create Custom Skills" icon="Code">
+    Learn how to build your own skills
+  </Card>
+  <Card href="/docs/openclaw/plugins/sdk" title="Plugin SDK" icon="Package">
+    Explore the Plugin SDK reference
+  </Card>
+</Cards>

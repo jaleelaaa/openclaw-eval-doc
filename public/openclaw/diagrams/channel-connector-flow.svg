@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="500" viewBox="0 0 1100 500">
+  <defs>
+    <style type="text/css">
+      .title { font-family: Arial, Helvetica, sans-serif; font-size: 24px; font-weight: bold; fill: #333333; }
+      .section-label { font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: bold; fill: #333333; }
+      .component-title { font-family: Arial, Helvetica, sans-serif; font-size: 13px; font-weight: bold; fill: #ffffff; }
+      .component-text { font-family: Arial, Helvetica, sans-serif; font-size: 11px; font-weight: bold; fill: #ffffff; }
+      .step-label { font-family: Arial, Helvetica, sans-serif; font-size: 11px; font-weight: bold; fill: #666666; }
+      .arrow-label { font-family: Arial, Helvetica, sans-serif; font-size: 10px; font-weight: bold; fill: #333333; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333333"/>
+    </marker>
+    <marker id="arrowhead-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#1976D2"/>
+    </marker>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="2" dy="2" stdDeviation="2" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1100" height="500" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="550" y="35" text-anchor="middle" class="title">Channel Connector Message Flow</text>
+
+  <!-- External Platforms -->
+  <rect x="30" y="80" width="180" height="350" rx="10" fill="#f5f5f5" stroke="#666666" stroke-width="2" stroke-dasharray="5,5"/>
+  <text x="120" y="105" text-anchor="middle" class="section-label">External Platforms</text>
+
+  <!-- WhatsApp -->
+  <rect x="50" y="130" width="140" height="45" rx="8" fill="#25D366" stroke="#1DA851" stroke-width="2" filter="url(#shadow)"/>
+  <text x="120" y="157" text-anchor="middle" class="component-title">WhatsApp</text>
+
+  <!-- Telegram -->
+  <rect x="50" y="190" width="140" height="45" rx="8" fill="#0088CC" stroke="#006699" stroke-width="2" filter="url(#shadow)"/>
+  <text x="120" y="217" text-anchor="middle" class="component-title">Telegram</text>
+
+  <!-- Discord -->
+  <rect x="50" y="250" width="140" height="45" rx="8" fill="#5865F2" stroke="#4752C4" stroke-width="2" filter="url(#shadow)"/>
+  <text x="120" y="277" text-anchor="middle" class="component-title">Discord</text>
+
+  <!-- Slack -->
+  <rect x="50" y="310" width="140" height="45" rx="8" fill="#E01E5A" stroke="#B01849" stroke-width="2" filter="url(#shadow)"/>
+  <text x="120" y="337" text-anchor="middle" class="component-title">Slack</text>
+
+  <!-- Others -->
+  <rect x="50" y="370" width="140" height="45" rx="8" fill="#6B6B6B" stroke="#4D4D4D" stroke-width="2" filter="url(#shadow)"/>
+  <text x="120" y="397" text-anchor="middle" class="component-title">Signal / iMessage</text>
+
+  <!-- Channel Connectors -->
+  <rect x="260" y="80" width="180" height="350" rx="10" fill="#E3F2FD" stroke="#1976D2" stroke-width="2"/>
+  <text x="350" y="105" text-anchor="middle" class="section-label">Channel Connectors</text>
+
+  <!-- Baileys -->
+  <rect x="280" y="130" width="140" height="45" rx="8" fill="#1976D2" stroke="#0D47A1" stroke-width="2" filter="url(#shadow)"/>
+  <text x="350" y="150" text-anchor="middle" class="component-title">Baileys</text>
+  <text x="350" y="167" text-anchor="middle" class="component-text">WebSocket</text>
+
+  <!-- grammY -->
+  <rect x="280" y="190" width="140" height="45" rx="8" fill="#1976D2" stroke="#0D47A1" stroke-width="2" filter="url(#shadow)"/>
+  <text x="350" y="210" text-anchor="middle" class="component-title">grammY</text>
+  <text x="350" y="227" text-anchor="middle" class="component-text">Bot API</text>
+
+  <!-- discord.js -->
+  <rect x="280" y="250" width="140" height="45" rx="8" fill="#1976D2" stroke="#0D47A1" stroke-width="2" filter="url(#shadow)"/>
+  <text x="350" y="270" text-anchor="middle" class="component-title">discord.js</text>
+  <text x="350" y="287" text-anchor="middle" class="component-text">Gateway</text>
+
+  <!-- Bolt -->
+  <rect x="280" y="310" width="140" height="45" rx="8" fill="#1976D2" stroke="#0D47A1" stroke-width="2" filter="url(#shadow)"/>
+  <text x="350" y="330" text-anchor="middle" class="component-title">Bolt</text>
+  <text x="350" y="347" text-anchor="middle" class="component-text">Events API</text>
+
+  <!-- Native -->
+  <rect x="280" y="370" width="140" height="45" rx="8" fill="#1976D2" stroke="#0D47A1" stroke-width="2" filter="url(#shadow)"/>
+  <text x="350" y="390" text-anchor="middle" class="component-title">Native</text>
+  <text x="350" y="407" text-anchor="middle" class="component-text">Protocol</text>
+
+  <!-- Message Processing -->
+  <rect x="490" y="80" width="180" height="350" rx="10" fill="#FFF3E0" stroke="#F57C00" stroke-width="2"/>
+  <text x="580" y="105" text-anchor="middle" class="section-label">Message Processing</text>
+
+  <!-- Normalization -->
+  <rect x="510" y="160" width="140" height="60" rx="8" fill="#F57C00" stroke="#E65100" stroke-width="2" filter="url(#shadow)"/>
+  <text x="580" y="185" text-anchor="middle" class="component-title">Normalization</text>
+  <text x="580" y="205" text-anchor="middle" class="component-text">Unified Format</text>
+
+  <!-- Access Control -->
+  <polygon points="580,260 640,300 580,340 520,300" fill="#F57C00" stroke="#E65100" stroke-width="2" filter="url(#shadow)"/>
+  <text x="580" y="295" text-anchor="middle" class="component-title">Access</text>
+  <text x="580" y="310" text-anchor="middle" class="component-title">Control</text>
+
+  <!-- Routing -->
+  <rect x="510" y="370" width="140" height="50" rx="8" fill="#F57C00" stroke="#E65100" stroke-width="2" filter="url(#shadow)"/>
+  <text x="580" y="400" text-anchor="middle" class="component-title">Message Router</text>
+
+  <!-- Gateway -->
+  <rect x="720" y="80" width="180" height="350" rx="10" fill="#E8F5E9" stroke="#388E3C" stroke-width="2"/>
+  <text x="810" y="105" text-anchor="middle" class="section-label">Gateway Core</text>
+
+  <!-- Agent Runtime -->
+  <rect x="740" y="150" width="140" height="80" rx="8" fill="#388E3C" stroke="#1B5E20" stroke-width="2" filter="url(#shadow)"/>
+  <text x="810" y="180" text-anchor="middle" class="component-title">Agent Runtime</text>
+  <text x="810" y="200" text-anchor="middle" class="component-text">pi-agent-core</text>
+  <text x="810" y="218" text-anchor="middle" class="component-text">LLM Calls</text>
+
+  <!-- Session Manager -->
+  <rect x="740" y="260" width="140" height="60" rx="8" fill="#388E3C" stroke="#1B5E20" stroke-width="2" filter="url(#shadow)"/>
+  <text x="810" y="285" text-anchor="middle" class="component-title">Session Manager</text>
+  <text x="810" y="305" text-anchor="middle" class="component-text">History</text>
+
+  <!-- Response -->
+  <rect x="740" y="350" width="140" height="60" rx="8" fill="#388E3C" stroke="#1B5E20" stroke-width="2" filter="url(#shadow)"/>
+  <text x="810" y="375" text-anchor="middle" class="component-title">Response</text>
+  <text x="810" y="395" text-anchor="middle" class="component-text">Formatting</text>
+
+  <!-- LLM Box -->
+  <rect x="950" y="130" width="120" height="120" rx="10" fill="#FCE4EC" stroke="#C2185B" stroke-width="2" stroke-dasharray="5,5"/>
+  <text x="1010" y="155" text-anchor="middle" class="section-label">LLM</text>
+  <rect x="965" y="170" width="90" height="30" rx="6" fill="#C2185B" stroke="#880E4F" stroke-width="2"/>
+  <text x="1010" y="190" text-anchor="middle" class="component-text">Gemini</text>
+  <rect x="965" y="210" width="90" height="30" rx="6" fill="#C2185B" stroke="#880E4F" stroke-width="2"/>
+  <text x="1010" y="230" text-anchor="middle" class="component-text">Claude</text>
+
+  <!-- Arrows - Platform to Connector -->
+  <line x1="190" y1="152" x2="280" y2="152" stroke="#333333" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <line x1="190" y1="212" x2="280" y2="212" stroke="#333333" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <line x1="190" y1="272" x2="280" y2="272" stroke="#333333" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <line x1="190" y1="332" x2="280" y2="332" stroke="#333333" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <line x1="190" y1="392" x2="280" y2="392" stroke="#333333" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+  <!-- Arrows - Connector to Processing -->
+  <path d="M 420 190 L 460 190 L 460 190 L 510 190" fill="none" stroke="#1976D2" stroke-width="2" marker-end="url(#arrowhead-blue)"/>
+  <path d="M 420 272 L 460 272 L 460 190 L 510 190" fill="none" stroke="#1976D2" stroke-width="2"/>
+  <path d="M 420 332 L 460 332 L 460 190 L 510 190" fill="none" stroke="#1976D2" stroke-width="2"/>
+
+  <!-- Arrows - Processing internal -->
+  <line x1="580" y1="220" x2="580" y2="260" stroke="#F57C00" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <line x1="580" y1="340" x2="580" y2="370" stroke="#F57C00" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+  <!-- Arrows - Processing to Gateway -->
+  <line x1="650" y1="395" x2="740" y2="380" stroke="#333333" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+  <!-- Arrow - Gateway to LLM -->
+  <line x1="880" y1="190" x2="950" y2="190" stroke="#C2185B" stroke-width="2" stroke-dasharray="5,5" marker-end="url(#arrowhead)"/>
+
+  <!-- Step labels -->
+  <text x="235" y="145" text-anchor="middle" class="step-label">1</text>
+  <text x="465" y="183" text-anchor="middle" class="step-label">2</text>
+  <text x="595" y="243" text-anchor="middle" class="step-label">3</text>
+  <text x="595" y="363" text-anchor="middle" class="step-label">4</text>
+  <text x="700" y="388" text-anchor="middle" class="step-label">5</text>
+  <text x="915" y="183" text-anchor="middle" class="step-label">6</text>
+
+  <!-- Legend -->
+  <rect x="950" y="300" width="120" height="120" rx="8" fill="#ffffff" stroke="#666666" stroke-width="1"/>
+  <text x="965" y="320" class="section-label">Legend</text>
+  <line x1="965" y1="340" x2="995" y2="340" stroke="#333333" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <text x="1005" y="345" class="arrow-label">Data Flow</text>
+  <line x1="965" y1="365" x2="995" y2="365" stroke="#C2185B" stroke-width="2" stroke-dasharray="5,5"/>
+  <text x="1005" y="370" class="arrow-label">API Call</text>
+  <rect x="965" y="385" width="20" height="15" rx="3" fill="#388E3C"/>
+  <text x="1000" y="397" class="arrow-label">Processing</text>
+</svg>

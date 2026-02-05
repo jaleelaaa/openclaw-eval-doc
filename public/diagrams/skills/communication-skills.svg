@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900">
+  <defs>
+    <style>
+      .title { font: bold 22px Arial, sans-serif; fill: #1a1a2e; }
+      .label { font: bold 13px Arial, sans-serif; fill: #ffffff; }
+      .small-text { font: bold 11px Arial, sans-serif; fill: #4b5563; }
+      .code { font: bold 11px Consolas, monospace; fill: #1f2937; }
+    </style>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#1a1a2e"/>
+    </marker>
+    <linearGradient id="commGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#06b6d4"/>
+      <stop offset="100%" style="stop-color:#0891b2"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="900" fill="#ffffff"/>
+
+  <!-- Header -->
+  <rect x="0" y="0" width="1200" height="70" fill="url(#commGrad)"/>
+  <text x="600" y="40" text-anchor="middle" style="font: bold 28px Arial; fill: white;">COMMUNICATION SKILLS</text>
+  <text x="600" y="60" text-anchor="middle" style="font: bold 14px Arial; fill: #cffafe;">Himalaya, iMsg, Voice Call, WaCLI, BlueBubbles</text>
+
+  <!-- HIMALAYA (Email) SKILL -->
+  <rect x="20" y="85" width="380" height="250" fill="#f0f9ff" stroke="#0ea5e9" stroke-width="3" rx="10"/>
+  <rect x="20" y="85" width="380" height="40" fill="#0ea5e9" rx="10"/>
+  <rect x="20" y="105" width="380" height="20" fill="#0ea5e9"/>
+  <text x="210" y="112" text-anchor="middle" style="font: bold 18px Arial; fill: white;">HIMALAYA (Email)</text>
+
+  <text x="40" y="150" style="font: bold 14px Arial; fill: #1a1a2e;">Purpose: Email Client CLI</text>
+  <text x="40" y="175" class="small-text">* Read/send emails via IMAP/SMTP</text>
+  <text x="40" y="195" class="small-text">* Search and filter messages</text>
+  <text x="40" y="215" class="small-text">* Manage folders and labels</text>
+
+  <rect x="40" y="235" width="340" height="40" fill="#fef2f2" stroke="#dc2626" rx="5"/>
+  <text x="60" y="260" class="code">Missing: himalaya CLI installation</text>
+
+  <text x="40" y="300" class="code">@openclaw check my email</text>
+  <text x="40" y="320" class="code">@openclaw send email to john@...</text>
+
+  <!-- IMSG SKILL -->
+  <rect x="410" y="85" width="380" height="250" fill="#ecfdf5" stroke="#10b981" stroke-width="3" rx="10"/>
+  <rect x="410" y="85" width="380" height="40" fill="#10b981" rx="10"/>
+  <rect x="410" y="105" width="380" height="20" fill="#10b981"/>
+  <text x="600" y="112" text-anchor="middle" style="font: bold 18px Arial; fill: white;">iMSG (macOS)</text>
+
+  <text x="430" y="150" style="font: bold 14px Arial; fill: #1a1a2e;">Purpose: iMessage Integration</text>
+  <text x="430" y="175" class="small-text">* Send/receive iMessages</text>
+  <text x="430" y="195" class="small-text">* Read conversation history</text>
+  <text x="430" y="215" class="small-text">* React to messages</text>
+
+  <rect x="430" y="235" width="340" height="40" fill="#ecfdf5" stroke="#10b981" rx="5"/>
+  <text x="450" y="260" style="font: bold 11px Arial; fill: #059669;">Status: READY (macOS only)</text>
+
+  <text x="430" y="300" class="code">@openclaw send imessage to Mom</text>
+  <text x="430" y="320" class="code">@openclaw read messages from John</text>
+
+  <!-- VOICE CALL SKILL -->
+  <rect x="800" y="85" width="380" height="250" fill="#fef3c7" stroke="#f59e0b" stroke-width="3" rx="10"/>
+  <rect x="800" y="85" width="380" height="40" fill="#f59e0b" rx="10"/>
+  <rect x="800" y="105" width="380" height="20" fill="#f59e0b"/>
+  <text x="990" y="112" text-anchor="middle" style="font: bold 18px Arial; fill: white;">VOICE CALL</text>
+
+  <text x="820" y="150" style="font: bold 14px Arial; fill: #1a1a2e;">Purpose: Voice Communication</text>
+  <text x="820" y="175" class="small-text">* Initiate voice calls</text>
+  <text x="820" y="195" class="small-text">* Voice-to-text transcription</text>
+  <text x="820" y="215" class="small-text">* Call management</text>
+
+  <rect x="820" y="235" width="340" height="40" fill="#fef2f2" stroke="#dc2626" rx="5"/>
+  <text x="840" y="260" class="code">Missing: Voice call setup</text>
+
+  <text x="820" y="300" class="code">@openclaw call support line</text>
+  <text x="820" y="320" class="code">@openclaw transcribe last call</text>
+
+  <!-- WACLI (WhatsApp) SKILL -->
+  <rect x="20" y="350" width="380" height="250" fill="#f0fdf4" stroke="#22c55e" stroke-width="3" rx="10"/>
+  <rect x="20" y="350" width="380" height="40" fill="#22c55e" rx="10"/>
+  <rect x="20" y="370" width="380" height="20" fill="#22c55e"/>
+  <text x="210" y="377" text-anchor="middle" style="font: bold 18px Arial; fill: white;">WACLI (WhatsApp)</text>
+
+  <text x="40" y="415" style="font: bold 14px Arial; fill: #1a1a2e;">Purpose: WhatsApp CLI</text>
+  <text x="40" y="440" class="small-text">* Send/receive WhatsApp messages</text>
+  <text x="40" y="460" class="small-text">* Manage groups and contacts</text>
+  <text x="40" y="480" class="small-text">* Send media files</text>
+
+  <rect x="40" y="500" width="340" height="40" fill="#fef2f2" stroke="#dc2626" rx="5"/>
+  <text x="60" y="525" class="code">Missing: wacli installation + auth</text>
+
+  <text x="40" y="565" class="code">@openclaw send whatsapp to Team</text>
+  <text x="40" y="585" class="code">@openclaw read whatsapp messages</text>
+
+  <!-- BLUEBUBBLES SKILL -->
+  <rect x="410" y="350" width="380" height="250" fill="#dbeafe" stroke="#3b82f6" stroke-width="3" rx="10"/>
+  <rect x="410" y="350" width="380" height="40" fill="#3b82f6" rx="10"/>
+  <rect x="410" y="370" width="380" height="20" fill="#3b82f6"/>
+  <text x="600" y="377" text-anchor="middle" style="font: bold 18px Arial; fill: white;">BLUEBUBBLES</text>
+
+  <text x="430" y="415" style="font: bold 14px Arial; fill: #1a1a2e;">Purpose: Cross-Platform iMessage</text>
+  <text x="430" y="440" class="small-text">* iMessage from any device</text>
+  <text x="430" y="460" class="small-text">* Requires macOS server running</text>
+  <text x="430" y="480" class="small-text">* Full message sync</text>
+
+  <rect x="430" y="500" width="340" height="40" fill="#fef2f2" stroke="#dc2626" rx="5"/>
+  <text x="450" y="525" class="code">Missing: BlueBubbles server URL</text>
+
+  <text x="430" y="565" class="code">@openclaw send bluebubbles msg</text>
+  <text x="430" y="585" class="code">@openclaw list bluebubbles chats</text>
+
+  <!-- Summary Box -->
+  <rect x="800" y="350" width="380" height="250" fill="#f8fafc" stroke="#64748b" stroke-width="3" rx="10"/>
+  <rect x="800" y="350" width="380" height="40" fill="#64748b" rx="10"/>
+  <rect x="800" y="370" width="380" height="20" fill="#64748b"/>
+  <text x="990" y="377" text-anchor="middle" style="font: bold 18px Arial; fill: white;">PLATFORM SUPPORT</text>
+
+  <text x="820" y="415" style="font: bold 14px Arial; fill: #1a1a2e;">Availability by Platform:</text>
+
+  <rect x="830" y="430" width="150" height="30" fill="#1a1a2e" rx="4"/>
+  <text x="905" y="450" text-anchor="middle" style="font: bold 11px Arial; fill: white;">macOS</text>
+  <text x="990" y="450" class="small-text">iMsg, BlueBubbles Server</text>
+
+  <rect x="830" y="470" width="150" height="30" fill="#3b82f6" rx="4"/>
+  <text x="905" y="490" text-anchor="middle" style="font: bold 11px Arial; fill: white;">Windows/Linux</text>
+  <text x="990" y="490" class="small-text">Himalaya, WaCLI</text>
+
+  <rect x="830" y="510" width="150" height="30" fill="#22c55e" rx="4"/>
+  <text x="905" y="530" text-anchor="middle" style="font: bold 11px Arial; fill: white;">Cross-Platform</text>
+  <text x="990" y="530" class="small-text">Voice Call, BlueBubbles</text>
+
+  <text x="820" y="570" style="font: bold 12px Arial; fill: #dc2626;">Note: Most require external CLI tools</text>
+  <text x="820" y="590" style="font: bold 12px Arial; fill: #dc2626;">or API credentials to function.</text>
+
+  <!-- Architecture Diagram -->
+  <rect x="20" y="620" width="1160" height="260" fill="#f0f9ff" stroke="#0ea5e9" stroke-width="2" rx="10"/>
+  <text x="600" y="650" text-anchor="middle" style="font: bold 20px Arial; fill: #0369a1;">COMMUNICATION SKILLS ARCHITECTURE</text>
+
+  <!-- User -->
+  <rect x="60" y="690" width="100" height="60" fill="#06b6d4" rx="8"/>
+  <text x="110" y="725" text-anchor="middle" class="label">USER</text>
+
+  <!-- Gateway -->
+  <rect x="230" y="690" width="120" height="60" fill="#3b82f6" rx="8"/>
+  <text x="290" y="715" text-anchor="middle" class="label">OPENCLAW</text>
+  <text x="290" y="732" text-anchor="middle" class="label">GATEWAY</text>
+
+  <line x1="160" y1="720" x2="220" y2="720" stroke="#1a1a2e" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Message Router -->
+  <rect x="410" y="690" width="150" height="60" fill="#8b5cf6" rx="8"/>
+  <text x="485" y="715" text-anchor="middle" class="label">MESSAGE</text>
+  <text x="485" y="732" text-anchor="middle" class="label">ROUTER</text>
+
+  <line x1="350" y1="720" x2="400" y2="720" stroke="#1a1a2e" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Service Icons -->
+  <rect x="620" y="670" width="100" height="40" fill="#0ea5e9" rx="6"/>
+  <text x="670" y="695" text-anchor="middle" style="font: bold 11px Arial; fill: white;">Email</text>
+
+  <rect x="620" y="720" width="100" height="40" fill="#10b981" rx="6"/>
+  <text x="670" y="745" text-anchor="middle" style="font: bold 11px Arial; fill: white;">iMessage</text>
+
+  <rect x="620" y="770" width="100" height="40" fill="#22c55e" rx="6"/>
+  <text x="670" y="795" text-anchor="middle" style="font: bold 11px Arial; fill: white;">WhatsApp</text>
+
+  <rect x="620" y="820" width="100" height="40" fill="#f59e0b" rx="6"/>
+  <text x="670" y="845" text-anchor="middle" style="font: bold 11px Arial; fill: white;">Voice</text>
+
+  <!-- Arrows from router -->
+  <line x1="560" y1="700" x2="610" y2="690" stroke="#1a1a2e" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="560" y1="715" x2="610" y2="740" stroke="#1a1a2e" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="560" y1="730" x2="610" y2="790" stroke="#1a1a2e" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="560" y1="745" x2="610" y2="840" stroke="#1a1a2e" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- External Services -->
+  <rect x="780" y="670" width="180" height="200" fill="#ffffff" stroke="#6b7280" stroke-width="2" rx="8"/>
+  <text x="870" y="695" text-anchor="middle" style="font: bold 14px Arial; fill: #1a1a2e;">EXTERNAL SERVICES</text>
+
+  <text x="800" y="720" class="small-text">IMAP/SMTP Servers</text>
+  <text x="800" y="745" class="small-text">Apple iMessage DB</text>
+  <text x="800" y="770" class="small-text">WhatsApp Web API</text>
+  <text x="800" y="795" class="small-text">BlueBubbles Server</text>
+  <text x="800" y="820" class="small-text">VoIP Providers</text>
+
+  <!-- Arrows to external -->
+  <line x1="720" y1="690" x2="770" y2="710" stroke="#1a1a2e" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="720" y1="740" x2="770" y2="745" stroke="#1a1a2e" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="720" y1="790" x2="770" y2="790" stroke="#1a1a2e" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Result -->
+  <rect x="1000" y="720" width="160" height="100" fill="#ecfdf5" stroke="#10b981" stroke-width="2" rx="8"/>
+  <text x="1080" y="750" text-anchor="middle" style="font: bold 14px Arial; fill: #059669;">RESULTS</text>
+  <text x="1020" y="775" class="small-text">Messages sent</text>
+  <text x="1020" y="795" class="small-text">Inbox retrieved</text>
+  <text x="1020" y="815" class="small-text">Calls connected</text>
+
+  <line x1="960" y1="770" x2="990" y2="770" stroke="#10b981" stroke-width="2" marker-end="url(#arrow)"/>
+</svg>

@@ -1,0 +1,294 @@
+---
+title: Session Management
+description: How OpenClaw manages conversation history and context
+icon: History
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Card, Cards } from 'fumadocs-ui/components/card';
+
+# Session Management
+
+Sessions are the persistent state for each conversation between a user and an agent. OpenClaw maintains separate sessions per user, per agent, enabling personalized and continuous interactions.
+
+## Session Concepts
+
+### Session Key
+
+Each session is uniquely identified by:
+
+```
+agent:<agentId>:<peerId>
+
+Examples:
+- agent:default:+1234567890      (WhatsApp user)
+- agent:coding-bot:@user#1234    (Discord user)
+- agent:support:U01234567        (Slack user)
+```
+
+### Session Storage
+
+Sessions are stored as JSON files:
+
+```
+~/.openclaw/agents/<agentId>/sessions/
+├── <sessionKey>.json     # Conversation history
+└── <sessionKey>.meta     # Session metadata
+```
+
+## Session Lifecycle
+
+```
+User Message Received
+        ↓
+Session Exists? ─── No ──→ Create New Session
+        │
+       Yes
+        ↓
+Load Session History
+        ↓
+Process Message (Agent Loop)
+        ↓
+Update Session
+        ↓
+Persist to Disk
+```
+
+### Session States
+
+| State | Description |
+|-------|-------------|
+| **Active** | Recent messages, frequently accessed |
+| **Idle** | No recent activity, loaded on demand |
+| **Archived** | Old sessions, may be compacted |
+
+## Session Data Structure
+
+### History File (`.json`)
+
+```json
+{
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are a helpful assistant..."
+    },
+    {
+      "role": "user",
+      "content": "Hello!",
+      "timestamp": "2026-02-05T10:00:00Z"
+    },
+    {
+      "role": "assistant",
+      "content": "Hello! How can I help you today?",
+      "timestamp": "2026-02-05T10:00:05Z"
+    }
+  ],
+  "toolResults": [
+    {
+      "id": "tool_1",
+      "name": "read",
+      "result": "file contents..."
+    }
+  ]
+}
+```
+
+### Metadata File (`.meta`)
+
+```json
+{
+  "sessionKey": "agent:default:+1234567890",
+  "agentId": "default",
+  "peer": "+1234567890",
+  "channel": "whatsapp",
+  "created": "2026-02-01T08:00:00Z",
+  "lastUpdated": "2026-02-05T10:00:05Z",
+  "messageCount": 42,
+  "compactionCount": 2
+}
+```
+
+## Context Window Management
+
+### Token Limits
+
+LLM providers have context limits:
+
+| Provider | Typical Limit |
+|----------|---------------|
+| Gemini 3 | 1M tokens |
+| Claude | 200K tokens |
+| GPT-4 | 128K tokens |
+
+OpenClaw tracks usage and manages accordingly.
+
+### Compaction
+
+When sessions grow too large, compaction reduces size while preserving context:
+
+```
+Original History (50K tokens)
+        ↓
+Summarization (compress old messages)
+        ↓
+Compacted History (15K tokens) + Summary
+```
+
+Configure compaction:
+
+```json
+{
+  "agents": {
+    "defaults": {
+      "compaction": {
+        "reserveTokensFloor": 20000,
+        "softThreshold": 0.7,
+        "hardThreshold": 0.9
+      }
+    }
+  }
+}
+```
+
+| Setting | Description |
+|---------|-------------|
+| `reserveTokensFloor` | Minimum tokens to keep for new content |
+| `softThreshold` | Trigger memory flush (% of limit) |
+| `hardThreshold` | Trigger compaction (% of limit) |
+
+### Memory Flush
+
+Before compaction, important information is saved:
+
+```
+Session → Extract learnings → MEMORY.md
+                           → memory/YYYY-MM-DD.md
+```
+
+## Session Commands
+
+### View Sessions
+
+```bash
+# List all sessions
+openclaw sessions list
+
+# List sessions for specific agent
+openclaw sessions list --agent default
+```
+
+### Inspect Session
+
+```bash
+# View session details
+openclaw sessions get agent:default:+1234567890
+
+# View recent messages
+openclaw sessions messages agent:default:+1234567890 --limit 10
+```
+
+### Reset Session
+
+```bash
+# Clear session history
+openclaw sessions reset agent:default:+1234567890
+
+# Reset all sessions for an agent
+openclaw sessions reset --agent default --all
+```
+
+<Callout title="Data Loss" type="warn">
+  Resetting sessions permanently deletes conversation history. This cannot be undone.
+</Callout>
+
+### Export Session
+
+```bash
+# Export to JSON
+openclaw sessions export agent:default:+1234567890 > session.json
+
+# Export as readable text
+openclaw sessions export agent:default:+1234567890 --format text
+```
+
+## Session Isolation
+
+Each session is isolated:
+
+- **Per User**: Different users have different sessions
+- **Per Agent**: Same user with different agents has different sessions
+- **Per Account**: Multiple channel accounts maintain separate sessions
+
+```
+User A → WhatsApp → Agent: default → Session 1
+User A → Discord  → Agent: default → Session 2 (different!)
+User A → WhatsApp → Agent: coding  → Session 3 (different!)
+```
+
+## Session Persistence
+
+### Write Behavior
+
+Sessions are written after each agent turn:
+
+1. **Atomic Write**: Write to temp file, then rename
+2. **Backup**: Previous version kept as `.bak`
+3. **Immediate**: No batching, ensures durability
+
+### File Locking
+
+OpenClaw uses file locks to prevent concurrent modifications:
+
+```
+Session Write → Acquire Lock → Write → Release Lock
+```
+
+## Session Cleanup
+
+### Automatic Cleanup
+
+Old sessions can be automatically archived:
+
+```json
+{
+  "agents": {
+    "defaults": {
+      "sessions": {
+        "maxAgeDays": 90,
+        "archiveInactive": true
+      }
+    }
+  }
+}
+```
+
+### Manual Cleanup
+
+```bash
+# Delete old sessions
+openclaw sessions prune --older-than 90d
+
+# Archive inactive sessions
+openclaw sessions archive --inactive-days 30
+```
+
+## Troubleshooting
+
+| Issue | Solution |
+|-------|----------|
+| Session not loading | Check file permissions, verify path |
+| Context too long | Enable compaction, reset session |
+| Lost conversation | Check backup files (`.bak`) |
+| Wrong agent responding | Check routing bindings |
+
+## Next Steps
+
+<Cards>
+  <Card href="/docs/openclaw/concepts/gateway" title="Gateway" icon="Server">
+    Understand the control plane
+  </Card>
+  <Card href="/docs/openclaw/operations/troubleshooting" title="Troubleshooting" icon="AlertCircle">
+    Solve common issues
+  </Card>
+</Cards>

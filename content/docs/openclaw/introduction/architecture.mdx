@@ -1,0 +1,224 @@
+---
+title: System Architecture
+description: Understanding OpenClaw's gateway-centric, plugin-based architecture
+icon: Layers
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Card, Cards } from 'fumadocs-ui/components/card';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
+# System Architecture
+
+OpenClaw follows a **gateway-centric architecture** where all messaging platforms connect through a unified WebSocket-based control plane. This design enables consistent message handling, centralized configuration, and easy extensibility.
+
+## High-Level Architecture Diagram
+
+<img src="/diagrams/openclaw-architecture.svg" alt="OpenClaw Discord-to-Gemini Architecture" style={{width: '100%', maxWidth: '1200px', margin: '20px 0'}} />
+
+The diagram above illustrates the complete system architecture for the Discord-to-Gemini pathway, showing the flow of messages from Discord clients through the containerized gateway to the Gemini API, including all intermediate processing components.
+
+## Architecture Layers
+
+### External Platforms Layer
+
+The leftmost layer represents the messaging platforms that users interact with:
+
+| Platform | Integration Library | Connection Type |
+|----------|---------------------|-----------------|
+| WhatsApp | Baileys | WebSocket (WA Web Protocol) |
+| Telegram | grammY | Polling/Webhook |
+| Discord | discord.js | WebSocket Gateway |
+| Slack | Bolt | Events API |
+| Signal | Native | Signal Protocol |
+| iMessage | BlueBubbles | HTTP Bridge |
+
+Each platform has unique authentication requirements and message formats, but OpenClaw normalizes these differences internally.
+
+### Gateway Container Layer
+
+The central Docker container runs several interconnected services:
+
+#### Gateway Server
+The core WebSocket + HTTP server that:
+- Listens on **port 18789** for WebSocket connections
+- Provides the HTTP Control UI for management
+- Validates authentication tokens
+- Routes messages between components
+
+#### Channel Connectors
+Plugin-based adapters that:
+- Connect to external platform APIs
+- Transform platform-specific messages to internal format
+- Handle authentication and reconnection
+- Route outbound responses back to platforms
+
+#### Message Router
+The routing engine that:
+- Matches incoming messages to agent bindings
+- Supports pattern-based routing (channel, peer, account)
+- Manages message queues per session
+
+#### Agent Runtime
+Powered by `pi-agent-core`, the runtime:
+- Manages agent state and conversation context
+- Interfaces with LLM providers
+- Executes tools and skills
+- Handles streaming responses
+
+#### Supporting Services
+
+| Service | Purpose |
+|---------|---------|
+| **Session Manager** | Persists conversation history |
+| **Control UI** | Web dashboard for monitoring |
+| **Canvas Host** | File server on port 18793 |
+| **Browser Service** | Playwright-based web automation |
+| **Tools & Skills** | Extensible capability system |
+
+### LLM Providers Layer
+
+OpenClaw supports multiple LLM providers with automatic failover:
+
+- **Google Gemini** — Default recommendation for cost-effectiveness
+- **Anthropic Claude** — Superior reasoning capabilities
+- **OpenAI GPT** — Broad model selection
+- **Local (Ollama)** — Complete privacy with local inference
+
+<Callout title="Provider Failover" type="info">
+  Configure multiple providers as fallbacks. If your primary provider fails, OpenClaw automatically switches to the next available provider.
+</Callout>
+
+### Persistent Storage Layer
+
+All state is stored in the `~/.openclaw` directory:
+
+```
+~/.openclaw/
+├── openclaw.json          # Main configuration
+├── openclaw.json.bak      # Automatic backup
+├── agents/                # Per-agent state
+│   └── <agentId>/
+│       ├── agent/         # Agent-specific config
+│       └── sessions/      # Chat history (JSON)
+├── canvas/                # Canvas file server root
+├── cron/                  # Scheduled task definitions
+├── identity/              # Device identity keys
+└── workspace/             # Default agent workspace
+    ├── AGENTS.md          # Agent persona definition
+    ├── SOUL.md            # Agent personality
+    └── USER.md            # User preferences
+```
+
+## Message Processing Sequence
+
+<img src="/diagrams/openclaw-sequence.svg" alt="Message Processing Sequence" style={{width: '100%', maxWidth: '1100px', margin: '20px 0'}} />
+
+The sequence diagram above illustrates the complete message processing flow from user input to response delivery:
+
+| Step | Component | Action |
+|------|-----------|--------|
+| 1-2 | Discord → Monitor | User sends message via Discord, received through WebSocket |
+| 3-4 | Monitor → Access Control | Sender validated against allowlist and pairing status |
+| 5 | Access Control → Agent | Message forwarded to Agent Engine for processing |
+| 6-8 | Agent → Gemini API | Request constructed and sent to LLM provider |
+| 9-12 | Gemini → Discord | Response flows back and delivered to user |
+
+### Latency Analysis
+
+| Component | Typical Latency |
+|-----------|----------------|
+| Discord WebSocket | 30-100ms |
+| Access Control | Under 10ms |
+| Agent Processing | 10-50ms |
+| Gemini API (Flash) | 500-2000ms |
+| Response Formatting | Under 20ms |
+| **Total Round-Trip** | **600-2200ms** |
+
+## Configuration & Data Flow
+
+<img src="/diagrams/openclaw-dataflow.svg" alt="Configuration Data Flow" style={{width: '100%', maxWidth: '1100px', margin: '20px 0'}} />
+
+This diagram illustrates how configuration files, environment variables, and source code modules interact to enable the Discord-Gemini communication pathway.
+
+### Configuration File Structure
+
+```json
+{
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "google/gemini-3-flash-preview"
+      },
+      "maxConcurrent": 4,
+      "workspace": "/home/node/.openclaw/workspace"
+    }
+  },
+  "channels": {
+    "discord": {
+      "enabled": true,
+      "token": "BOT_TOKEN_HERE",
+      "groupPolicy": "open"
+    }
+  },
+  "gateway": {
+    "port": 18789,
+    "auth": {
+      "mode": "token",
+      "token": "GATEWAY_TOKEN"
+    }
+  }
+}
+```
+
+## Port Configuration
+
+| Port | Protocol | Purpose |
+|------|----------|---------|
+| **18789** | WebSocket/HTTP | Gateway control plane + Control UI |
+| **18790** | TCP | Bridge protocol (legacy) |
+| **18793** | HTTP | Canvas file server |
+
+## Component Communication
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                     Docker Compose Stack                        │
+├─────────────────────────────────────────────────────────────────┤
+│  ┌─────────────────────────┐   ┌─────────────────────────────┐  │
+│  │   openclaw-gateway      │   │      openclaw-cli           │  │
+│  │   (Main Service)        │   │   (Utility Container)       │  │
+│  │                         │   │                             │  │
+│  │  - WebSocket Server     │   │  - Provider Login           │  │
+│  │  - HTTP Control UI      │   │  - Configuration            │  │
+│  │  - Channel Connectors   │   │  - Health Checks            │  │
+│  │  - Agent Orchestration  │   │  - Diagnostics              │  │
+│  └─────────────────────────┘   └─────────────────────────────┘  │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+The deployment consists of two Docker services:
+- **openclaw-gateway** — Always-running main service
+- **openclaw-cli** — On-demand utility container for management tasks
+
+## Technology Stack
+
+| Component | Technology |
+|-----------|------------|
+| **Language** | TypeScript (ES2023 + NodeNext) |
+| **Runtime** | Node.js 22+ |
+| **Package Manager** | pnpm |
+| **Agent Core** | @mariozechner/pi-agent-core |
+| **Schema Validation** | TypeBox + AJV |
+| **Build Tool** | esbuild |
+
+## Next Steps
+
+<Cards>
+  <Card href="/docs/openclaw/introduction/quickstart" title="Quick Start" icon="Rocket">
+    Set up OpenClaw in 15 minutes
+  </Card>
+  <Card href="/docs/openclaw/concepts/message-flow" title="Message Flow" icon="GitBranch">
+    Understand how messages are processed
+  </Card>
+</Cards>

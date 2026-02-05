@@ -1,0 +1,316 @@
+---
+title: Agent Runtime
+description: Understanding agent configuration, routing, and execution
+icon: Bot
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Card, Cards } from 'fumadocs-ui/components/card';
+
+# Agent Runtime
+
+The agent runtime is the component that executes AI interactions, managing the conversation loop between users, LLM providers, and tools. OpenClaw supports multiple concurrent agents with different configurations.
+
+## Agent Architecture
+
+```
+┌────────────────────────────────────────────────────────────────┐
+│                       Agent Runtime                            │
+├────────────────────────────────────────────────────────────────┤
+│                                                                │
+│  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐        │
+│  │   Context   │    │    Model    │    │    Tool     │        │
+│  │  Assembler  │───>│  Interface  │───>│  Executor   │        │
+│  └─────────────┘    └─────────────┘    └─────────────┘        │
+│         │                  │                  │                │
+│         └──────────────────┼──────────────────┘                │
+│                            ▼                                   │
+│                  ┌─────────────────┐                          │
+│                  │ Session Manager │                          │
+│                  └─────────────────┘                          │
+│                                                                │
+└────────────────────────────────────────────────────────────────┘
+```
+
+## Multi-Agent Configuration
+
+OpenClaw supports multiple agents, each with its own:
+- Persona and personality
+- Model configuration
+- Tool permissions
+- Workspace
+
+### Defining Agents
+
+In `openclaw.json`:
+
+```json
+{
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "google/gemini-3-flash-preview"
+      }
+    },
+    "list": [
+      {
+        "id": "default",
+        "name": "Default Agent",
+        "workspace": "~/.openclaw/workspace"
+      },
+      {
+        "id": "coding-assistant",
+        "name": "Coding Assistant",
+        "workspace": "~/.openclaw/agents/coding-assistant",
+        "model": {
+          "primary": "anthropic/claude-sonnet"
+        }
+      }
+    ]
+  }
+}
+```
+
+## Agent Routing
+
+Messages are routed to agents based on bindings:
+
+```json
+{
+  "agents": {
+    "bindings": [
+      {
+        "agentId": "coding-assistant",
+        "match": {
+          "channel": "discord",
+          "peer": "dev-channel"
+        }
+      },
+      {
+        "agentId": "support-bot",
+        "match": {
+          "channel": "slack",
+          "account": "support-workspace"
+        }
+      },
+      {
+        "agentId": "default",
+        "match": {}
+      }
+    ]
+  }
+}
+```
+
+### Routing Priority
+
+Bindings are evaluated in order:
+1. First matching binding wins
+2. More specific matches should come first
+3. Default (empty match) should be last
+
+### Match Fields
+
+| Field | Description | Example |
+|-------|-------------|---------|
+| `channel` | Messaging platform | `"whatsapp"`, `"telegram"` |
+| `peer` | Specific user or group | `"+1234567890"`, `"#general"` |
+| `account` | Channel account ID | `"work-slack"` |
+
+## Agent Execution Loop
+
+When a message arrives:
+
+```
+1. Route to agent based on bindings
+2. Load agent configuration
+3. Load session history
+4. Assemble context (system prompt + history + user message)
+5. Call LLM provider
+6. If tool calls: execute tools and loop back to step 5
+7. Stream/return response
+8. Persist session
+```
+
+### Tool Execution
+
+Agents can execute tools during their response:
+
+```typescript
+// Tool call from LLM
+{
+  "type": "tool_use",
+  "name": "read",
+  "input": { "path": "/home/user/file.txt" }
+}
+
+// Tool result
+{
+  "type": "tool_result",
+  "content": "file contents..."
+}
+```
+
+### Tool Policy
+
+Configure which tools agents can use:
+
+```json
+{
+  "agents": {
+    "defaults": {
+      "tools": {
+        "allowed": ["read", "write", "exec"],
+        "denied": ["browser"]
+      }
+    }
+  }
+}
+```
+
+<Callout title="Security" type="warn">
+  Be careful with tools like `exec` and `write`. Consider sandboxing for untrusted inputs.
+</Callout>
+
+## Sandbox Modes
+
+Control agent isolation:
+
+| Mode | Description |
+|------|-------------|
+| `none` | Full host access (default) |
+| `jailed` | Workspace-only filesystem access |
+| `strict` | Container/pod isolation |
+
+```bash
+openclaw config set agents.defaults.sandbox.mode "jailed"
+```
+
+## Agent State
+
+Each agent maintains:
+
+### Workspace
+```
+~/.openclaw/agents/<agentId>/
+├── agent/
+│   ├── AGENTS.md
+│   ├── SOUL.md
+│   └── USER.md
+└── sessions/
+    ├── <session1>.json
+    └── <session2>.json
+```
+
+### Session
+Per-conversation state including:
+- Message history
+- Tool call results
+- Compaction summaries
+- Metadata (timestamps, message count)
+
+### Memory
+Persistent learnings:
+- `MEMORY.md` — Curated long-term memory
+- `memory/YYYY-MM-DD.md` — Daily logs
+
+## Model Configuration
+
+### Primary Model
+
+```bash
+openclaw config set agents.defaults.model.primary "anthropic/claude-sonnet"
+```
+
+### Fallback Models
+
+```bash
+openclaw models fallbacks add "google/gemini-3-flash-preview"
+openclaw models fallbacks add "openai/gpt-4"
+```
+
+### Model Selection Per Agent
+
+```json
+{
+  "agents": {
+    "list": [
+      {
+        "id": "premium-agent",
+        "model": {
+          "primary": "anthropic/claude-opus",
+          "fallbacks": []
+        }
+      }
+    ]
+  }
+}
+```
+
+## Timeouts
+
+Configure execution limits:
+
+```json
+{
+  "agents": {
+    "defaults": {
+      "timeoutSeconds": 600,
+      "toolTimeoutSeconds": 30
+    }
+  }
+}
+```
+
+## Streaming
+
+Control response streaming:
+
+```json
+{
+  "agents": {
+    "defaults": {
+      "blockStreamingDefault": "partial",
+      "blockStreamingBreak": "text_end"
+    }
+  }
+}
+```
+
+| Mode | Behavior |
+|------|----------|
+| `off` | Wait for complete response |
+| `partial` | Stream per block/paragraph |
+| `full` | Stream all deltas |
+
+## Debugging Agents
+
+### Enable Verbose Mode
+
+```bash
+openclaw gateway --verbose
+```
+
+### Check Agent Status
+
+```bash
+openclaw agents list
+openclaw agents status default
+```
+
+### Test Agent Directly
+
+```bash
+openclaw agent --message "Hello" --agent-id default
+```
+
+## Next Steps
+
+<Cards>
+  <Card href="/docs/openclaw/concepts/sessions" title="Sessions" icon="History">
+    Understand session persistence
+  </Card>
+  <Card href="/docs/openclaw/plugins" title="Extend Agents" icon="Puzzle">
+    Add custom skills and tools
+  </Card>
+</Cards>

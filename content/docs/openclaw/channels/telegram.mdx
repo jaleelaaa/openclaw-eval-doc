@@ -1,0 +1,202 @@
+---
+title: Telegram
+description: Configure Telegram bot integration with grammY
+icon: Send
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Card, Cards } from 'fumadocs-ui/components/card';
+
+# Telegram Integration
+
+Telegram integration uses the grammY library to connect through the official Telegram Bot API. This provides a reliable, officially supported way to build AI assistants on Telegram.
+
+## Prerequisites
+
+- A Telegram account
+- Access to [@BotFather](https://t.me/botfather)
+- OpenClaw gateway running
+
+## Create a Telegram Bot
+
+### Step 1: Talk to BotFather
+
+1. Open Telegram and search for [@BotFather](https://t.me/botfather)
+2. Start a chat and send `/newbot`
+3. Follow the prompts:
+   - Enter a **display name** for your bot
+   - Enter a **username** (must end in `bot`, e.g., `MyAssistantBot`)
+
+### Step 2: Get Your Bot Token
+
+BotFather will provide a token like:
+```
+123456789:ABCdefGHIjklMNOpqrsTUVwxyz
+```
+
+<Callout title="Token Security" type="warn">
+  Keep your bot token secret! Anyone with this token can control your bot.
+</Callout>
+
+### Step 3: Add Token to OpenClaw
+
+```bash
+# Via CLI
+openclaw providers add --provider telegram --token "123456789:ABCdefGHIjklMNOpqrsTUVwxyz"
+
+# Or via environment variable
+export TELEGRAM_BOT_TOKEN="123456789:ABCdefGHIjklMNOpqrsTUVwxyz"
+```
+
+### Step 4: Verify Connection
+
+```bash
+openclaw channels status
+```
+
+Expected output:
+```json
+{
+  "channels": {
+    "telegram": "connected"
+  }
+}
+```
+
+## Configuration
+
+### Enable/Disable Telegram
+
+```bash
+# Enable
+openclaw config set channels.telegram.enabled true
+
+# Disable
+openclaw config set channels.telegram.enabled false
+```
+
+### DM Policy
+
+```bash
+# Require pairing
+openclaw config set channels.telegram.dmPolicy "pairing"
+
+# Allow specific users (by user ID or username)
+openclaw config set channels.telegram.dmPolicy "allowlist"
+openclaw config set channels.telegram.allowFrom '["123456789", "username"]'
+
+# Allow anyone
+openclaw config set channels.telegram.dmPolicy "open"
+```
+
+### Group Configuration
+
+```bash
+# Enable group messages
+openclaw config set channels.telegram.groups.enabled true
+
+# Only respond when mentioned (@botname)
+openclaw config set channels.telegram.groups.mentionOnly true
+
+# Respond to all group messages
+openclaw config set channels.telegram.groups.mentionOnly false
+```
+
+## Bot Commands
+
+Set up slash commands for your bot:
+
+### Via BotFather
+
+1. Open [@BotFather](https://t.me/botfather)
+2. Send `/setcommands`
+3. Select your bot
+4. Send command list:
+```
+start - Start the bot
+help - Show help message
+reset - Reset conversation
+```
+
+### Via OpenClaw
+
+Commands are handled automatically based on your agent configuration.
+
+## Features
+
+| Feature | Supported |
+|---------|-----------|
+| Text messages | ✅ |
+| Images | ✅ |
+| Documents | ✅ |
+| Voice messages | ✅ |
+| Video | ✅ |
+| Inline queries | ✅ |
+| Slash commands | ✅ |
+| Groups/Supergroups | ✅ |
+| Channels | ⚠️ (partial) |
+| Reactions | ✅ |
+| Reply threads | ✅ |
+
+## Webhook vs Polling
+
+OpenClaw supports both connection methods:
+
+### Polling (Default)
+```bash
+# Uses long polling - simpler, works everywhere
+openclaw config set channels.telegram.mode "polling"
+```
+
+### Webhook
+```bash
+# Requires public URL with HTTPS
+openclaw config set channels.telegram.mode "webhook"
+openclaw config set channels.telegram.webhookUrl "https://your-domain.com/telegram/webhook"
+```
+
+<Callout title="Webhook Requirements" type="info">
+  Webhooks require a publicly accessible HTTPS endpoint. Use a tunnel service like ngrok for development.
+</Callout>
+
+## Troubleshooting
+
+| Issue | Solution |
+|-------|----------|
+| Bot not responding | Check token is correct, gateway is running |
+| "Unauthorized" error | Token is invalid; get a new one from BotFather |
+| Can't message bot | Start a chat with `/start` first |
+| Group messages not working | Check group settings, ensure bot has permissions |
+| Rate limited | Telegram has limits; slow down message frequency |
+
+### Regenerate Token
+
+If your token is compromised:
+
+1. Go to [@BotFather](https://t.me/botfather)
+2. Send `/revoke`
+3. Select your bot
+4. Copy the new token
+5. Update OpenClaw configuration
+
+## Bot Settings via BotFather
+
+| Command | Purpose |
+|---------|---------|
+| `/setname` | Change bot display name |
+| `/setdescription` | Set bot description (shown on profile) |
+| `/setabouttext` | Set "About" text |
+| `/setuserpic` | Set bot profile picture |
+| `/setcommands` | Configure slash commands |
+| `/setprivacy` | Toggle group privacy mode |
+
+## Next Steps
+
+<Cards>
+  <Card href="/docs/openclaw/channels/discord" title="Add Discord" icon="Hash">
+    Connect a Discord bot
+  </Card>
+  <Card href="/docs/openclaw/concepts/message-flow" title="Message Flow" icon="GitBranch">
+    Understand how messages are processed
+  </Card>
+</Cards>

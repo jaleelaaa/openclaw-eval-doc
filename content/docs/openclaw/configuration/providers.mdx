@@ -1,0 +1,250 @@
+---
+title: LLM Provider Setup
+description: Configure Anthropic, Google, OpenAI, and local LLM providers
+icon: Brain
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+import { Card, Cards } from 'fumadocs-ui/components/card';
+
+# LLM Provider Setup
+
+OpenClaw supports multiple LLM providers, allowing you to choose based on cost, capability, or privacy requirements. This guide covers setting up each supported provider.
+
+## Supported Providers
+
+| Provider | Models | Best For |
+|----------|--------|----------|
+| **Google Gemini** | gemini-3-flash, gemini-3-pro | Cost-effective, generous free tier |
+| **Anthropic Claude** | claude-sonnet, claude-opus | Superior reasoning, long context |
+| **OpenAI** | gpt-4, gpt-4-turbo | Broad capabilities, ecosystem |
+| **Ollama** | llama3, mistral, etc. | Privacy, local inference |
+| **OpenRouter** | Multiple providers | Single API, provider switching |
+
+## Provider Configuration
+
+<Tabs items={['Google Gemini', 'Anthropic Claude', 'OpenAI', 'Ollama', 'OpenRouter']}>
+  <Tab value="Google Gemini">
+    **Recommended for getting started** — generous free tier and fast responses.
+
+    ### Get API Key
+    1. Visit [Google AI Studio](https://makersuite.google.com/app/apikey)
+    2. Click "Create API Key"
+    3. Copy the generated key
+
+    ### Configure
+    ```bash
+    # Set environment variable
+    export GOOGLE_API_KEY="your-api-key"
+
+    # Set as default model
+    openclaw config set agents.defaults.model.primary "google/gemini-3-flash-preview"
+    ```
+
+    ### Available Models
+    | Model | Context | Best For |
+    |-------|---------|----------|
+    | `google/gemini-3-flash-preview` | 1M tokens | Fast, cost-effective |
+    | `google/gemini-3-pro` | 1M tokens | Complex reasoning |
+    | `google/gemini-3-ultra` | 1M tokens | Most capable |
+  </Tab>
+
+  <Tab value="Anthropic Claude">
+    **Best reasoning capabilities** — ideal for complex tasks.
+
+    ### Get API Key
+    1. Visit [Anthropic Console](https://console.anthropic.com/)
+    2. Navigate to API Keys
+    3. Create a new key
+
+    ### Configure
+    ```bash
+    # Set environment variable
+    export ANTHROPIC_API_KEY="sk-ant-..."
+
+    # Set as default model
+    openclaw config set agents.defaults.model.primary "anthropic/claude-sonnet"
+    ```
+
+    ### Available Models
+    | Model | Context | Best For |
+    |-------|---------|----------|
+    | `anthropic/claude-sonnet` | 200K tokens | Balanced performance |
+    | `anthropic/claude-opus` | 200K tokens | Most capable |
+    | `anthropic/claude-haiku` | 200K tokens | Fast, economical |
+  </Tab>
+
+  <Tab value="OpenAI">
+    **Industry standard** — broad model selection and tooling.
+
+    ### Get API Key
+    1. Visit [OpenAI Platform](https://platform.openai.com/api-keys)
+    2. Create a new API key
+    3. Copy the key (shown only once)
+
+    ### Configure
+    ```bash
+    # Set environment variable
+    export OPENAI_API_KEY="sk-..."
+
+    # Set as default model
+    openclaw config set agents.defaults.model.primary "openai/gpt-4"
+    ```
+
+    ### Available Models
+    | Model | Context | Best For |
+    |-------|---------|----------|
+    | `openai/gpt-4` | 8K tokens | Complex tasks |
+    | `openai/gpt-4-turbo` | 128K tokens | Long context |
+    | `openai/gpt-4o` | 128K tokens | Latest, multimodal |
+  </Tab>
+
+  <Tab value="Ollama">
+    **Complete privacy** — run models locally on your hardware.
+
+    ### Install Ollama
+    ```bash
+    # macOS/Linux
+    curl -fsSL https://ollama.com/install.sh | sh
+
+    # Or download from https://ollama.com/download
+    ```
+
+    ### Pull a Model
+    ```bash
+    # Pull Llama 3 (8B parameters)
+    ollama pull llama3
+
+    # Or other models
+    ollama pull mistral
+    ollama pull codellama
+    ```
+
+    ### Start Ollama Service
+    ```bash
+    ollama serve
+    ```
+
+    ### Configure OpenClaw
+    ```bash
+    # No API key needed for local
+    openclaw config set agents.defaults.model.primary "ollama/llama3"
+    ```
+
+    <Callout title="Hardware Requirements" type="info">
+      Running local models requires significant RAM. Llama 3 8B needs ~8GB RAM; larger models need more.
+    </Callout>
+  </Tab>
+
+  <Tab value="OpenRouter">
+    **Multi-provider access** — single API for multiple providers.
+
+    ### Get API Key
+    1. Visit [OpenRouter](https://openrouter.ai/)
+    2. Create an account
+    3. Generate an API key
+
+    ### Configure
+    ```bash
+    # Set environment variable
+    export OPENROUTER_API_KEY="your-key"
+
+    # Set as default model (via OpenRouter)
+    openclaw config set agents.defaults.model.primary "openrouter/anthropic/claude-sonnet"
+    ```
+  </Tab>
+</Tabs>
+
+## Multi-Provider Failover
+
+Configure fallback providers for reliability:
+
+```bash
+# Set primary model
+openclaw config set agents.defaults.model.primary "google/gemini-3-flash-preview"
+
+# Add fallback models
+openclaw models fallbacks add "anthropic/claude-sonnet"
+openclaw models fallbacks add "openai/gpt-4"
+```
+
+When the primary provider fails, OpenClaw automatically switches to the next available provider.
+
+## Provider Management Commands
+
+```bash
+# List available models
+openclaw models list
+
+# Check current configuration
+openclaw models status
+
+# Set default model
+openclaw models set google/gemini-3-flash-preview
+
+# View provider status
+openclaw providers status
+```
+
+## Configuration File Example
+
+```json
+{
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "google/gemini-3-flash-preview",
+        "fallbacks": [
+          "anthropic/claude-sonnet",
+          "openai/gpt-4"
+        ]
+      }
+    }
+  },
+  "models": {
+    "providers": {
+      "custom-provider": {
+        "baseUrl": "https://api.example.com/v1",
+        "apiKey": "${CUSTOM_API_KEY}",
+        "api": "openai-completions"
+      }
+    }
+  }
+}
+```
+
+## Custom Provider Configuration
+
+Add custom OpenAI-compatible providers:
+
+```bash
+openclaw config set models.providers.custom-provider.baseUrl "https://api.example.com/v1"
+openclaw config set models.providers.custom-provider.apiKey "\${CUSTOM_API_KEY}"
+openclaw config set models.providers.custom-provider.api "openai-completions"
+```
+
+## Verifying Provider Setup
+
+```bash
+# Check health (includes model status)
+openclaw health --json
+
+# Test a specific provider
+openclaw agent --message "Hello" --model "google/gemini-3-flash-preview"
+```
+
+<Callout title="Cost Management" type="info">
+  Monitor your API usage through each provider's dashboard. Consider setting up billing alerts to avoid unexpected charges.
+</Callout>
+
+## Next Steps
+
+<Cards>
+  <Card href="/docs/openclaw/configuration/workspace" title="Agent Workspace" icon="Folder">
+    Configure agent personas and personalities
+  </Card>
+  <Card href="/docs/openclaw/channels" title="Connect Channels" icon="MessageSquare">
+    Link messaging platforms
+  </Card>
+</Cards>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <defs>
+    <style>
+      .title { font: bold 24px Arial, sans-serif; fill: #1a1a2e; }
+      .subtitle { font: bold 14px Arial, sans-serif; fill: #16213e; }
+      .label { font: bold 12px Arial, sans-serif; fill: #ffffff; }
+      .label-dark { font: bold 12px Arial, sans-serif; fill: #1a1a2e; }
+      .small-label { font: bold 10px Arial, sans-serif; fill: #666; }
+      .arrow { stroke: #4a5568; stroke-width: 2; fill: none; marker-end: url(#arrowhead); }
+      .box-primary { fill: #3b82f6; stroke: #1d4ed8; stroke-width: 2; rx: 8; }
+      .box-secondary { fill: #10b981; stroke: #059669; stroke-width: 2; rx: 8; }
+      .box-accent { fill: #f59e0b; stroke: #d97706; stroke-width: 2; rx: 8; }
+      .box-light { fill: #f3f4f6; stroke: #d1d5db; stroke-width: 2; rx: 8; }
+      .connector { stroke: #6b7280; stroke-width: 2; stroke-dasharray: 5,5; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#4a5568"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="600" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="400" y="40" text-anchor="middle" class="title">OPENCLAW SKILL ARCHITECTURE</text>
+  <text x="400" y="60" text-anchor="middle" class="small-label">How skills process user requests through channels</text>
+
+  <!-- User Request Box -->
+  <rect x="250" y="80" width="300" height="60" class="box-primary"/>
+  <text x="400" y="105" text-anchor="middle" class="label">USER REQUEST</text>
+  <text x="400" y="125" text-anchor="middle" class="label">(Discord / Slack / WebChat / CLI)</text>
+
+  <!-- Arrow down -->
+  <line x1="400" y1="140" x2="400" y2="170" class="arrow"/>
+
+  <!-- Gateway Box -->
+  <rect x="200" y="180" width="400" height="80" class="box-secondary"/>
+  <text x="400" y="210" text-anchor="middle" class="label">OPENCLAW GATEWAY</text>
+  <text x="400" y="230" text-anchor="middle" class="label">(Skill Router &amp; Orchestrator)</text>
+  <text x="400" y="250" text-anchor="middle" class="label">ws://127.0.0.1:18789</text>
+
+  <!-- Arrow down to skills -->
+  <line x1="400" y1="260" x2="400" y2="290" class="arrow"/>
+
+  <!-- Skills Row -->
+  <rect x="50" y="310" width="140" height="100" class="box-accent"/>
+  <text x="120" y="345" text-anchor="middle" class="label">WEATHER</text>
+  <text x="120" y="365" text-anchor="middle" class="label">SKILL</text>
+  <text x="120" y="395" text-anchor="middle" style="font: bold 10px Arial; fill: #fff;">🟢 eligible</text>
+
+  <rect x="230" y="310" width="140" height="100" class="box-accent"/>
+  <text x="300" y="345" text-anchor="middle" class="label">GITHUB</text>
+  <text x="300" y="365" text-anchor="middle" class="label">SKILL</text>
+  <text x="300" y="395" text-anchor="middle" style="font: bold 10px Arial; fill: #fff;">🔴 blocked</text>
+
+  <rect x="410" y="310" width="140" height="100" class="box-accent"/>
+  <text x="480" y="345" text-anchor="middle" class="label">NOTION</text>
+  <text x="480" y="365" text-anchor="middle" class="label">SKILL</text>
+  <text x="480" y="395" text-anchor="middle" style="font: bold 10px Arial; fill: #fff;">🔴 blocked</text>
+
+  <rect x="590" y="310" width="140" height="100" class="box-accent"/>
+  <text x="660" y="345" text-anchor="middle" class="label">TRELLO</text>
+  <text x="660" y="365" text-anchor="middle" class="label">SKILL</text>
+  <text x="660" y="395" text-anchor="middle" style="font: bold 10px Arial; fill: #fff;">🔴 blocked</text>
+
+  <!-- Connecting lines from gateway to skills -->
+  <line x1="250" y1="290" x2="120" y2="310" class="connector"/>
+  <line x1="340" y1="290" x2="300" y2="310" class="connector"/>
+  <line x1="460" y1="290" x2="480" y2="310" class="connector"/>
+  <line x1="550" y1="290" x2="660" y2="310" class="connector"/>
+
+  <!-- External APIs Row -->
+  <rect x="50" y="450" width="140" height="60" class="box-light"/>
+  <text x="120" y="480" text-anchor="middle" class="label-dark">WEATHER</text>
+  <text x="120" y="498" text-anchor="middle" class="label-dark">API</text>
+
+  <rect x="230" y="450" width="140" height="60" class="box-light"/>
+  <text x="300" y="480" text-anchor="middle" class="label-dark">GITHUB</text>
+  <text x="300" y="498" text-anchor="middle" class="label-dark">API</text>
+
+  <rect x="410" y="450" width="140" height="60" class="box-light"/>
+  <text x="480" y="480" text-anchor="middle" class="label-dark">NOTION</text>
+  <text x="480" y="498" text-anchor="middle" class="label-dark">API</text>
+
+  <rect x="590" y="450" width="140" height="60" class="box-light"/>
+  <text x="660" y="480" text-anchor="middle" class="label-dark">TRELLO</text>
+  <text x="660" y="498" text-anchor="middle" class="label-dark">API</text>
+
+  <!-- Arrows from skills to APIs -->
+  <line x1="120" y1="410" x2="120" y2="450" class="arrow"/>
+  <line x1="300" y1="410" x2="300" y2="450" class="arrow"/>
+  <line x1="480" y1="410" x2="480" y2="450" class="arrow"/>
+  <line x1="660" y1="410" x2="660" y2="450" class="arrow"/>
+
+  <!-- Legend -->
+  <rect x="50" y="540" width="700" height="50" fill="#f9fafb" stroke="#e5e7eb" rx="4"/>
+  <text x="70" y="565" class="small-label">LEGEND:</text>
+  <rect x="140" y="553" width="15" height="15" fill="#3b82f6"/>
+  <text x="160" y="565" class="small-label">User/Gateway</text>
+  <rect x="260" y="553" width="15" height="15" fill="#10b981"/>
+  <text x="280" y="565" class="small-label">Gateway Core</text>
+  <rect x="380" y="553" width="15" height="15" fill="#f59e0b"/>
+  <text x="400" y="565" class="small-label">Skills</text>
+  <rect x="480" y="553" width="15" height="15" fill="#f3f4f6" stroke="#d1d5db"/>
+  <text x="500" y="565" class="small-label">External APIs</text>
+  <text x="620" y="565" class="small-label">🟢 Ready  🔴 Needs Setup</text>
+</svg>

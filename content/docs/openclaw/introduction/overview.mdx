@@ -1,0 +1,107 @@
+---
+title: What is OpenClaw?
+description: Overview of OpenClaw's capabilities as a personal AI assistant gateway
+icon: Info
+---
+
+import { Card, Cards } from 'fumadocs-ui/components/card';
+import { Callout } from 'fumadocs-ui/components/callout';
+
+# What is OpenClaw?
+
+OpenClaw is an **open-source, self-hosted AI agent gateway** that acts as a unified control plane for AI assistants across multiple messaging platforms. Instead of building separate integrations for each platform, OpenClaw provides a single point of connection where messages from WhatsApp, Telegram, Discord, Slack, and other channels flow through a central gateway to your chosen LLM provider.
+
+## The Problem OpenClaw Solves
+
+Building AI assistants that work across multiple platforms typically requires:
+
+- **Separate codebases** for each messaging platform
+- **Duplicated logic** for message handling and response generation
+- **Multiple deployments** to manage and maintain
+- **Scattered data** across different services
+- **Privacy concerns** with cloud-based solutions
+
+OpenClaw consolidates all of this into a single, self-hosted gateway.
+
+## Core Capabilities
+
+### Multi-Platform Messaging
+
+Connect your AI assistant to the platforms your users already use:
+
+| Platform | Library | Features |
+|----------|---------|----------|
+| **WhatsApp** | Baileys | Personal and business accounts, media support |
+| **Telegram** | grammY | Bots, groups, channels, inline queries |
+| **Discord** | discord.js | Servers, threads, slash commands |
+| **Slack** | Bolt | Workspaces, channels, direct messages |
+| **Signal** | Native | End-to-end encrypted messaging |
+| **iMessage** | BlueBubbles | macOS integration |
+
+### Multi-Model AI Support
+
+Choose from over 15 LLM providers:
+
+- **Google Gemini** — Fast, cost-effective with generous free tier
+- **Anthropic Claude** — Advanced reasoning and longer context windows
+- **OpenAI GPT** — Industry-standard models with broad capabilities
+- **Ollama** — Run models locally for complete privacy
+- **OpenRouter** — Access multiple providers through one API
+
+### Key Features
+
+<Cards>
+  <Card title="Privacy-First" icon="Shield">
+    Self-hosted means your conversations stay on your infrastructure
+  </Card>
+  <Card title="Hot-Reload Configuration" icon="RefreshCw">
+    Change settings without restarting—configuration changes apply instantly
+  </Card>
+  <Card title="Session Persistence" icon="Database">
+    Conversations are saved and can be resumed across restarts
+  </Card>
+  <Card title="Tool Execution" icon="Terminal">
+    Agents can execute tools, browse the web, and interact with external services
+  </Card>
+</Cards>
+
+## Use Cases
+
+OpenClaw is ideal for:
+
+- **Personal AI Assistants** — Your own AI companion across all your messaging apps
+- **Team Chatbots** — Deploy assistants for your organization's Slack or Discord
+- **Customer Support** — Automated responses with human-like understanding
+- **Development** — Build and test AI-powered applications locally
+- **Research** — Experiment with different LLM providers and configurations
+
+## How It Works
+
+At its core, OpenClaw follows a simple flow:
+
+```
+User Message → Channel Connector → Gateway Router → Agent Runtime → LLM Provider
+                                                           ↓
+User Response ← Channel Connector ← Gateway Router ← Agent Response
+```
+
+1. **Messages arrive** through platform-specific channel connectors
+2. **Gateway routes** messages to the appropriate agent based on configuration
+3. **Agent runtime** processes the message with context and tools
+4. **LLM provider** generates a response
+5. **Response flows back** through the gateway to the original platform
+
+<Callout title="Learn More" type="info">
+  For a detailed breakdown of the architecture, see the [System Architecture](/docs/openclaw/introduction/architecture) page. To understand message processing, check out [Message Flow](/docs/openclaw/concepts/message-flow).
+</Callout>
+
+## Next Steps
+
+<Cards>
+  <Card href="/docs/openclaw/introduction/architecture" title="Architecture" icon="Layers">
+    Understand the components and how they connect
+  </Card>
+  <Card href="/docs/openclaw/introduction/quickstart" title="Quick Start" icon="Rocket">
+    Get OpenClaw running in 15 minutes
+  </Card>
+</Cards>

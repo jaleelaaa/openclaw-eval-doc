@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="650" viewBox="0 0 1000 650">
+  <defs>
+    <style type="text/css">
+      .title { font-family: Arial, Helvetica, sans-serif; font-size: 22px; font-weight: bold; fill: #333333; }
+      .subtitle { font-family: Arial, Helvetica, sans-serif; font-size: 12px; fill: #666666; }
+      .section-title { font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: bold; fill: #333333; }
+      .section-subtitle { font-family: Arial, Helvetica, sans-serif; font-size: 11px; fill: #666666; }
+      .component-title { font-family: Arial, Helvetica, sans-serif; font-size: 12px; font-weight: bold; fill: #ffffff; }
+      .component-text { font-family: Arial, Helvetica, sans-serif; font-size: 10px; fill: #ffffff; }
+      .principle-text { font-family: Arial, Helvetica, sans-serif; font-size: 10px; fill: #333333; }
+      .arrow-label { font-family: Arial, Helvetica, sans-serif; font-size: 10px; font-weight: bold; fill: #333333; }
+    </style>
+    <marker id="arrow-green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#388E3C"/>
+    </marker>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#1976D2"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1000" height="650" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="500" y="30" text-anchor="middle" class="title">OpenClaw Plugin Architecture</text>
+  <text x="500" y="55" text-anchor="middle" class="subtitle">Two-Layer SDK + Runtime Extensibility Model</text>
+
+  <!-- SDK Layer Box -->
+  <rect x="30" y="80" width="440" height="260" rx="10" fill="#E8F5E9" stroke="#388E3C" stroke-width="3"/>
+  <text x="250" y="105" text-anchor="middle" class="section-title">Plugin SDK</text>
+  <text x="250" y="122" text-anchor="middle" class="section-subtitle">Compile-time, Stable, Publishable</text>
+
+  <!-- SDK Components -->
+  <rect x="50" y="140" width="125" height="85" rx="6" fill="#388E3C" stroke="#1B5E20" stroke-width="2"/>
+  <text x="112" y="160" text-anchor="middle" class="component-title">Types</text>
+  <text x="112" y="178" text-anchor="middle" class="component-text">ChannelPlugin</text>
+  <text x="112" y="193" text-anchor="middle" class="component-text">ChannelMeta</text>
+  <text x="112" y="208" text-anchor="middle" class="component-text">ChannelCapabilities</text>
+
+  <rect x="185" y="140" width="135" height="85" rx="6" fill="#388E3C" stroke="#1B5E20" stroke-width="2"/>
+  <text x="252" y="160" text-anchor="middle" class="component-title">Config Helpers</text>
+  <text x="252" y="178" text-anchor="middle" class="component-text">buildConfigSchema</text>
+  <text x="252" y="193" text-anchor="middle" class="component-text">setAccountEnabled</text>
+  <text x="252" y="208" text-anchor="middle" class="component-text">applyAccountName</text>
+
+  <rect x="330" y="140" width="125" height="85" rx="6" fill="#388E3C" stroke="#1B5E20" stroke-width="2"/>
+  <text x="392" y="160" text-anchor="middle" class="component-title">Pairing Helpers</text>
+  <text x="392" y="178" text-anchor="middle" class="component-text">formatPairingHint</text>
+  <text x="392" y="193" text-anchor="middle" class="component-text">PAIRING_MESSAGE</text>
+
+  <rect x="50" y="240" width="125" height="80" rx="6" fill="#388E3C" stroke="#1B5E20" stroke-width="2"/>
+  <text x="112" y="260" text-anchor="middle" class="component-title">Onboarding</text>
+  <text x="112" y="278" text-anchor="middle" class="component-text">promptAccessConfig</text>
+  <text x="112" y="293" text-anchor="middle" class="component-text">addWildcardAllow</text>
+
+  <rect x="185" y="240" width="135" height="80" rx="6" fill="#388E3C" stroke="#1B5E20" stroke-width="2"/>
+  <text x="252" y="260" text-anchor="middle" class="component-title">Tool Params</text>
+  <text x="252" y="278" text-anchor="middle" class="component-text">readStringParam</text>
+  <text x="252" y="293" text-anchor="middle" class="component-text">readNumberParam</text>
+  <text x="252" y="308" text-anchor="middle" class="component-text">jsonResult</text>
+
+  <rect x="330" y="240" width="125" height="80" rx="6" fill="#388E3C" stroke="#1B5E20" stroke-width="2"/>
+  <text x="392" y="260" text-anchor="middle" class="component-title">Utilities</text>
+  <text x="392" y="278" text-anchor="middle" class="component-text">formatDocsLink</text>
+  <text x="392" y="293" text-anchor="middle" class="component-text">Validation</text>
+
+  <!-- Runtime Layer Box -->
+  <rect x="500" y="80" width="470" height="260" rx="10" fill="#E3F2FD" stroke="#1976D2" stroke-width="3"/>
+  <text x="735" y="105" text-anchor="middle" class="section-title">Plugin Runtime</text>
+  <text x="735" y="122" text-anchor="middle" class="section-subtitle">Execution Surface, Injected at Runtime</text>
+
+  <!-- Runtime Components -->
+  <rect x="520" y="140" width="130" height="80" rx="6" fill="#1976D2" stroke="#0D47A1" stroke-width="2"/>
+  <text x="585" y="160" text-anchor="middle" class="component-title">channel.text</text>
+  <text x="585" y="178" text-anchor="middle" class="component-text">chunkMarkdown</text>
+  <text x="585" y="193" text-anchor="middle" class="component-text">resolveChunkLimit</text>
+  <text x="585" y="208" text-anchor="middle" class="component-text">hasControlCommand</text>
+
+  <rect x="660" y="140" width="130" height="80" rx="6" fill="#1976D2" stroke="#0D47A1" stroke-width="2"/>
+  <text x="725" y="160" text-anchor="middle" class="component-title">channel.reply</text>
+  <text x="725" y="178" text-anchor="middle" class="component-text">dispatchReply</text>
+  <text x="725" y="193" text-anchor="middle" class="component-text">bufferedDispatcher</text>
+
+  <rect x="800" y="140" width="130" height="80" rx="6" fill="#1976D2" stroke="#0D47A1" stroke-width="2"/>
+  <text x="865" y="160" text-anchor="middle" class="component-title">channel.routing</text>
+  <text x="865" y="178" text-anchor="middle" class="component-text">resolveAgentRoute</text>
+
+  <rect x="520" y="235" width="130" height="85" rx="6" fill="#1976D2" stroke="#0D47A1" stroke-width="2"/>
+  <text x="585" y="255" text-anchor="middle" class="component-title">channel.pairing</text>
+  <text x="585" y="273" text-anchor="middle" class="component-text">buildPairingReply</text>
+  <text x="585" y="288" text-anchor="middle" class="component-text">readAllowFromStore</text>
+  <text x="585" y="303" text-anchor="middle" class="component-text">upsertPairingRequest</text>
+
+  <rect x="660" y="235" width="130" height="85" rx="6" fill="#1976D2" stroke="#0D47A1" stroke-width="2"/>
+  <text x="725" y="255" text-anchor="middle" class="component-title">channel.media</text>
+  <text x="725" y="273" text-anchor="middle" class="component-text">fetchRemoteMedia</text>
+  <text x="725" y="288" text-anchor="middle" class="component-text">saveMediaBuffer</text>
+
+  <rect x="800" y="235" width="130" height="85" rx="6" fill="#1976D2" stroke="#0D47A1" stroke-width="2"/>
+  <text x="865" y="255" text-anchor="middle" class="component-title">logging</text>
+  <text x="865" y="273" text-anchor="middle" class="component-text">getChildLogger</text>
+  <text x="865" y="288" text-anchor="middle" class="component-text">shouldLogVerbose</text>
+
+  <!-- Plugin Implementation Box -->
+  <rect x="190" y="380" width="600" height="190" rx="10" fill="#FFF3E0" stroke="#F57C00" stroke-width="3"/>
+  <text x="490" y="405" text-anchor="middle" class="section-title">Channel Plugin Implementation</text>
+  <text x="490" y="422" text-anchor="middle" class="section-subtitle">Example: Discord, Telegram, WhatsApp, Slack</text>
+
+  <!-- Plugin Components -->
+  <rect x="210" y="440" width="100" height="65" rx="6" fill="#F57C00" stroke="#E65100" stroke-width="2"/>
+  <text x="260" y="460" text-anchor="middle" class="component-title">channel.ts</text>
+  <text x="260" y="478" text-anchor="middle" class="component-text">implements</text>
+  <text x="260" y="493" text-anchor="middle" class="component-text">ChannelPlugin</text>
+
+  <rect x="320" y="440" width="100" height="65" rx="6" fill="#F57C00" stroke="#E65100" stroke-width="2"/>
+  <text x="370" y="460" text-anchor="middle" class="component-title">monitor.ts</text>
+  <text x="370" y="478" text-anchor="middle" class="component-text">Message handler</text>
+  <text x="370" y="493" text-anchor="middle" class="component-text">Event processing</text>
+
+  <rect x="430" y="440" width="100" height="65" rx="6" fill="#F57C00" stroke="#E65100" stroke-width="2"/>
+  <text x="480" y="458" text-anchor="middle" class="component-title">config-</text>
+  <text x="480" y="472" text-anchor="middle" class="component-title">schema.ts</text>
+  <text x="480" y="490" text-anchor="middle" class="component-text">TypeBox schema</text>
+
+  <rect x="540" y="440" width="100" height="65" rx="6" fill="#F57C00" stroke="#E65100" stroke-width="2"/>
+  <text x="590" y="458" text-anchor="middle" class="component-title">onboarding</text>
+  <text x="590" y="472" text-anchor="middle" class="component-title">.ts</text>
+  <text x="590" y="490" text-anchor="middle" class="component-text">Setup wizard</text>
+
+  <rect x="650" y="440" width="100" height="65" rx="6" fill="#F57C00" stroke="#E65100" stroke-width="2"/>
+  <text x="700" y="460" text-anchor="middle" class="component-title">runtime.ts</text>
+  <text x="700" y="478" text-anchor="middle" class="component-text">Lifecycle</text>
+  <text x="700" y="493" text-anchor="middle" class="component-text">Connection mgmt</text>
+
+  <!-- Plugin Manifest -->
+  <path d="M 210 520 L 210 555 L 350 555 L 350 530 L 340 520 Z" fill="#FFF9C4" stroke="#F57C00" stroke-width="2"/>
+  <path d="M 340 520 L 340 530 L 350 530" fill="none" stroke="#F57C00" stroke-width="1"/>
+  <text x="280" y="538" text-anchor="middle" style="font-family: Arial; font-size: 11px; font-weight: bold; fill: #333;">openclaw.plugin.json</text>
+  <text x="280" y="552" text-anchor="middle" style="font-family: Arial; font-size: 9px; fill: #666;">id, name, version, caps</text>
+
+  <!-- Arrows -->
+  <path d="M 112 225 Q 112 360 210 472" fill="none" stroke="#388E3C" stroke-width="2" stroke-dasharray="5,5" marker-end="url(#arrow-green)"/>
+  <text x="140" y="350" class="arrow-label">imports</text>
+
+  <path d="M 725 220 Q 725 360 370 440" fill="none" stroke="#1976D2" stroke-width="2" stroke-dasharray="5,5" marker-end="url(#arrow-blue)"/>
+  <text x="550" y="350" class="arrow-label">injected</text>
+
+  <!-- Key Principles Box -->
+  <rect x="30" y="400" width="140" height="170" rx="8" fill="#F3E5F5" stroke="#7B1FA2" stroke-width="2"/>
+  <text x="100" y="420" text-anchor="middle" class="section-title">Key Principles</text>
+  <text x="45" y="445" class="principle-text">1. No direct src/**</text>
+  <text x="55" y="458" class="principle-text">imports</text>
+  <text x="45" y="480" class="principle-text">2. SDK is stable API</text>
+  <text x="45" y="505" class="principle-text">3. Runtime is injected</text>
+  <text x="45" y="530" class="principle-text">4. Semver guarantees</text>
+  <text x="45" y="555" class="principle-text">5. TypeBox schemas</text>
+
+</svg>

@@ -1,0 +1,314 @@
+---
+title: Additional Skills
+description: Specialized HR and organizational skills for ODC management
+icon: Users
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
+# Additional Skills
+
+OpenClaw includes specialized skills designed for Offshore Development Center (ODC) management. These skills help streamline HR processes, employee onboarding, and interview management.
+
+## Overview
+
+| Skill | Purpose | Primary Users |
+|-------|---------|---------------|
+| **Onboarding** | Employee onboarding management | HR, Managers |
+| **HR-Interview** | Interview process management | HR, Hiring Managers, Interviewers |
+
+---
+
+## Onboarding Skill
+
+The Onboarding skill is an **Employee Onboarding Assistant** designed to help HR and managers efficiently onboard new employees. It provides checklists, welcome communications, and training schedules to streamline the onboarding process.
+
+### Skill Metadata
+
+```yaml
+name: onboarding
+emoji: "\U0001F680"  # Rocket emoji
+userInvocable: true
+always: true
+```
+
+### Capabilities
+
+<Tabs items={['Checklists', 'Communications', 'Training']}>
+  <Tab value="Checklists">
+    **Onboarding Checklists**
+    - Developer onboarding (tools, repos, environments)
+    - QA onboarding (test frameworks, access)
+    - Manager onboarding (team introductions, processes)
+    - Role-specific customized checklists
+  </Tab>
+  <Tab value="Communications">
+    **Welcome Communications**
+    - Welcome emails for new hires
+    - First day instructions
+    - Team introduction messages
+    - Manager introduction templates
+  </Tab>
+  <Tab value="Training">
+    **Training Schedules**
+    - Week 1 orientation plan
+    - 30-60-90 day goal setting
+    - Technical training roadmap
+    - Compliance training schedules
+  </Tab>
+</Tabs>
+
+### Onboarding Timeline
+
+The skill follows a structured onboarding timeline:
+
+#### Day 1 - Basics
+- Laptop and equipment setup
+- Email and Slack access
+- Building access / ID card
+- Meet the team introduction
+- HR paperwork completion
+
+#### Week 1 - Getting Started
+- Development environment setup
+- Repository access granted
+- Complete security training
+- Review project documentation
+- First 1:1 with manager
+
+#### Month 1 - Ramping Up
+- Complete all required training
+- First code commit / contribution
+- Understand team workflows
+- Set 90-day goals with manager
+
+### Available Commands
+
+| Request | Action |
+|---------|--------|
+| `Create onboarding checklist for [role]` | Generate role-specific checklist |
+| `Write welcome email for [name]` | Draft welcome communication |
+| `Create training schedule for [role]` | Build training plan |
+| `Generate 30-60-90 plan` | Create milestone goals |
+| `First day instructions for [name]` | Generate day-one guide |
+
+### Usage Examples
+
+```bash
+# Generate a developer onboarding checklist
+"Create an onboarding checklist for a new Senior Developer"
+
+# Write a welcome email
+"Write a welcome email for John Smith starting Monday"
+
+# Create a training schedule
+"Generate a 90-day training schedule for QA engineers"
+
+# Set up milestone goals
+"Create a 30-60-90 day plan for new DevOps hire"
+```
+
+<Callout title="Always Active" type="info">
+  The Onboarding skill is always enabled (`always: true`) and can be invoked at any time through natural language commands.
+</Callout>
+
+---
+
+## HR-Interview Skill
+
+The HR Interview Assistant is an **expert HR interviewing tool** that helps with all aspects of the interview process from preparation through candidate evaluation.
+
+### Skill Metadata
+
+```yaml
+name: hr-interview
+emoji: "\U0001F454"  # Necktie emoji
+userInvocable: true
+always: true
+```
+
+### Capabilities
+
+<Tabs items={['Preparation', 'During Interview', 'Post Interview']}>
+  <Tab value="Preparation">
+    **Interview Preparation**
+    - Generate role-specific interview questions (technical + behavioral)
+    - Create scoring rubrics and evaluation criteria
+    - Prepare interview schedules and agendas
+    - Build competency frameworks
+  </Tab>
+  <Tab value="During Interview">
+    **During Interview**
+    - Act as a mock interviewer for practice
+    - Provide real-time question suggestions
+    - Track candidate responses
+    - Guide structured interview flow
+  </Tab>
+  <Tab value="Post Interview">
+    **Post Interview**
+    - Generate structured feedback templates
+    - Summarize interview notes
+    - Create comparison matrices for multiple candidates
+    - Draft offer/rejection communications
+  </Tab>
+</Tabs>
+
+### Question Bank
+
+The skill includes a comprehensive question bank organized by category:
+
+#### Technical Roles (Developer, QA, DevOps)
+
+**Coding Skills:**
+- Explain your approach to debugging a complex issue
+- Describe a challenging technical problem you solved
+- How do you ensure code quality in your work?
+- Walk me through your code review process
+
+**System Design:**
+- How would you design a scalable API?
+- Explain microservices vs monolithic architecture
+- How do you handle database scaling?
+- Describe your approach to system reliability
+
+#### Behavioral Questions (All Roles)
+
+**Leadership:**
+- Tell me about a time you led a team through a difficult project
+- How do you handle conflicts within your team?
+- Describe your approach to mentoring junior developers
+
+**Problem Solving:**
+- Describe a situation where you had to make a quick decision
+- How do you prioritize when everything is urgent?
+- Tell me about a time you failed and what you learned
+
+### Scoring Rubric
+
+The skill generates standardized scoring rubrics:
+
+| Criteria | 1 (Poor) | 3 (Average) | 5 (Excellent) |
+|----------|----------|-------------|---------------|
+| Technical Skills | No experience | Meets requirements | Expert level |
+| Communication | Cannot articulate | Clear | Exceptional |
+| Problem Solving | No examples | Adequate | Outstanding |
+| Cultural Fit | Poor alignment | Acceptable | Perfect fit |
+| Leadership | No evidence | Some examples | Strong leader |
+
+### Available Commands
+
+| Request | Action |
+|---------|--------|
+| `Generate questions for [role]` | Create role-specific question list |
+| `Create rubric for [role]` | Generate scoring rubric |
+| `Mock interview for [role]` | Conduct practice interview |
+| `Summarize interview` | Create structured summary |
+| `Compare candidates` | Build comparison matrix |
+| `Draft offer letter` | Generate offer communication |
+| `Draft rejection email` | Generate polite rejection |
+
+### Usage Examples
+
+```bash
+# Generate interview questions
+"Generate interview questions for a Senior Developer position"
+
+# Create a scoring rubric
+"Create a scoring rubric for QA engineer interviews"
+
+# Conduct a mock interview
+"Let's do a mock interview for the DevOps role"
+
+# Compare candidates
+"Compare these three candidates and recommend the best fit"
+
+# Draft communications
+"Draft an offer letter for Sarah with a $120k salary"
+"Draft a polite rejection email for the candidate"
+```
+
+### Interview Workflow
+
+```
+┌─────────────────┐
+│   Preparation   │
+│  - Questions    │
+│  - Rubric       │
+│  - Schedule     │
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────┐
+│    Interview    │
+│  - Mock/Real    │
+│  - Track notes  │
+│  - Score        │
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────┐
+│   Evaluation    │
+│  - Summarize    │
+│  - Compare      │
+│  - Decide       │
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────┐
+│  Communication  │
+│  - Offer        │
+│  - Rejection    │
+└─────────────────┘
+```
+
+<Callout title="Mock Interview Mode" type="info">
+  The HR-Interview skill can act as a mock interviewer, asking questions and providing feedback to help candidates or interviewers practice.
+</Callout>
+
+---
+
+## Skill Comparison
+
+| Aspect | Onboarding | HR-Interview |
+|--------|-----------|---------------|
+| **Purpose** | Employee onboarding management | Interview process management |
+| **Emoji** | :rocket: | :necktie: |
+| **Primary Users** | HR, Managers | HR, Hiring Managers, Interviewers |
+| **Main Functions** | Checklists, communications, schedules | Preparation, execution, evaluation |
+| **Workflow Stage** | Post-hire | Pre-hire |
+| **Output Types** | Checklists, emails, training plans | Questions, rubrics, feedback, offers |
+| **Always Active** | Yes | Yes |
+
+## Integration with OpenClaw
+
+Both skills are fully integrated into the OpenClaw framework:
+
+- **Natural Language Invocation**: Simply describe what you need
+- **Context Awareness**: Skills understand the current conversation context
+- **Combinable**: Use multiple skills together in workflows
+- **Customizable**: Outputs can be tailored to your organization's needs
+
+### Example Combined Workflow
+
+```bash
+# Complete hiring workflow using both skills
+
+# 1. Prepare for interview (HR-Interview)
+"Generate interview questions for Senior Developer"
+
+# 2. Conduct interviews and evaluate
+"Create a comparison matrix for our 3 finalists"
+
+# 3. Make offer
+"Draft an offer letter for the selected candidate"
+
+# 4. Start onboarding (Onboarding)
+"Create an onboarding checklist for the new Senior Developer"
+"Write a welcome email for them starting next Monday"
+"Generate a 90-day training plan"
+```
+
+<Callout title="Seamless Workflow" type="info">
+  The HR-Interview and Onboarding skills work together to provide end-to-end coverage of the hiring and onboarding process.
+</Callout>

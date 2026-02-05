@@ -22,17 +22,6 @@
     <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
       <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.15"/>
     </filter>
-
-    <!-- Arrow markers -->
-    <marker id="arrowBlue" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
-      <path d="M0,0 L0,12 L12,6 Z" fill="#4F46E5"/>
-    </marker>
-    <marker id="arrowGreen" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
-      <path d="M0,0 L0,12 L12,6 Z" fill="#22C55E"/>
-    </marker>
-    <marker id="arrowRed" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
-      <path d="M0,0 L0,12 L12,6 Z" fill="#EF4444"/>
-    </marker>
   </defs>
 
   <!-- Background -->
@@ -68,7 +57,10 @@
   </g>
 
   <!-- Arrow 1 to 2 -->
-  <line x1="250" y1="180" x2="310" y2="180" stroke="#4F46E5" stroke-width="4" marker-end="url(#arrowBlue)"/>
+  <g transform="translate(250, 165)">
+    <line x1="0" y1="15" x2="50" y2="15" stroke="#4F46E5" stroke-width="4"/>
+    <polygon points="50,5 70,15 50,25" fill="#4F46E5"/>
+  </g>
 
   <!-- Phase 2: Interview -->
   <g transform="translate(330, 100)">
@@ -91,7 +83,10 @@
   </g>
 
   <!-- Arrow 2 to 3 -->
-  <line x1="520" y1="180" x2="580" y2="180" stroke="#4F46E5" stroke-width="4" marker-end="url(#arrowBlue)"/>
+  <g transform="translate(520, 165)">
+    <line x1="0" y1="15" x2="50" y2="15" stroke="#4F46E5" stroke-width="4"/>
+    <polygon points="50,5 70,15 50,25" fill="#4F46E5"/>
+  </g>
 
   <!-- Phase 3: Evaluation -->
   <g transform="translate(600, 100)">
@@ -112,10 +107,15 @@
   </g>
 
   <!-- Arrow 3 down to 4 -->
-  <path d="M 690 270 L 690 310 L 690 340 L 540 340 L 540 370" fill="none" stroke="#4F46E5" stroke-width="4" marker-end="url(#arrowBlue)"/>
+  <g>
+    <line x1="690" y1="270" x2="690" y2="320" stroke="#4F46E5" stroke-width="4"/>
+    <line x1="690" y1="320" x2="540" y2="320" stroke="#4F46E5" stroke-width="4"/>
+    <line x1="540" y1="320" x2="540" y2="370" stroke="#4F46E5" stroke-width="4"/>
+    <polygon points="530,370 540,395 550,370" fill="#4F46E5"/>
+  </g>
 
   <!-- Phase 4: Communication -->
-  <g transform="translate(450, 390)">
+  <g transform="translate(450, 400)">
     <rect x="0" y="0" width="180" height="160" rx="12" fill="url(#commGradient)" filter="url(#shadow)"/>
     <circle cx="22" cy="22" r="16" fill="#FFF" opacity="0.95"/>
     <text x="22" y="27" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#10B981">4</text>
@@ -133,75 +133,77 @@
     <text x="90" y="144" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#FFF" opacity="0.95">• Follow-up Actions</text>
   </g>
 
-  <!-- Arrow to Offer -->
-  <line x1="450" y1="470" x2="330" y2="470" stroke="#22C55E" stroke-width="4" marker-end="url(#arrowGreen)"/>
+  <!-- Arrow to Offer (left) -->
+  <g transform="translate(350, 475)">
+    <line x1="90" y1="5" x2="30" y2="5" stroke="#22C55E" stroke-width="4"/>
+    <polygon points="30,15 5,5 30,-5" fill="#22C55E"/>
+  </g>
 
   <!-- Offer box -->
-  <g transform="translate(150, 435)">
-    <rect x="0" y="0" width="160" height="70" rx="10" fill="#DCFCE7" stroke="#22C55E" stroke-width="3" filter="url(#shadow)"/>
-    <text x="80" y="32" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#166534">OFFER</text>
-    <text x="80" y="52" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#166534">Proceed to Onboarding</text>
+  <g transform="translate(150, 440)">
+    <rect x="0" y="0" width="170" height="80" rx="10" fill="#DCFCE7" stroke="#22C55E" stroke-width="3" filter="url(#shadow)"/>
+    <text x="85" y="35" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#166534">OFFER</text>
+    <text x="85" y="58" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#166534">Proceed to Onboarding</text>
   </g>
 
-  <!-- Arrow to Rejection -->
-  <line x1="630" y1="470" x2="750" y2="470" stroke="#EF4444" stroke-width="4" marker-end="url(#arrowRed)"/>
+  <!-- Arrow to Rejection (right) -->
+  <g transform="translate(640, 475)">
+    <line x1="0" y1="5" x2="60" y2="5" stroke="#EF4444" stroke-width="4"/>
+    <polygon points="60,-5 85,5 60,15" fill="#EF4444"/>
+  </g>
 
   <!-- Rejection box -->
-  <g transform="translate(770, 435)">
-    <rect x="0" y="0" width="160" height="70" rx="10" fill="#FEE2E2" stroke="#EF4444" stroke-width="3" filter="url(#shadow)"/>
-    <text x="80" y="32" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#991B1B">REJECTION</text>
-    <text x="80" y="52" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#991B1B">Talent Pool / Archive</text>
+  <g transform="translate(740, 440)">
+    <rect x="0" y="0" width="170" height="80" rx="10" fill="#FEE2E2" stroke="#EF4444" stroke-width="3" filter="url(#shadow)"/>
+    <text x="85" y="35" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#991B1B">REJECTION</text>
+    <text x="85" y="58" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#991B1B">Talent Pool / Archive</text>
   </g>
 
-  <!-- Key metrics panel - moved to bottom left -->
-  <g transform="translate(60, 530)">
-    <rect x="0" y="0" width="280" height="130" rx="10" fill="#FFF" stroke="#E2E8F0" stroke-width="2" filter="url(#shadow)"/>
+  <!-- Key metrics panel - bottom left -->
+  <g transform="translate(60, 550)">
+    <rect x="0" y="0" width="280" height="120" rx="10" fill="#FFF" stroke="#E2E8F0" stroke-width="2" filter="url(#shadow)"/>
     <text x="140" y="25" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1E293B">Key Metrics Tracked</text>
     <line x1="20" y1="38" x2="260" y2="38" stroke="#E2E8F0" stroke-width="1"/>
 
-    <g transform="translate(25, 52)">
+    <g transform="translate(25, 50)">
       <circle cx="8" cy="8" r="8" fill="#3B82F6"/>
       <text x="24" y="12" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#475569">Technical Skills Score</text>
     </g>
-    <g transform="translate(25, 74)">
+    <g transform="translate(25, 72)">
       <circle cx="8" cy="8" r="8" fill="#8B5CF6"/>
       <text x="24" y="12" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#475569">Communication Rating</text>
     </g>
-    <g transform="translate(25, 96)">
+    <g transform="translate(150, 50)">
       <circle cx="8" cy="8" r="8" fill="#F59E0B"/>
-      <text x="24" y="12" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#475569">Problem Solving Ability</text>
+      <text x="24" y="12" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#475569">Problem Solving</text>
     </g>
-    <g transform="translate(25, 118)">
+    <g transform="translate(150, 72)">
       <circle cx="8" cy="8" r="8" fill="#10B981"/>
-      <text x="24" y="12" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#475569">Cultural Fit Assessment</text>
+      <text x="24" y="12" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#475569">Cultural Fit</text>
     </g>
   </g>
 
-  <!-- Timeline panel - moved to bottom right -->
-  <g transform="translate(380, 530)">
-    <rect x="0" y="0" width="560" height="130" rx="10" fill="#FFF" stroke="#E2E8F0" stroke-width="2" filter="url(#shadow)"/>
+  <!-- Timeline panel - bottom right -->
+  <g transform="translate(380, 550)">
+    <rect x="0" y="0" width="560" height="120" rx="10" fill="#FFF" stroke="#E2E8F0" stroke-width="2" filter="url(#shadow)"/>
     <text x="280" y="25" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1E293B">Typical Interview Cycle Timeline</text>
     <line x1="20" y1="38" x2="540" y2="38" stroke="#E2E8F0" stroke-width="1"/>
 
     <!-- Timeline line -->
-    <line x1="50" y1="80" x2="510" y2="80" stroke="#CBD5E1" stroke-width="3"/>
+    <line x1="50" y1="75" x2="510" y2="75" stroke="#CBD5E1" stroke-width="3"/>
 
     <!-- Timeline points -->
-    <circle cx="80" cy="80" r="10" fill="#3B82F6"/>
-    <text x="80" y="105" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#3B82F6">Day 1-2</text>
-    <text x="80" y="118" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" font-weight="bold" fill="#64748B">Preparation</text>
+    <circle cx="80" cy="75" r="10" fill="#3B82F6"/>
+    <text x="80" y="98" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#3B82F6">Day 1-2</text>
 
-    <circle cx="210" cy="80" r="10" fill="#8B5CF6"/>
-    <text x="210" y="105" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#8B5CF6">Day 3-5</text>
-    <text x="210" y="118" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" font-weight="bold" fill="#64748B">Interview</text>
+    <circle cx="210" cy="75" r="10" fill="#8B5CF6"/>
+    <text x="210" y="98" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#8B5CF6">Day 3-5</text>
 
-    <circle cx="360" cy="80" r="10" fill="#F59E0B"/>
-    <text x="360" y="105" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#F59E0B">Day 6-7</text>
-    <text x="360" y="118" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" font-weight="bold" fill="#64748B">Evaluation</text>
+    <circle cx="360" cy="75" r="10" fill="#F59E0B"/>
+    <text x="360" y="98" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#F59E0B">Day 6-7</text>
 
-    <circle cx="490" cy="80" r="10" fill="#10B981"/>
-    <text x="490" y="105" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#10B981">Day 8-10</text>
-    <text x="490" y="118" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" font-weight="bold" fill="#64748B">Communication</text>
+    <circle cx="490" cy="75" r="10" fill="#10B981"/>
+    <text x="490" y="98" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#10B981">Day 8-10</text>
   </g>
 
 </svg>

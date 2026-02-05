@@ -95,3 +95,64 @@ body {
 .animate-pulse-glow {
   animation: pulse-glow 2s ease-in-out infinite;
 }
+
+/* Sidebar scrollbar styling */
+[data-sidebar] {
+  overflow-y: auto;
+  max-height: calc(100vh - 64px);
+}
+
+/* Custom scrollbar for sidebar */
+[data-sidebar]::-webkit-scrollbar {
+  width: 6px;
+}
+
+[data-sidebar]::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+[data-sidebar]::-webkit-scrollbar-thumb {
+  background: var(--color-fd-muted-foreground);
+  border-radius: 3px;
+  opacity: 0.5;
+}
+
+[data-sidebar]::-webkit-scrollbar-thumb:hover {
+  background: var(--color-fd-foreground);
+}
+
+/* Firefox scrollbar */
+[data-sidebar] {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-fd-muted-foreground) transparent;
+}
+
+/* Ensure sidebar content is scrollable */
+.fd-sidebar-content,
+nav[class*="sidebar"] {
+  overflow-y: auto;
+  max-height: calc(100vh - 80px);
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-fd-muted-foreground) transparent;
+}
+
+.fd-sidebar-content::-webkit-scrollbar,
+nav[class*="sidebar"]::-webkit-scrollbar {
+  width: 6px;
+}
+
+.fd-sidebar-content::-webkit-scrollbar-track,
+nav[class*="sidebar"]::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.fd-sidebar-content::-webkit-scrollbar-thumb,
+nav[class*="sidebar"]::-webkit-scrollbar-thumb {
+  background: var(--color-fd-muted-foreground);
+  border-radius: 3px;
+}
+
+.fd-sidebar-content::-webkit-scrollbar-thumb:hover,
+nav[class*="sidebar"]::-webkit-scrollbar-thumb:hover {
+  background: var(--color-fd-foreground);
+}

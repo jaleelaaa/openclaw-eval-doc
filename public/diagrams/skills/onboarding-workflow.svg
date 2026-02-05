@@ -1,0 +1,218 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 750">
+  <defs>
+    <!-- Gradient definitions -->
+    <linearGradient id="day1Gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3B82F6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1D4ED8;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="week1Gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8B5CF6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#6D28D9;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="month1Gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F59E0B;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#D97706;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="month3Gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10B981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Shadow filter -->
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1000" height="750" fill="#F8FAFC"/>
+
+  <!-- Title -->
+  <text x="500" y="40" text-anchor="middle" font-family="Arial, sans-serif" font-size="26" font-weight="bold" fill="#1E293B">
+    Employee Onboarding Process
+  </text>
+  <text x="500" y="65" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#64748B">
+    Structured 90-Day Integration Program
+  </text>
+
+  <!-- Phase 1: Day 1 -->
+  <g transform="translate(60, 100)">
+    <rect x="0" y="0" width="200" height="200" rx="12" fill="url(#day1Gradient)" filter="url(#shadow)"/>
+    <circle cx="24" cy="24" r="18" fill="#FFF" opacity="0.95"/>
+    <text x="24" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#3B82F6">1</text>
+
+    <!-- Icon - Laptop -->
+    <g transform="translate(100, 50)">
+      <circle cx="0" cy="0" r="26" fill="#FFF" opacity="0.2"/>
+      <rect x="-16" y="-10" width="32" height="20" rx="2" fill="none" stroke="#FFF" stroke-width="2"/>
+      <rect x="-20" y="10" width="40" height="4" rx="1" fill="#FFF"/>
+    </g>
+
+    <text x="100" y="100" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#FFF">DAY 1</text>
+    <text x="100" y="118" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#FFF" opacity="0.9">First Day Basics</text>
+
+    <text x="100" y="142" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#FFF" opacity="0.95">• Equipment Setup</text>
+    <text x="100" y="156" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#FFF" opacity="0.95">• Email & Slack Access</text>
+    <text x="100" y="170" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#FFF" opacity="0.95">• ID Card & Building Access</text>
+    <text x="100" y="184" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#FFF" opacity="0.95">• Team Introduction</text>
+  </g>
+
+  <!-- Arrow 1 to 2 -->
+  <g transform="translate(270, 185)">
+    <line x1="0" y1="15" x2="45" y2="15" stroke="#4F46E5" stroke-width="4"/>
+    <polygon points="45,5 65,15 45,25" fill="#4F46E5"/>
+  </g>
+
+  <!-- Phase 2: Week 1 -->
+  <g transform="translate(350, 100)">
+    <rect x="0" y="0" width="200" height="200" rx="12" fill="url(#week1Gradient)" filter="url(#shadow)"/>
+    <circle cx="24" cy="24" r="18" fill="#FFF" opacity="0.95"/>
+    <text x="24" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#8B5CF6">2</text>
+
+    <!-- Icon - Code -->
+    <g transform="translate(100, 50)">
+      <circle cx="0" cy="0" r="26" fill="#FFF" opacity="0.2"/>
+      <text x="0" y="6" text-anchor="middle" font-family="monospace" font-size="18" font-weight="bold" fill="#FFF">&lt;/&gt;</text>
+    </g>
+
+    <text x="100" y="100" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#FFF">WEEK 1</text>
+    <text x="100" y="118" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#FFF" opacity="0.9">Getting Started</text>
+
+    <text x="100" y="142" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#FFF" opacity="0.95">• Dev Environment Setup</text>
+    <text x="100" y="156" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#FFF" opacity="0.95">• Repository Access</text>
+    <text x="100" y="170" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#FFF" opacity="0.95">• Security Training</text>
+    <text x="100" y="184" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#FFF" opacity="0.95">• First 1:1 with Manager</text>
+  </g>
+
+  <!-- Arrow 2 to 3 -->
+  <g transform="translate(560, 185)">
+    <line x1="0" y1="15" x2="45" y2="15" stroke="#4F46E5" stroke-width="4"/>
+    <polygon points="45,5 65,15 45,25" fill="#4F46E5"/>
+  </g>
+
+  <!-- Phase 3: Month 1 -->
+  <g transform="translate(640, 100)">
+    <rect x="0" y="0" width="200" height="200" rx="12" fill="url(#month1Gradient)" filter="url(#shadow)"/>
+    <circle cx="24" cy="24" r="18" fill="#FFF" opacity="0.95"/>
+    <text x="24" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#F59E0B">3</text>
+
+    <!-- Icon - Checkmark -->
+    <g transform="translate(100, 50)">
+      <circle cx="0" cy="0" r="26" fill="#FFF" opacity="0.2"/>
+      <path d="M-12 0 L-4 8 L12 -8" fill="none" stroke="#FFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+
+    <text x="100" y="100" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#FFF">MONTH 1</text>
+    <text x="100" y="118" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#FFF" opacity="0.9">Ramping Up</text>
+
+    <text x="100" y="142" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#FFF" opacity="0.95">• Complete Training</text>
+    <text x="100" y="156" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#FFF" opacity="0.95">• First Code Commit</text>
+    <text x="100" y="170" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#FFF" opacity="0.95">• Learn Team Workflows</text>
+    <text x="100" y="184" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#FFF" opacity="0.95">• Set 90-Day Goals</text>
+  </g>
+
+  <!-- Arrow 3 down to 4 -->
+  <g>
+    <line x1="740" y1="310" x2="740" y2="350" stroke="#4F46E5" stroke-width="4"/>
+    <line x1="740" y1="350" x2="540" y2="350" stroke="#4F46E5" stroke-width="4"/>
+    <line x1="540" y1="350" x2="540" y2="390" stroke="#4F46E5" stroke-width="4"/>
+    <polygon points="530,390 540,415 550,390" fill="#4F46E5"/>
+  </g>
+
+  <!-- Phase 4: Month 3 (90 Days) -->
+  <g transform="translate(440, 420)">
+    <rect x="0" y="0" width="200" height="200" rx="12" fill="url(#month3Gradient)" filter="url(#shadow)"/>
+    <circle cx="24" cy="24" r="18" fill="#FFF" opacity="0.95"/>
+    <text x="24" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#10B981">4</text>
+
+    <!-- Icon - Star -->
+    <g transform="translate(100, 50)">
+      <circle cx="0" cy="0" r="26" fill="#FFF" opacity="0.2"/>
+      <polygon points="0,-12 4,-4 12,-4 6,2 8,12 0,6 -8,12 -6,2 -12,-4 -4,-4" fill="#FFF"/>
+    </g>
+
+    <text x="100" y="100" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#FFF">90 DAYS</text>
+    <text x="100" y="118" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#FFF" opacity="0.9">Fully Integrated</text>
+
+    <text x="100" y="142" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#FFF" opacity="0.95">• Independent Contributor</text>
+    <text x="100" y="156" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#FFF" opacity="0.95">• Performance Review</text>
+    <text x="100" y="170" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#FFF" opacity="0.95">• Goals Achievement</text>
+    <text x="100" y="184" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#FFF" opacity="0.95">• Career Path Planning</text>
+  </g>
+
+  <!-- Success indicator -->
+  <g transform="translate(660, 490)">
+    <rect x="0" y="0" width="180" height="80" rx="10" fill="#DCFCE7" stroke="#22C55E" stroke-width="3" filter="url(#shadow)"/>
+    <text x="90" y="35" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#166534">SUCCESS</text>
+    <text x="90" y="55" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#166534">Productive Team Member</text>
+  </g>
+
+  <!-- Arrow to Success -->
+  <g transform="translate(640, 520)">
+    <line x1="0" y1="10" x2="10" y2="10" stroke="#22C55E" stroke-width="4"/>
+    <polygon points="10,0 30,10 10,20" fill="#22C55E"/>
+  </g>
+
+  <!-- Checklist Panel - Left -->
+  <g transform="translate(60, 340)">
+    <rect x="0" y="0" width="260" height="180" rx="10" fill="#FFF" stroke="#E2E8F0" stroke-width="2" filter="url(#shadow)"/>
+    <text x="130" y="25" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1E293B">Onboarding Deliverables</text>
+    <line x1="15" y1="38" x2="245" y2="38" stroke="#E2E8F0" stroke-width="1"/>
+
+    <g transform="translate(20, 52)">
+      <rect x="0" y="0" width="16" height="16" rx="3" fill="#DCFCE7" stroke="#22C55E" stroke-width="2"/>
+      <path d="M3 8 L7 12 L13 4" fill="none" stroke="#22C55E" stroke-width="2"/>
+      <text x="24" y="13" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#475569">Welcome Email Sent</text>
+    </g>
+    <g transform="translate(20, 76)">
+      <rect x="0" y="0" width="16" height="16" rx="3" fill="#DCFCE7" stroke="#22C55E" stroke-width="2"/>
+      <path d="M3 8 L7 12 L13 4" fill="none" stroke="#22C55E" stroke-width="2"/>
+      <text x="24" y="13" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#475569">Equipment Configured</text>
+    </g>
+    <g transform="translate(20, 100)">
+      <rect x="0" y="0" width="16" height="16" rx="3" fill="#DCFCE7" stroke="#22C55E" stroke-width="2"/>
+      <path d="M3 8 L7 12 L13 4" fill="none" stroke="#22C55E" stroke-width="2"/>
+      <text x="24" y="13" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#475569">Training Completed</text>
+    </g>
+    <g transform="translate(20, 124)">
+      <rect x="0" y="0" width="16" height="16" rx="3" fill="#DCFCE7" stroke="#22C55E" stroke-width="2"/>
+      <path d="M3 8 L7 12 L13 4" fill="none" stroke="#22C55E" stroke-width="2"/>
+      <text x="24" y="13" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#475569">30-60-90 Plan Created</text>
+    </g>
+    <g transform="translate(20, 148)">
+      <rect x="0" y="0" width="16" height="16" rx="3" fill="#DCFCE7" stroke="#22C55E" stroke-width="2"/>
+      <path d="M3 8 L7 12 L13 4" fill="none" stroke="#22C55E" stroke-width="2"/>
+      <text x="24" y="13" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#475569">First Contribution Made</text>
+    </g>
+  </g>
+
+  <!-- Timeline Progress Bar -->
+  <g transform="translate(60, 650)">
+    <rect x="0" y="0" width="880" height="70" rx="10" fill="#FFF" stroke="#E2E8F0" stroke-width="2" filter="url(#shadow)"/>
+    <text x="440" y="22" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1E293B">Onboarding Progress Timeline</text>
+
+    <!-- Progress bar background -->
+    <rect x="40" y="38" width="800" height="12" rx="6" fill="#E2E8F0"/>
+
+    <!-- Progress segments -->
+    <rect x="40" y="38" width="200" height="12" rx="6" fill="#3B82F6"/>
+    <rect x="240" y="38" width="200" height="12" fill="#8B5CF6"/>
+    <rect x="440" y="38" width="200" height="12" fill="#F59E0B"/>
+    <rect x="640" y="38" width="200" height="12" rx="6" fill="#10B981"/>
+
+    <!-- Milestone markers -->
+    <circle cx="40" cy="44" r="8" fill="#FFF" stroke="#3B82F6" stroke-width="3"/>
+    <circle cx="240" cy="44" r="8" fill="#FFF" stroke="#8B5CF6" stroke-width="3"/>
+    <circle cx="440" cy="44" r="8" fill="#FFF" stroke="#F59E0B" stroke-width="3"/>
+    <circle cx="640" cy="44" r="8" fill="#FFF" stroke="#10B981" stroke-width="3"/>
+    <circle cx="840" cy="44" r="8" fill="#10B981" stroke="#10B981" stroke-width="3"/>
+
+    <!-- Labels -->
+    <text x="40" y="65" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#3B82F6">Start</text>
+    <text x="240" y="65" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#8B5CF6">Week 1</text>
+    <text x="440" y="65" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#F59E0B">Month 1</text>
+    <text x="640" y="65" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#10B981">Month 2</text>
+    <text x="840" y="65" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#10B981">90 Days</text>
+  </g>
+
+</svg>

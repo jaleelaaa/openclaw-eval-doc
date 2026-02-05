@@ -9,109 +9,14 @@ import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 
 # Additional Skills
 
-OpenClaw includes specialized skills designed for Offshore Development Center (ODC) management. These skills help streamline HR processes, employee onboarding, and interview management.
+OpenClaw includes specialized skills designed for Offshore Development Center (ODC) management. These skills help streamline HR processes, interview management, and employee onboarding.
 
 ## Overview
 
-| Skill | Purpose | Primary Users |
-|-------|---------|---------------|
-| **Onboarding** | Employee onboarding management | HR, Managers |
-| **HR-Interview** | Interview process management | HR, Hiring Managers, Interviewers |
-
----
-
-## Onboarding Skill
-
-The Onboarding skill is an **Employee Onboarding Assistant** designed to help HR and managers efficiently onboard new employees. It provides checklists, welcome communications, and training schedules to streamline the onboarding process.
-
-### Skill Metadata
-
-```yaml
-name: onboarding
-emoji: "\U0001F680"  # Rocket emoji
-userInvocable: true
-always: true
-```
-
-### Capabilities
-
-<Tabs items={['Checklists', 'Communications', 'Training']}>
-  <Tab value="Checklists">
-    **Onboarding Checklists**
-    - Developer onboarding (tools, repos, environments)
-    - QA onboarding (test frameworks, access)
-    - Manager onboarding (team introductions, processes)
-    - Role-specific customized checklists
-  </Tab>
-  <Tab value="Communications">
-    **Welcome Communications**
-    - Welcome emails for new hires
-    - First day instructions
-    - Team introduction messages
-    - Manager introduction templates
-  </Tab>
-  <Tab value="Training">
-    **Training Schedules**
-    - Week 1 orientation plan
-    - 30-60-90 day goal setting
-    - Technical training roadmap
-    - Compliance training schedules
-  </Tab>
-</Tabs>
-
-### Onboarding Timeline
-
-The skill follows a structured onboarding timeline:
-
-#### Day 1 - Basics
-- Laptop and equipment setup
-- Email and Slack access
-- Building access / ID card
-- Meet the team introduction
-- HR paperwork completion
-
-#### Week 1 - Getting Started
-- Development environment setup
-- Repository access granted
-- Complete security training
-- Review project documentation
-- First 1:1 with manager
-
-#### Month 1 - Ramping Up
-- Complete all required training
-- First code commit / contribution
-- Understand team workflows
-- Set 90-day goals with manager
-
-### Available Commands
-
-| Request | Action |
-|---------|--------|
-| `Create onboarding checklist for [role]` | Generate role-specific checklist |
-| `Write welcome email for [name]` | Draft welcome communication |
-| `Create training schedule for [role]` | Build training plan |
-| `Generate 30-60-90 plan` | Create milestone goals |
-| `First day instructions for [name]` | Generate day-one guide |
-
-### Usage Examples
-
-```bash
-# Generate a developer onboarding checklist
-"Create an onboarding checklist for a new Senior Developer"
-
-# Write a welcome email
-"Write a welcome email for John Smith starting Monday"
-
-# Create a training schedule
-"Generate a 90-day training schedule for QA engineers"
-
-# Set up milestone goals
-"Create a 30-60-90 day plan for new DevOps hire"
-```
-
-<Callout title="Always Active" type="info">
-  The Onboarding skill is always enabled (`always: true`) and can be invoked at any time through natural language commands.
-</Callout>
+| Skill | Purpose | Primary Users | Workflow Stage |
+|-------|---------|---------------|----------------|
+| **HR-Interview** | Interview process management | HR, Hiring Managers, Interviewers | Pre-hire |
+| **Onboarding** | Employee onboarding management | HR, Managers | Post-hire |
 
 ---
 
@@ -238,16 +143,111 @@ The skill generates standardized scoring rubrics:
 
 ---
 
+## Onboarding Skill
+
+The Onboarding skill is an **Employee Onboarding Assistant** designed to help HR and managers efficiently onboard new employees. It provides checklists, welcome communications, and training schedules to streamline the onboarding process.
+
+### Skill Metadata
+
+```yaml
+name: onboarding
+emoji: "\U0001F680"  # Rocket emoji
+userInvocable: true
+always: true
+```
+
+### Capabilities
+
+<Tabs items={['Checklists', 'Communications', 'Training']}>
+  <Tab value="Checklists">
+    **Onboarding Checklists**
+    - Developer onboarding (tools, repos, environments)
+    - QA onboarding (test frameworks, access)
+    - Manager onboarding (team introductions, processes)
+    - Role-specific customized checklists
+  </Tab>
+  <Tab value="Communications">
+    **Welcome Communications**
+    - Welcome emails for new hires
+    - First day instructions
+    - Team introduction messages
+    - Manager introduction templates
+  </Tab>
+  <Tab value="Training">
+    **Training Schedules**
+    - Week 1 orientation plan
+    - 30-60-90 day goal setting
+    - Technical training roadmap
+    - Compliance training schedules
+  </Tab>
+</Tabs>
+
+### Onboarding Timeline
+
+The skill follows a structured onboarding timeline:
+
+#### Day 1 - Basics
+- Laptop and equipment setup
+- Email and Slack access
+- Building access / ID card
+- Meet the team introduction
+- HR paperwork completion
+
+#### Week 1 - Getting Started
+- Development environment setup
+- Repository access granted
+- Complete security training
+- Review project documentation
+- First 1:1 with manager
+
+#### Month 1 - Ramping Up
+- Complete all required training
+- First code commit / contribution
+- Understand team workflows
+- Set 90-day goals with manager
+
+### Available Commands
+
+| Request | Action |
+|---------|--------|
+| `Create onboarding checklist for [role]` | Generate role-specific checklist |
+| `Write welcome email for [name]` | Draft welcome communication |
+| `Create training schedule for [role]` | Build training plan |
+| `Generate 30-60-90 plan` | Create milestone goals |
+| `First day instructions for [name]` | Generate day-one guide |
+
+### Usage Examples
+
+```bash
+# Generate a developer onboarding checklist
+"Create an onboarding checklist for a new Senior Developer"
+
+# Write a welcome email
+"Write a welcome email for John Smith starting Monday"
+
+# Create a training schedule
+"Generate a 90-day training schedule for QA engineers"
+
+# Set up milestone goals
+"Create a 30-60-90 day plan for new DevOps hire"
+```
+
+<Callout title="Always Active" type="info">
+  The Onboarding skill is always enabled (`always: true`) and can be invoked at any time through natural language commands.
+</Callout>
+
+---
+
 ## Skill Comparison
 
-| Aspect | Onboarding | HR-Interview |
-|--------|-----------|---------------|
-| **Purpose** | Employee onboarding management | Interview process management |
-| **Emoji** | :rocket: | :necktie: |
-| **Primary Users** | HR, Managers | HR, Hiring Managers, Interviewers |
-| **Main Functions** | Checklists, communications, schedules | Preparation, execution, evaluation |
-| **Workflow Stage** | Post-hire | Pre-hire |
-| **Output Types** | Checklists, emails, training plans | Questions, rubrics, feedback, offers |
+| Aspect | HR-Interview | Onboarding |
+|--------|--------------|------------|
+| **Purpose** | Interview process management | Employee onboarding management |
+| **Emoji** | :necktie: | :rocket: |
+| **Primary Users** | HR, Hiring Managers, Interviewers | HR, Managers |
+| **Main Functions** | Preparation, execution, evaluation | Checklists, communications, schedules |
+| **Workflow Stage** | Pre-hire | Post-hire |
+| **Output Types** | Questions, rubrics, feedback, offers | Checklists, emails, training plans |
 | **Always Active** | Yes | Yes |
 
 ## Integration with OpenClaw

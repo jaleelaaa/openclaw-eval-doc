@@ -181,21 +181,7 @@ This diagram illustrates how configuration files, environment variables, and sou
 
 ## Component Communication
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                     Docker Compose Stack                        │
-├─────────────────────────────────────────────────────────────────┤
-│  ┌─────────────────────────┐   ┌─────────────────────────────┐  │
-│  │   openclaw-gateway      │   │      openclaw-cli           │  │
-│  │   (Main Service)        │   │   (Utility Container)       │  │
-│  │                         │   │                             │  │
-│  │  - WebSocket Server     │   │  - Provider Login           │  │
-│  │  - HTTP Control UI      │   │  - Configuration            │  │
-│  │  - Channel Connectors   │   │  - Health Checks            │  │
-│  │  - Agent Orchestration  │   │  - Diagnostics              │  │
-│  └─────────────────────────┘   └─────────────────────────────┘  │
-└─────────────────────────────────────────────────────────────────┘
-```
+<img src="/diagrams/component-communication.svg" alt="Docker Compose Stack Architecture" style={{width: '100%', maxWidth: '900px', margin: '20px 0'}} />
 
 The deployment consists of two Docker services:
 - **openclaw-gateway** — Always-running main service

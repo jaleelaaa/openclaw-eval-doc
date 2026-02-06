@@ -38,21 +38,7 @@ Sessions are stored as JSON files:
 
 ## Session Lifecycle
 
-```
-User Message Received
-        ↓
-Session Exists? ─── No ──→ Create New Session
-        │
-       Yes
-        ↓
-Load Session History
-        ↓
-Process Message (Agent Loop)
-        ↓
-Update Session
-        ↓
-Persist to Disk
-```
+<img src="/diagrams/session-lifecycle.svg" alt="Session Lifecycle Flow" style={{width: '100%', maxWidth: '900px', margin: '20px 0'}} />
 
 ### Session States
 

@@ -51,9 +51,9 @@
     </g>
 
     <text x="90" y="90" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" font-weight="bold" fill="#FFF">PREPARATION</text>
-    <text x="90" y="112" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#FFF" opacity="0.95">• Generate Questions</text>
-    <text x="90" y="128" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#FFF" opacity="0.95">• Create Rubric</text>
-    <text x="90" y="144" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#FFF" opacity="0.95">• Schedule Setup</text>
+    <text x="90" y="112" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#FFF" opacity="0.95">Generate Questions</text>
+    <text x="90" y="128" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#FFF" opacity="0.95">Create Rubric</text>
+    <text x="90" y="144" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#FFF" opacity="0.95">Schedule Setup</text>
   </g>
 
   <!-- Arrow 1 to 2 -->
@@ -77,9 +77,9 @@
     </g>
 
     <text x="90" y="90" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" font-weight="bold" fill="#FFF">INTERVIEW</text>
-    <text x="90" y="112" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#FFF" opacity="0.95">• Conduct Session</text>
-    <text x="90" y="128" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#FFF" opacity="0.95">• Track Responses</text>
-    <text x="90" y="144" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#FFF" opacity="0.95">• Real-time Scoring</text>
+    <text x="90" y="112" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#FFF" opacity="0.95">Conduct Session</text>
+    <text x="90" y="128" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#FFF" opacity="0.95">Track Responses</text>
+    <text x="90" y="144" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#FFF" opacity="0.95">Real-time Scoring</text>
   </g>
 
   <!-- Arrow 2 to 3 -->
@@ -101,9 +101,9 @@
     </g>
 
     <text x="90" y="90" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" font-weight="bold" fill="#FFF">EVALUATION</text>
-    <text x="90" y="112" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#FFF" opacity="0.95">• Summarize Notes</text>
-    <text x="90" y="128" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#FFF" opacity="0.95">• Compare Candidates</text>
-    <text x="90" y="144" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#FFF" opacity="0.95">• Make Decision</text>
+    <text x="90" y="112" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#FFF" opacity="0.95">Summarize Notes</text>
+    <text x="90" y="128" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#FFF" opacity="0.95">Compare Candidates</text>
+    <text x="90" y="144" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#FFF" opacity="0.95">Make Decision</text>
   </g>
 
   <!-- Arrow 3 down to 4 -->
@@ -128,9 +128,9 @@
     </g>
 
     <text x="90" y="90" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" font-weight="bold" fill="#FFF">COMMUNICATION</text>
-    <text x="90" y="112" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#FFF" opacity="0.95">• Draft Offer Letter</text>
-    <text x="90" y="128" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#FFF" opacity="0.95">• Send Rejection</text>
-    <text x="90" y="144" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#FFF" opacity="0.95">• Follow-up Actions</text>
+    <text x="90" y="112" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#FFF" opacity="0.95">Draft Offer Letter</text>
+    <text x="90" y="128" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#FFF" opacity="0.95">Send Rejection</text>
+    <text x="90" y="144" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#FFF" opacity="0.95">Follow-up Actions</text>
   </g>
 
   <!-- Arrow to Offer (left) -->

@@ -24,61 +24,13 @@ The gateway handles:
 
 ## Architecture Overview
 
-```
-┌──────────────────────────────────────────────────────────────────┐
-│                       Gateway Process                            │
-├──────────────────────────────────────────────────────────────────┤
-│                                                                  │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐              │
-│  │  WebSocket  │  │   HTTP      │  │  Channel    │              │
-│  │   Server    │  │   Server    │  │  Manager    │              │
-│  │  (Control)  │  │ (Control UI)│  │ (Plugins)   │              │
-│  └──────┬──────┘  └──────┬──────┘  └──────┬──────┘              │
-│         │                │                │                      │
-│         └────────────────┼────────────────┘                      │
-│                          ▼                                       │
-│              ┌─────────────────────┐                            │
-│              │   Message Router    │                            │
-│              │  (Binding-based)    │                            │
-│              └──────────┬──────────┘                            │
-│                         ▼                                        │
-│              ┌─────────────────────┐                            │
-│              │   Agent Runtime     │                            │
-│              │  (pi-agent-core)    │                            │
-│              └──────────┬──────────┘                            │
-│                         ▼                                        │
-│              ┌─────────────────────┐                            │
-│              │   Session Manager   │                            │
-│              │  (File Persistence) │                            │
-│              └─────────────────────┘                            │
-│                                                                  │
-└──────────────────────────────────────────────────────────────────┘
-```
+<img src="/diagrams/gateway-architecture.svg" alt="Gateway Process Architecture" style={{width: '100%', maxWidth: '900px', margin: '20px 0'}} />
 
 ## WebSocket Protocol
 
-The gateway communicates via WebSocket using a JSON-based protocol:
+The gateway communicates via WebSocket using a JSON-based protocol.
 
-### Connection Handshake
-
-```
-Client                           Gateway
-  │                                │
-  │─── req:connect ───────────────>│   (mandatory first frame)
-  │<── res:hello-ok ───────────────│   (includes system snapshot)
-```
-
-### Message Flow
-
-```
-Client                           Gateway
-  │                                │
-  │─── req:agent ─────────────────>│   (run agent turn)
-  │<── res:agent (ack) ────────────│   (runId, status:accepted)
-  │<── event:agent ────────────────│   (streaming output)
-  │<── event:agent ────────────────│   (streaming output)
-  │<── res:agent (final) ──────────│   (runId, status:ok/error)
-```
+<img src="/diagrams/websocket-protocol.svg" alt="WebSocket Protocol Communication Flow" style={{width: '100%', maxWidth: '900px', margin: '20px 0'}} />
 
 ### Frame Types
 

@@ -22,10 +22,10 @@
   <!-- Purpose -->
   <rect x="20" y="75" width="370" height="120" fill="#f3f4f6" stroke="#6b7280" stroke-width="2" rx="8"/>
   <text x="40" y="100" style="font: bold 16px Arial; fill: #1a1a2e;">PURPOSE</text>
-  <text x="40" y="125" class="small-text">• React to messages with emojis</text>
-  <text x="40" y="145" class="small-text">• Pin/unpin important messages</text>
-  <text x="40" y="165" class="small-text">• Manage channel interactions</text>
-  <text x="40" y="185" class="small-text">• Extended Slack control</text>
+  <text x="40" y="125" class="small-text">React to messages with emojis</text>
+  <text x="40" y="145" class="small-text">Pin/unpin important messages</text>
+  <text x="40" y="165" class="small-text">Manage channel interactions</text>
+  <text x="40" y="185" class="small-text">Extended Slack control</text>
 
   <!-- Requirements -->
   <rect x="410" y="75" width="370" height="120" fill="#fef2f2" stroke="#dc2626" stroke-width="2" rx="8"/>
@@ -65,9 +65,9 @@
   <!-- Actions -->
   <rect x="540" y="255" width="220" height="100" fill="#ffffff" stroke="#10b981" stroke-width="2" rx="6"/>
   <text x="650" y="280" text-anchor="middle" style="font: bold 14px Arial; fill: #059669;">AVAILABLE ACTIONS</text>
-  <text x="560" y="305" style="font: bold 11px Arial; fill: #4b5563;">✓ React with emoji</text>
-  <text x="560" y="325" style="font: bold 11px Arial; fill: #4b5563;">✓ Pin/Unpin messages</text>
-  <text x="560" y="345" style="font: bold 11px Arial; fill: #4b5563;">✓ Channel management</text>
+  <text x="560" y="305" style="font: bold 11px Arial; fill: #4b5563;">React with emoji</text>
+  <text x="560" y="325" style="font: bold 11px Arial; fill: #4b5563;">Pin/Unpin messages</text>
+  <text x="560" y="345" style="font: bold 11px Arial; fill: #4b5563;">Channel management</text>
 
   <!-- Examples -->
   <rect x="20" y="385" width="760" height="100" fill="#fef3c7" stroke="#f59e0b" stroke-width="2" rx="8"/>

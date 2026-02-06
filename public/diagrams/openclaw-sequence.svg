@@ -101,8 +101,8 @@
   <!-- Note: Build prompt -->
   <rect x="720" y="310" width="120" height="50" rx="3" fill="#e1d5e7" stroke="#9673a6" stroke-width="1"/>
   <text x="780" y="328" text-anchor="middle" class="note" fill="#333">Build prompt:</text>
-  <text x="780" y="342" text-anchor="middle" class="note" fill="#333">• System instruction</text>
-  <text x="780" y="356" text-anchor="middle" class="note" fill="#333">• User message</text>
+  <text x="780" y="342" text-anchor="middle" class="note" fill="#333">System instruction</text>
+  <text x="780" y="356" text-anchor="middle" class="note" fill="#333">User message</text>
 
   <!-- Step 6: Route to model -->
   <line x1="715" y1="380" x2="850" y2="380" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
@@ -160,8 +160,8 @@
   <!-- Timing annotations -->
   <rect x="30" y="680" width="300" height="60" rx="5" fill="#f5f5f5" stroke="#ccc" stroke-width="1"/>
   <text x="40" y="700" class="note" fill="#333">Typical Latency:</text>
-  <text x="40" y="715" class="note" fill="#666">• Discord WebSocket: ~50ms</text>
-  <text x="40" y="730" class="note" fill="#666">• Gemini API: 500ms - 2000ms (model dependent)</text>
+  <text x="40" y="715" class="note" fill="#666">Discord WebSocket: ~50ms</text>
+  <text x="40" y="730" class="note" fill="#666">Gemini API: 500ms - 2000ms (model dependent)</text>
 
   <!-- Footer -->
   <text x="550" y="780" text-anchor="middle" style="font-size: 10px; fill: #666;">Figure 2: Message Processing Sequence | OpenClaw v2026.2.1</text>

@@ -32,20 +32,20 @@
   <!-- Purpose Section -->
   <rect x="20" y="85" width="340" height="180" fill="#f0fdf4" stroke="#10b981" stroke-width="2" rx="10"/>
   <text x="40" y="115" style="font: bold 18px Arial; fill: #059669;">PURPOSE</text>
-  <text x="40" y="145" class="small-text">• Write new code files from scratch</text>
-  <text x="40" y="170" class="small-text">• Modify and refactor existing code</text>
-  <text x="40" y="195" class="small-text">• Execute shell commands safely</text>
-  <text x="40" y="220" class="small-text">• Debug and fix code issues</text>
-  <text x="40" y="245" class="small-text">• Explain code and suggest improvements</text>
+  <text x="40" y="145" class="small-text">Write new code files from scratch</text>
+  <text x="40" y="170" class="small-text">Modify and refactor existing code</text>
+  <text x="40" y="195" class="small-text">Execute shell commands safely</text>
+  <text x="40" y="220" class="small-text">Debug and fix code issues</text>
+  <text x="40" y="245" class="small-text">Explain code and suggest improvements</text>
 
   <!-- Capabilities Section -->
   <rect x="380" y="85" width="320" height="180" fill="#eff6ff" stroke="#3b82f6" stroke-width="2" rx="10"/>
   <text x="400" y="115" style="font: bold 18px Arial; fill: #1d4ed8;">CAPABILITIES</text>
-  <text x="400" y="145" class="small-text">✓ Multi-language support (Python, JS, etc.)</text>
-  <text x="400" y="170" class="small-text">✓ File system read/write operations</text>
-  <text x="400" y="195" class="small-text">✓ Git operations (commit, push, etc.)</text>
-  <text x="400" y="220" class="small-text">✓ Package management (npm, pip)</text>
-  <text x="400" y="245" class="small-text">✓ Test execution and debugging</text>
+  <text x="400" y="145" class="small-text">Multi-language support (Python, JS, etc.)</text>
+  <text x="400" y="170" class="small-text">File system read/write operations</text>
+  <text x="400" y="195" class="small-text">Git operations (commit, push, etc.)</text>
+  <text x="400" y="220" class="small-text">Package management (npm, pip)</text>
+  <text x="400" y="245" class="small-text">Test execution and debugging</text>
 
   <!-- Workflow Diagram -->
   <rect x="20" y="280" width="860" height="200" fill="#f8fafc" stroke="#64748b" stroke-width="2" rx="10"/>
@@ -79,8 +79,8 @@
   <!-- Actions -->
   <rect x="590" y="330" width="130" height="80" fill="#f59e0b" rx="8"/>
   <text x="655" y="355" text-anchor="middle" class="label">ACTIONS</text>
-  <text x="655" y="375" text-anchor="middle" style="font: bold 10px Arial; fill: #fef3c7;">• Write files</text>
-  <text x="655" y="392" text-anchor="middle" style="font: bold 10px Arial; fill: #fef3c7;">• Run commands</text>
+  <text x="655" y="375" text-anchor="middle" style="font: bold 10px Arial; fill: #fef3c7;">Write files</text>
+  <text x="655" y="392" text-anchor="middle" style="font: bold 10px Arial; fill: #fef3c7;">Run commands</text>
 
   <!-- Arrow 4 -->
   <line x1="720" y1="370" x2="770" y2="370" stroke="#1a1a2e" stroke-width="2" marker-end="url(#arrow)"/>
@@ -92,7 +92,7 @@
 
   <!-- Return arrow -->
   <path d="M 820 400 L 820 450 L 100 450 L 100 410" fill="none" stroke="#10b981" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arrow)"/>
-  <text x="460" y="465" text-anchor="middle" style="font: bold 11px Arial; fill: #10b981;">Code written/executed → Result returned to user</text>
+  <text x="460" y="465" text-anchor="middle" style="font: bold 11px Arial; fill: #10b981;">Code written/executed - Result returned to user</text>
 
   <!-- Example Commands -->
   <rect x="20" y="495" width="860" height="140" fill="#fef3c7" stroke="#f59e0b" stroke-width="2" rx="10"/>

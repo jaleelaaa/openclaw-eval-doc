@@ -51,10 +51,10 @@
     <text x="100" y="100" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#FFF">DAY 1</text>
     <text x="100" y="118" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#FFF" opacity="0.9">First Day Basics</text>
 
-    <text x="100" y="142" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#FFF" opacity="0.95">• Equipment Setup</text>
-    <text x="100" y="156" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#FFF" opacity="0.95">• Email & Slack Access</text>
-    <text x="100" y="170" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#FFF" opacity="0.95">• ID Card & Building Access</text>
-    <text x="100" y="184" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#FFF" opacity="0.95">• Team Introduction</text>
+    <text x="100" y="142" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#FFF" opacity="0.95">Equipment Setup</text>
+    <text x="100" y="156" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#FFF" opacity="0.95">Email & Slack Access</text>
+    <text x="100" y="170" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#FFF" opacity="0.95">ID Card & Building Access</text>
+    <text x="100" y="184" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#FFF" opacity="0.95">Team Introduction</text>
   </g>
 
   <!-- Arrow 1 to 2 -->
@@ -78,10 +78,10 @@
     <text x="100" y="100" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#FFF">WEEK 1</text>
     <text x="100" y="118" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#FFF" opacity="0.9">Getting Started</text>
 
-    <text x="100" y="142" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#FFF" opacity="0.95">• Dev Environment Setup</text>
-    <text x="100" y="156" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#FFF" opacity="0.95">• Repository Access</text>
-    <text x="100" y="170" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#FFF" opacity="0.95">• Security Training</text>
-    <text x="100" y="184" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#FFF" opacity="0.95">• First 1:1 with Manager</text>
+    <text x="100" y="142" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#FFF" opacity="0.95">Dev Environment Setup</text>
+    <text x="100" y="156" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#FFF" opacity="0.95">Repository Access</text>
+    <text x="100" y="170" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#FFF" opacity="0.95">Security Training</text>
+    <text x="100" y="184" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#FFF" opacity="0.95">First 1:1 with Manager</text>
   </g>
 
   <!-- Arrow 2 to 3 -->
@@ -105,10 +105,10 @@
     <text x="100" y="100" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#FFF">MONTH 1</text>
     <text x="100" y="118" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#FFF" opacity="0.9">Ramping Up</text>
 
-    <text x="100" y="142" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#FFF" opacity="0.95">• Complete Training</text>
-    <text x="100" y="156" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#FFF" opacity="0.95">• First Code Commit</text>
-    <text x="100" y="170" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#FFF" opacity="0.95">• Learn Team Workflows</text>
-    <text x="100" y="184" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#FFF" opacity="0.95">• Set 90-Day Goals</text>
+    <text x="100" y="142" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#FFF" opacity="0.95">Complete Training</text>
+    <text x="100" y="156" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#FFF" opacity="0.95">First Code Commit</text>
+    <text x="100" y="170" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#FFF" opacity="0.95">Learn Team Workflows</text>
+    <text x="100" y="184" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#FFF" opacity="0.95">Set 90-Day Goals</text>
   </g>
 
   <!-- Arrow 3 down to 4 -->
@@ -134,10 +134,10 @@
     <text x="100" y="100" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#FFF">90 DAYS</text>
     <text x="100" y="118" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#FFF" opacity="0.9">Fully Integrated</text>
 
-    <text x="100" y="142" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#FFF" opacity="0.95">• Independent Contributor</text>
-    <text x="100" y="156" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#FFF" opacity="0.95">• Performance Review</text>
-    <text x="100" y="170" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#FFF" opacity="0.95">• Goals Achievement</text>
-    <text x="100" y="184" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#FFF" opacity="0.95">• Career Path Planning</text>
+    <text x="100" y="142" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#FFF" opacity="0.95">Independent Contributor</text>
+    <text x="100" y="156" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#FFF" opacity="0.95">Performance Review</text>
+    <text x="100" y="170" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#FFF" opacity="0.95">Goals Achievement</text>
+    <text x="100" y="184" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="#FFF" opacity="0.95">Career Path Planning</text>
   </g>
 
   <!-- Success indicator -->

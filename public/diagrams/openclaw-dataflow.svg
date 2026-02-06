@@ -42,7 +42,7 @@
   <text x="60" y="285" class="file" fill="#333">📁 senders/discord/</text>
   <line x1="50" y1="295" x2="330" y2="295" stroke="#d6b656" stroke-width="1"/>
   <text x="60" y="315" class="content" fill="#333">📄 allowlist.json</text>
-  <text x="180" y="315" class="content" fill="#666">→ Approved user IDs</text>
+  <text x="180" y="315" class="content" fill="#666">- Approved user IDs</text>
 
   <!-- devices directory -->
   <rect x="50" y="345" width="280" height="60" rx="5" fill="#ffffff" stroke="#d6b656" stroke-width="1"/>

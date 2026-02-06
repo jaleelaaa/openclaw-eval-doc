@@ -30,10 +30,10 @@
   <!-- Purpose Section -->
   <rect x="20" y="75" width="360" height="120" fill="#eff6ff" stroke="#3b82f6" stroke-width="2" rx="8"/>
   <text x="40" y="100" class="section-title">PURPOSE</text>
-  <text x="40" y="125" class="small-text">• Get current weather for any location</text>
-  <text x="40" y="145" class="small-text">• View 5-day forecasts</text>
-  <text x="40" y="165" class="small-text">• Check temperature, humidity, conditions</text>
-  <text x="40" y="185" class="small-text">• No API key required ✓</text>
+  <text x="40" y="125" class="small-text">Get current weather for any location</text>
+  <text x="40" y="145" class="small-text">View 5-day forecasts</text>
+  <text x="40" y="165" class="small-text">Check temperature, humidity, conditions</text>
+  <text x="40" y="185" class="small-text">No API key required</text>
 
   <!-- Status Section -->
   <rect x="420" y="75" width="360" height="120" fill="#ecfdf5" stroke="#10b981" stroke-width="2" rx="8"/>
@@ -41,7 +41,7 @@
   <text x="440" y="125" class="small-text">Requirements: None</text>
   <text x="440" y="145" class="small-text">Dependencies: None</text>
   <text x="440" y="165" class="small-text">Ready to use immediately!</text>
-  <text x="440" y="185" class="status">✓ No installation needed</text>
+  <text x="440" y="185" class="status">No installation needed</text>
 
   <!-- Flow Diagram -->
   <text x="400" y="220" text-anchor="middle" class="section-title">HOW IT WORKS</text>
